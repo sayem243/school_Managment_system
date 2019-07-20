@@ -16,6 +16,8 @@ class Transaction extends Model
         'paymentMethod',
         'paymentMobile',
         'month',
+        'receivable',
+        'balance',
         'transactionId',
         'year',
         'remark',

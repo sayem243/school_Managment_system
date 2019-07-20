@@ -36,6 +36,23 @@
                             </div>
                         </div>
                     @endif
+                        @if (session('success'))
+                            <div class="alert alert-danger violet" role="alert">
+                                <div class="alert-icon"><i class="feather icon-alert-triangle" style="font-size: 30px;"></i></div>
+                                <div class="alert-text">
+                                    {!! session('success') !!}
+                                </div>
+                            </div>
+                        @endif
+                        @if (session('warning'))
+                            <div class="alert alert-danger violet" role="alert">
+                                <div class="alert-icon"><i class="feather icon-alert-triangle" style="font-size: 30px;"></i></div>
+                                <div class="alert-text">
+                                    {!! session('warning') !!}
+                                </div>
+                            </div>
+                        @endif
+
                     <div class="card-body">
                         <form method="post" action="{{ route('transaction.store') }}" class="needs-validation" novalidate>
                             <div class="form-group row">

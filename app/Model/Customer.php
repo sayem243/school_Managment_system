@@ -24,7 +24,11 @@ class Customer extends Model
         'monthlyBill',
         'outstanding',
         'zone_id',
-        'package_id'
+        'package_id',
+        'receivable',
+        'payment',
+        'paidYear',
+        'paidMonth'
     ];
 
     public function transaction()

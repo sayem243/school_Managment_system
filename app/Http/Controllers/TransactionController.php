@@ -55,7 +55,7 @@ class TransactionController extends Controller
 
         $customers = Customer::all();
         $collections = User::all();
-        $process = array("In-progress","Paid","Receivable");
+        $process = array("Paid","Receivable");
         $methods = array("Cash","Mobile");
         return view('transaction.create',['customers' => $customers,'collections' => $collections,'process' => $process,'methods' => $methods]);
 
@@ -70,6 +70,7 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
 
+        $data = $request->request->all();
         $request->validate([
             'amount'=>'required',
             'customer_id'=> 'required',
@@ -78,27 +79,43 @@ class TransactionController extends Controller
             'paymentMethod'=> 'required'
         ]);
         $year = date("y");
+        $month = $request->get('month');
         $customerId = $request->get('customer_id');
         $amount = $request->get('amount');
         $customer = Customer::find($customerId);
-        $balance = (($customer->outstanding + $customer->monthlyBill) - $amount);
-        $post = new Transaction([
-            'amount' => $amount,
-            'customer_id'=> $customerId,
-            'collection_id'=> $request->get('collection_id'),
-            'process'=> $request->get('process'),
-            'month'=> $request->get('month'),
-            'year'=> $year,
-            'receivable' => $customer->monthlyBill,
-            'balance' => $balance,
-            'paymentMethod'=> $request->get('paymentMethod'),
-            'paymentMobile'=> $request->get('paymentMobile'),
-            'transactionId'=> $request->get('transactionId'),
-            'remark' => $request->get('remark')
-        ]);
-        $post->save();
-        $this->repository->billTransactionOutstanding($post,$customer);
-        return redirect('/transaction/create')->with('success', 'Transaction has been added successfully');
+        $existTransaction = $this->repository->getFindExistMonth($customerId,$month,$year);
+        if($existTransaction == "Valid"){
+            $process = $request->get('process');
+            $receivable = 0;
+            $balance = 0;
+            if($process === "Paid"){
+                $receivable = $customer->monthlyBill;
+                $balance = (($customer->outstanding + $customer->monthlyBill) - $amount);
+            }elseif($process === "Receivable"){
+                $receivable = ($customer->monthlyBill + $amount);
+                $balance = ($customer->outstanding + $customer->monthlyBill + $amount);
+            }
+
+            $post = new Transaction([
+                'amount' => $amount,
+                'customer_id'=> $customerId,
+                'collection_id'=> $request->get('collection_id'),
+                'process'=> $process,
+                'month'=> $request->get('month'),
+                'year'=> $year,
+                'receivable' => floatval($receivable),
+                'balance' => floatval($balance),
+                'paymentMethod'=> $request->get('paymentMethod'),
+                'paymentMobile'=> $request->get('paymentMobile'),
+                'transactionId'=> $request->get('transactionId'),
+                'remark' => $request->get('remark')
+            ]);
+            $post->save();
+            $this->repository->billTransactionOutstanding($customer,$month,$year);
+            return redirect('/transaction/create')->with('success', 'Transaction has been added successfully');
+        }else{
+            return redirect('/transaction/create')->with('warning', 'This payment month already exist');
+        }
 
     }
 

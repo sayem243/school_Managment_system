@@ -17,14 +17,36 @@ class TransactionRepository
      * @return \Illuminate\Database\Eloquent\Builder
      */
 
-    public function billTransactionOutstanding(Transaction $transaction, Customer $customer)
+    public function getFindExistMonth($customer,$month,$year)
     {
+        $transaction = DB::table('transactions')
+            ->select('id as id')
+            ->where(array('customer_id' => $customer,'month' => $month,'year' => $year))
+            ->first();
+        if($transaction){
+            return "In-valid";
+        }else{
+            return "Valid";
+        }
+
+    }
+
+    /**
+     * Create a query for Post.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+
+    public function billTransactionOutstanding(Customer $customer,$month,$year)
+    {
+
+        $customerId = $customer->id;
         $ct = DB::table('transactions')
-            ->select('SUM(transactions.receivable) as receivable','SUM(transactions.amount)')
-            ->where('customer_id',$transaction->customer_id)
-            ->get();
-        $balance = (($customer->openningBalance + $ct->receivable) - $ct->amount);
-        DB::table('customers')->where('id',$transaction->customer_id)->update([ 'outstanding' => $balance,'paidMonth'=>$transaction->month,'paidYear'=> $transaction->year ]);
+            ->select(DB::raw("SUM(transactions.receivable) as receivable") , DB::raw("SUM(transactions.amount) as payment"))
+            ->where('customer_id', '=', $customerId)
+            ->first();
+        $balance = (($customer->openningBalance + $ct->receivable) - $ct->payment);
+        DB::table('customers')->where('id',$customerId)->update([ 'outstanding' => $balance,'receivable' =>  $ct->receivable,'payment' => $ct->payment,'paidMonth'=>$month,'paidYear'=> $year ]);
 
     }
 
@@ -50,8 +72,9 @@ class TransactionRepository
                 DB::table('transactions') ->where('id',$transaction->id)->update([ 'billGenerate_id' => $generate->id ]);
             }else{
                 $balance = $customer->monthlyBill + $customer->outstanding;
+                $receivable = $customer->monthlyBill + $customer->receivable;
                 DB::table('transactions')->insert( [ 'customer_id' => $customer->id ,'billGenerate_id' => $generate->id, 'receivable' => $customer->monthlyBill,'month' => $generate->billMonth, 'year' => $generate->billYear,'balance' => $balance ]);
-                DB::table('customers')->where('id',$customer->id)->update([ 'outstanding' => $balance,'paidMonth'=>$generate->billMonth,'paidYear'=> $generate->billYear ]);
+                DB::table('customers')->where('id',$customer->id)->update([ 'outstanding' => $balance,'receivable' => $receivable,'paidMonth'=>$generate->billMonth,'paidYear'=> $generate->billYear ]);
             }
         endforeach;
         exit;
