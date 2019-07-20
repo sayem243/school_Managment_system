@@ -34,7 +34,6 @@ class TransactionRepository
      * @return \Illuminate\Database\Eloquent\Builder
      */
 
-
     public function billGenerate(BillGenerate $generate)
     {
         $zoneId = $generate->zone_id;
