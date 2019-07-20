@@ -17,15 +17,13 @@ class TransactionRepository
      * @return \Illuminate\Database\Eloquent\Builder
      */
 
-    public function billTransactionOutstanding(Transaction $transaction)
+    public function billTransactionOutstanding(Transaction $transaction, Customer $customer)
     {
-        $customer = Customer::find($transaction->customer_id);
-        $customers = DB::table('transactions')
+        $ct = DB::table('transactions')
             ->select('SUM(transactions.receivable) as receivable','SUM(transactions.amount)')
             ->where('customer_id',$transaction->customer_id)
             ->get();
-
-        $balance = (($customer->outstanding + $customer->monthlyBill) - $transaction->amount);
+        $balance = (($customer->openningBalance + $ct->receivable) - $ct->amount);
         DB::table('customers')->where('id',$transaction->customer_id)->update([ 'outstanding' => $balance,'paidMonth'=>$transaction->month,'paidYear'=> $transaction->year ]);
 
     }

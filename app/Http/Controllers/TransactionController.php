@@ -81,8 +81,7 @@ class TransactionController extends Controller
         $customerId = $request->get('customer_id');
         $amount = $request->get('amount');
         $customer = Customer::find($customerId);
-        echo $balance = (($customer->outstanding + $customer->monthlyBill) - $amount);
-        exit;
+        $balance = (($customer->outstanding + $customer->monthlyBill) - $amount);
         $post = new Transaction([
             'amount' => $amount,
             'customer_id'=> $customerId,
@@ -98,7 +97,7 @@ class TransactionController extends Controller
             'remark' => $request->get('remark')
         ]);
         $post->save();
-        $this->repository->billTransactionOutstanding($post);
+        $this->repository->billTransactionOutstanding($post,$customer);
         return redirect('/transaction/create')->with('success', 'Transaction has been added successfully');
 
     }
