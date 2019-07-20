@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 class InternetController extends Controller
 {
+
+    /**
+     * Create a new PostController instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *

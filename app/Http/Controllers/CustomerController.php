@@ -29,6 +29,7 @@ class CustomerController extends Controller
     public function __construct(CustomerRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('auth');
     }
 
 
@@ -80,10 +81,10 @@ class CustomerController extends Controller
             'connectionStatus'    => $request->get('connectionStatus'),
             'connectionMode'    => $request->get('$connectionMode'),
             'bandWidth'    => $request->get('bandWidth'),
-            'connectionMode'    => $request->get('connectionMode'),
-            'connectionStatus'    => $request->get('connectionStatus'),
             'assignBandWidth'    => $request->get('assignBandWidth'),
             'connectionDate'    => $request->get('connectionDate'),
+            'monthlyBill'    => $request->get('monthlyBill'),
+            'outstanding'    => $request->get('outstanding'),
             'zone_id'    => $request->get('zone'),
             'email'         => $request->get('email'),
 
@@ -196,7 +197,8 @@ class CustomerController extends Controller
                 $connectionMode     = $post->connectionMode,
                 $assignBandwidth    = $post->assignBandWidth,
                 $connectionStatus   = $post->connectionStatus,
-                $balance            = $post->balance,
+                $monthlyBill            = $post->monthlyBill,
+                $outstanding            = $post->outstanding,
                 "<div class='btn-group card-option'><button type='button' class='btn btn-notify' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-ellipsis-v'></i></button><ul class='list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right' x-placement='bottom-end'>
  <li class='dropdown-item'> <a href='/customer/show/{$id}' ><i class='feather icon-eye'></i> View</a></li>
 <li class='dropdown-item'> <a href='/customer/edit/{$id}'> <i class='feather icon-edit'></i> Edit</a></li>

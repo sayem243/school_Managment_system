@@ -174,10 +174,23 @@
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="col-form-label" for="connectionDate">Connection Date</label>
                                         <div class="col-form-label">
                                             <input type="date" class="form-control datePicker" name="connectionDate" id="connectionDate" aria-describedby="validationTooltipUsernamePrepend" required />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="connectionMode">Monthly Bill</label>
+                                        <div class="col-form-label">
+                                            <input type="text" class="form-control" name="monthlyBill" id="monthlyBill"  />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-form-label" for="connectionMode">Outstanding</label>
+                                        <div class="col-form-label">
+                                            <input type="text" class="form-control" name="outstanding" id="outstanding" />
                                         </div>
                                     </div>
                                 </div>

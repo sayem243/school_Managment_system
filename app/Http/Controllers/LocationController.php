@@ -13,22 +13,12 @@ use Illuminate\Support\Facades\DB;
 class LocationController extends Controller
 {
 
-
-    /**
-     * The CustomerRepository instance.
-     *
-     * @var \App\Repositories\CustomerRepository
-     */
-    public $repository;
-
     /**
      * Create a new PostController instance.
-     *
-     * @param  \App\Repositories\CustomerRepository $repository
      */
-    public function __construct(CustomerRepository $repository)
+    public function __construct()
     {
-        $this->repository = $repository;
+        $this->middleware('auth');
     }
 
 

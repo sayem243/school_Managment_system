@@ -4,11 +4,11 @@
         <div class="col-sm-12">
             <div class="card">
                <div class="card-header">
-                    <h5>Create New Package</h5>
+                    <h5>Receive Payment</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
-                            <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
-                            <a href="{{ route('internet.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            <a  href="{{ route('transaction.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Billing</a>
+                            <a href="{{ route('transaction.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                         </div>
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +40,7 @@
                         <form method="post" action="{{ route('transaction.store') }}" class="needs-validation" novalidate>
                             <div class="form-group row">
                                 @csrf
-                                <label class="col-sm-3 col-form-label" for="name">Customer Name <span class="required">*</span></label>
+                                <label class="col-sm-3 col-form-label" for="customer_id">Customer Name <span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
                                     <select class="form-control" name="customer_id" id="customer_id" aria-describedby="validationTooltipPackagePrepend" required>
                                         <option value=""> -Select customer- </option>
@@ -55,9 +55,20 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="youtube">Payment Method</label>
+                                <label class="col-sm-3 col-form-label" for="paymentMonth">Payment Month <span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                   <select>
+                                    <select class="form-control" name="month" id="month"  >
+                                        @php ( $months = array(1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April', 5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August', 9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'))
+                                        @foreach($months as $month)
+                                            <option value="{{ $month }}">{{ $month }},{{ now()->year }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label" for="paymentMethod">Payment Method <span class="required">*</span></label>
+                                <div class="col-sm-6 col-form-label">
+                                   <select name="paymentMethod" id="paymentMethod"  >
                                        @foreach($methods as $method)
                                        <option value="{{ $method }}">{{ $method }}</option>
                                        @endforeach
@@ -65,15 +76,15 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="youtube">Amount</label>
+                                <label class="col-sm-3 col-form-label" for="amount">Amount <span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" placeholder="Enter amount" name="amount" id="amount"  />
+                                    <input type="number" class="form-control" placeholder="Enter amount" name="amount" id="amount"  />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="youtube">Process</label>
+                                <label class="col-sm-3 col-form-label" for="process">Process<span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <select>
+                                    <select class="process" name="process" id="process">
                                         @foreach($process as $pro)
                                             <option value="{{ $pro }}">{{ $pro }}</option>
                                         @endforeach
@@ -81,9 +92,9 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="youtube">Collect To</label>
+                                <label class="col-sm-3 col-form-label" for="collection_id">Collect To<span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <select>
+                                    <select name="collection_id" id="collection_id" >
                                         @foreach($collections as $collection)
                                             <option value="{{ $collection['id'] }}">{{ $collection['name'] }}</option>
                                         @endforeach
@@ -92,20 +103,20 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="akamai">Payment Mobile No</label>
+                                <label class="col-sm-3 col-form-label" for="paymentMobile">Payment Mobile No</label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="paymentMobile" id="paymentMobile" placeholder="Enter internet package AKAMAI speed"  />
+                                    <input type="text" class="form-control" name="paymentMobile" id="paymentMobile" placeholder="Enter payment mobile no"  />
                                 </div>
                             </div>
                              <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="facebook">Transaction ID</label>
+                                <label class="col-sm-3 col-form-label" for="transactionId">Transaction ID</label>
                                 <div class="col-sm-6 col-form-label">
                                     <input type="text" class="form-control" name="transactionId" id="transactionId" placeholder="Enter mobile payment transaction id"  />
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="description">Remark</label>
+                                <label class="col-sm-3 col-form-label" for="remark">Remark</label>
                                 <div class="col-sm-6 col-form-label"><textarea class="form-control" name="remark" id="remark" rows="2" ></textarea>
                                 </div>
                             </div>

@@ -2,15 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\BillGenerate;
 use App\Model\Customer;
+use App\Model\InternetPackage;
+use App\Model\Location;
 use App\Model\Transaction;
-use App\Model\User;
+use App\Repositories\TransactionRepository;
+use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
+
+    /**
+     * The CustomerRepository instance.
+     *
+     * @var \App\Repositories\TransactionRepository
+     */
+    public $repository;
+
+    /**
+     * Create a new PostController instance.
+     *
+     * @param  \App\Repositories\TransactionRepository $repository
+     */
+    public function __construct(TransactionRepository $repository)
+    {
+        $this->repository = $repository;
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +55,7 @@ class TransactionController extends Controller
 
         $customers = Customer::all();
         $collections = User::all();
-        $process = array("In-progress","Paid","Advance","Due","Receivable");
+        $process = array("In-progress","Paid","Receivable");
         $methods = array("Cash","Mobile");
         return view('transaction.create',['customers' => $customers,'collections' => $collections,'process' => $process,'methods' => $methods]);
 
@@ -53,20 +77,75 @@ class TransactionController extends Controller
             'process'=> 'required',
             'paymentMethod'=> 'required'
         ]);
+        $year = date("y");
+        $customerId = $request->get('customer_id');
+        $amount = $request->get('amount');
+        $customer = Customer::find($customerId);
+        echo $balance = (($customer->outstanding + $customer->monthlyBill) - $amount);
+        exit;
         $post = new Transaction([
-            'amount' => $request->get('amount'),
-            'customer_id'=> $request->get('customer_id'),
+            'amount' => $amount,
+            'customer_id'=> $customerId,
             'collection_id'=> $request->get('collection_id'),
             'process'=> $request->get('process'),
+            'month'=> $request->get('month'),
+            'year'=> $year,
+            'receivable' => $customer->monthlyBill,
+            'balance' => $balance,
             'paymentMethod'=> $request->get('paymentMethod'),
             'paymentMobile'=> $request->get('paymentMobile'),
             'transactionId'=> $request->get('transactionId'),
             'remark' => $request->get('remark')
         ]);
         $post->save();
-        return redirect('/transaction')->with('success', 'Transaction has been added successfully');
+        $this->repository->billTransactionOutstanding($post);
+        return redirect('/transaction/create')->with('success', 'Transaction has been added successfully');
 
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function billGenerate()
+    {
+        $zones = Location::all();
+        $collections = User::all();
+        $packages = InternetPackage::all();
+        return view('transaction.billGenerate',['zones' => $zones,'collections' => $collections,'packages' => $packages]);
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function billGenerateCreate(Request $request)
+    {
+        $request->validate([
+            'zone_id'=> 'required',
+        ]);
+        $year = date("y");
+        $time = strtotime(date("d-m-Y"));
+        $month = date("F", strtotime("-1 month", $time));
+
+        $post = new BillGenerate([
+            'zone_id' => $request->get('zone_id'),
+            'package_id'=> $request->get('package_id'),
+            'collection_id'=> $request->get('collection_id'),
+            'billMonth' => $month,
+            'billYear' => $year,
+        ]);
+        $post->save();
+        $this->repository->billGenerate($post);
+        exit;
+        return view('transaction.index');
+    }
+
 
     /**
      * Display the specified resource.
@@ -153,27 +232,60 @@ class TransactionController extends Controller
 
         $end = $iDisplayStart + $iDisplayLength;
         $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $posts = DB::table('transactions')
+            ->join('customers', 'transactions.customer_id', '=', 'customers.id')
+            ->leftJoin('users', 'transactions.collection_id', '=', 'users.id')
+            ->leftJoin('locations', 'customers.zone_id', '=', 'locations.id')
+            ->leftJoin('internet_packages', 'customers.package_id', '=', 'internet_packages.id')
+            ->select('customers.name','customers.mobile as mobile','customers.name as name','customers.monthlyBill as monthlyBill','customers.outstanding as outstanding')
+            ->addSelect('transactions.id as id','transactions.amount as amount','transactions.process as process','transactions.month as month','transactions.year as year')
+            ->addSelect('internet_packages.name as packageName')
+            ->addSelect('locations.name as zone')
+            ->addSelect('users.username as username')
+            ->offset($iDisplayStart)
+            ->limit($end)
+            ->get();
+
         foreach ($posts as $post){
 
-            $records["data"][] = array(
-                $id = $post->id,
-                $name =  $post->name,
-                $amount = $post->price,
-                $youtube = $post->youtube,
-                $bdix = $post->bdix,
-                $akamai = $post->akamai,
-                $facebook = $post->facebook,
-                $ftp = $post->ftp,
-                $transaction = $post->transaction,
-                $description = $post->description,
-                "<div class='btn-group card-option'>
+            $id = $post->id;
+            $paymentMonth = $post->month.','.$post->year;
+            $action = "";
+            if($post->process == "In-progress"){
+                $action = "<div class='btn-group card-option'>
                             <button type='button' class='btn btn-notify' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                 <i class='fas fa-ellipsis-v'></i>
                             </button>
                             <ul class='list-unstyled card-option dropdown-menu dropdown-menu-right' x-placement='bottom-end' style='position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(53px, 41px, 0px);'>
  <li class='dropdown-item full-card'> <a href='/transaction/edit/{$id}'> <i class='feather icon-edit'></i> Edit</a></li>
+ <li class='dropdown-item full-card'> <a href='/transaction/show/{$id}'> <i class='feather icon-eye'></i> View</a></li>
 <li class='dropdown-item full-card'> <a  href='/transaction/destroy/{$id}'> <i class='feather icon-trash-2'></i> Remove</a></li>
-</ul></div>",
+</ul></div>";
+            }else{
+                $action = "<div class='btn-group card-option'>
+                            <button type='button' class='btn btn-notify' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                <i class='fas fa-ellipsis-v'></i>
+                            </button>
+                            <ul class='list-unstyled card-option dropdown-menu dropdown-menu-right' x-placement='bottom-end' style='position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(53px, 41px, 0px);'>
+ <li class='dropdown-item full-card'> <a href='/transaction/show/{$id}'> <i class='feather icon-eye'></i> View</a></li>
+</ul></div>";
+            }
+
+            $records["data"][] = array(
+                $id,
+                $name =  $post->name,
+                $mobile =  $post->mobile,
+                $packageName = $post->packageName,
+                $username =  $post->username,
+                $zone =  $post->zone,
+                $monthlyBill = $post->monthlyBill,
+                $paymentMonth,
+                $amount = $post->amount,
+                $outstanding = $post->outstanding,
+                $process = $post->process,
+                $action
+
             );
         }
 

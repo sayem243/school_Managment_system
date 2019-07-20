@@ -20,6 +20,9 @@ class Customer extends Model
         'connectionStatus',
         'assignBandWidth',
         'connectionDate',
+        'assignBandWidth',
+        'monthlyBill',
+        'outstanding',
         'zone_id',
         'package_id'
     ];

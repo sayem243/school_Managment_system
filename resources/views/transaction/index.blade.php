@@ -8,11 +8,11 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Internet Package</h5>
+                    <h5>Billing</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                            <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
-                            <a href="{{ route('internet.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            <a  href="{{ route('transaction.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Billing</a>
+                            <a href="{{ route('transaction.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                         </div>
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -43,15 +43,16 @@
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">S/N</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Youtube</th>
-                            <th scope="col">Bdix</th>
-                            <th scope="col">Akamai</th>
-                            <th scope="col">Facebook</th>
-                            <th scope="col">FTP</th>
-                            <th scope="col">Internet</th>
-                            <th scope="col">Description</th>
+                            <th scope="col">Customer Name</th>
+                            <th scope="col">Mobile</th>
+                            <th scope="col">Package</th>
+                            <th scope="col">Collection</th>
+                            <th scope="col">Zone</th>
+                            <th scope="col">Monthly</th>
+                            <th scope="col">Month</th>
+                            <th scope="col">Receive</th>
+                            <th scope="col">Balance</th>
+                            <th scope="col">Process</th>
                             <th scope="col text-center"><i class="feather icon-settings"></i></th>
                         </tr>
                         </thead>
@@ -66,5 +67,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset("assets/datatable/internet.js") }}" ></script>
+    <script src="{{ asset("assets/datatable/transaction.js") }}" ></script>
 @endsection

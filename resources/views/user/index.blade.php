@@ -1,3 +1,4 @@
+
 @extends('layout')
 @section('css')
 
@@ -7,12 +8,11 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Customers</h5>
+                    <h5>Manager User</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                            <a  href="{{ route('customer.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Customer</a>
-                            <a href="{{ route('customer.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
-                            <a href="{{ route('transaction.create') }}" class="btn btn-sm  btn-danger"><i class="fas fa-money-bill"></i>Payment Receive</a>
+                            <a  href="{{ route('user.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Users</a>
+                            <a href="{{ route('user.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add Users</a>
                         </div>
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -44,20 +44,26 @@
                         <tr>
                             <th scope="col">S/N</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Mobile</th>
-                            <th scope="col">Zone</th>
-                            <th scope="col">Package</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Mode</th>
-                            <th scope="col">Bandwidth</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Monthly</th>
-                            <th scope="col">Outstanding</th>
+                            <th scope="col">User Name</th>
+                            <th scope="col">Mobile no</th>
+                            <th scope="col">Enable</th>
                             <th scope="col text-center"><i class="feather icon-settings"></i></th>
                         </tr>
                         </thead>
                         <tbody>
+                        @php ($i = 1)
+                        @foreach($users as $user)
+
+                            <tr>
+                                <td scope="col">{{ $i }}</td>
+                                <td scope="col">{{ $user['name'] }}</td>
+                                <td scope="col">{{ $user['username'] }}</td>
+                                <td scope="col">{{ $user['mobile'] }}</td>
+                                <td scope="col">@if($user['enable']) Yes @else No @endif</td>
+                                <td scope="col text-center"></td>
+                            </tr>
+                            @php ( ++$i )
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -67,6 +73,3 @@
 
 @endsection
 
-@section('js')
-    <script src="{{ asset("assets/datatable/customer.js") }}" ></script>
-@endsection

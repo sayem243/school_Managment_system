@@ -15,9 +15,9 @@ class Transaction extends Model
         'process',
         'paymentMethod',
         'paymentMobile',
-        'connectionMode',
+        'month',
         'transactionId',
-        'connectionMode',
+        'year',
         'remark',
 
     ];

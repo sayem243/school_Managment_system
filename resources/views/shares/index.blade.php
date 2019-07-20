@@ -1,215 +1,96 @@
 
-@extends('layout')
-@section('css')
+            @extends('layout')
 
-@endsection
-@section('main')
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Hello card</h5>
-                </div>
-                <div class="card-block">
-                    <div class="alert alert-secondary violet" role="alert">
-                        <div class="alert-icon"><i class="far fa-bell" style="font-size: 30px;"></i></div>
-                        <div class="alert-text">
-                            Product set up is critical for an easy-to-manage store. Take the time to add great types, tags, brand information, and descriptions now. It will pay off in the future when you're selling, reporting, or managing your business.
+            @section('css')
+                <link rel="stylesheet" href="//cdn.jsdelivr.net/sweetalert2/6.3.8/sweetalert2.min.css">
+                <style>
+                    input, th span {
+                        cursor: pointer;
+                    }
+                </style>
+            @endsection
+            @section('main')
+                <section class="content-header box box-info">
+                   {{-- <h1>
+                        Buttons
+                        <small>Control panel</small>
+                    </h1>
+                    <a href="#" class="btn btn-block mini btn bg-purple margin right pull-right"><i class="fa fa-dashboard"></i> Home</a>
+--}}
+                    <div class="box-header">
+                        <h1 class="box-title">Customers
+                            <small>Customer Information Details</small>
+                        </h1>
+                        <!-- tools box -->
+                        <div class="pull-right box-tools">
+                            <button type="button" class="btn bg-purple btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                                <i class="fa fa-sign-out"></i> Create New</button>
+                            <button type="button" class="btn btn-danger btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
+                                <i class="fa fa-th-list"></i></button>
                         </div>
+                        <!-- /. tools -->
                     </div>
-                    <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                    </p>
+                </section>
+                <section class="content">
 
-                </div>
-            </div>
-        </div>
-    </div>
-     <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Customers</h5>
-                    <div class="card-header-right">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
-                            <button type="button" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Customer</button>
-                            <button type="button" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</button>
-                        </div>
-                        <div class="btn-group card-option">
-                            <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v"></i>
-                            </button>
-                            <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(53px, 41px, 0px);">
+                    <div class="callout callout-info">
+                        <h4>Notification!</h4>
+                        <ul>
+                            <li>Instructions for how to use modals are available on the</li>
+                            <li>Instructions for how to use modals are available on the</li>
+                            <li>Instructions for how to use modals are available on the</li>
+                            <li>Instructions for how to use modals are available on the</li>
+                        </ul>
 
-                                <li class="dropdown-item full-card">
-
-                                    <a id="excelBtn" class="dropdown-item" href="javascript:"> <i class="far fa-file-excel"></i> Excel</a></li>
-                                <li class="dropdown-item full-card">
-                                    <a id="pdfBtn" class="dropdown-item" href="javascript:"> <i class="far fa-file-pdf"></i> PDF</a></li>
-                                <li class="dropdown-item full-card">
-                                <a id="printBtn" class="dropdown-item" href="javascript:"> <i class="fa fa-print" aria-hidden="true"></i> Print</a>
-                                </li>
-                                <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
-                                <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
-                                <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
-
-                            </ul>
-                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
 
-                <div class="card-block">
-                    <table class="table table-striped table-bordered" style="width: 100%">
-                        <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                            <th scope="col">Handle</th>
-                            <th scope="col">Handle</th>
-                            <th scope="col">Handle</th>
-                            <th scope="col">Handle</th>
-                            <th scope="col">Handle</th>
-                            <th scope="col">Handle</th>
-                            <th scope="col text-center"><i class="feather icon-settings"></i></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+                                <div class="box-body table-responsive">
 
-@endsection
+                                    @if(session()->get('success'))
+                                        <div class="alert alert-success">
+                                            {{ session()->get('success') }}
+                                        </div><br />
+                                    @endif
+                                    <table id="users" class="table table-striped table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <td>ID</td>
+                                            <td>Stock Name</td>
+                                            <td>Stock Price</td>
+                                            <td>Stock Quantity</td>
+                                            <td colspan="2">Action</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($shares as $share)
+                                            <tr>
+                                                <td>{{$share->id}}</td>
+                                                <td>{{$share->share_name}}</td>
+                                                <td>{{$share->share_price}}</td>
+                                                <td>{{$share->share_qty}}</td>
+                                                <td><a href="{{ route('shares.edit',$share->id)}}" class="btn btn-primary">Edit</a></td>
+                                                <td><a href="{{ route('shares.destroy',$share->id)}}" class="btn btn-danger">Delete</a></td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
 
-@section('js')
-    <script src="{{ asset("assets/datatable/shares.js") }}" ></script>
+                            </div>
+                            <!-- /.box -->
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </section>
+
+                <!-- /.row -->
+
+            @endsection
+
+            @section('js')
+                <script src="{{ asset('adminlte/js/back.js') }}"></script>
+
 @endsection
