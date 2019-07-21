@@ -52,10 +52,10 @@ class CustomerController extends Controller
     {
         $packages = InternetPackage::all();
         $locations = Location::all();
-        $connectionStatus = array("Create","Active","Hold","Delete");
+        $connectionStatus = array("Create","Active","Hold","In-active");
         $connectionModes = array("Home","Mess","Office","Shop","Restaurant","Jim","Coaching","Institution","Government Office","Diagnostic","Hospital","Medicine");
         $bandwidthTypes = array("Shared","Dedicated","Dedicated + IP");
-        $assignBandwidth = array("1.0 Mbps","1.0 Mbps","1.5 Mbps","2.0 Mbps","2.5 Mbps","3.0 Mbps","3.5 Mbps","4.0 Mbps","4.5 Mbps","5.0 Mbps","5.5 Mbps","1.0 Mbps");
+        $assignBandwidth = array("512 Kb","1.0 Mbps","1.5 Mbps","2.0 Mbps","2.5 Mbps","3.0 Mbps","3.5 Mbps","4.0 Mbps","4.5 Mbps","5.0 Mbps","5.5 Mbps","1.0 Mbps");
         return view('customer.create',['packages' => $packages,'locations' => $locations,'connectionStatus' => $connectionStatus,'bandwidthTypes' => $bandwidthTypes,'connectionModes' => $connectionModes,'assignBandwidths' => $assignBandwidth]);
     }
 

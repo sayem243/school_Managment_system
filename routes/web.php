@@ -84,3 +84,17 @@ Route::name('user.create')->get('user/create', 'UserController@create');
 Route::name('user.edit')->get('user/edit/{id}', 'UserController@edit');
 Route::name('user.update')->put('user/update/{id}', 'UserController@update');
 Route::name('user.show')->get('user/show/{id}', 'UserController@show');
+
+
+/* ================== Users =====================*/
+
+Route::name('customer.import')->get('customer/import', 'CustomerImportController@index');
+Route::name('customer.importForm')->get('customer/import-form', 'CustomerImportController@create');
+Route::name('customer.importForm')->post('customer/import-form', 'CustomerImportController@store');
+Route::name('customer.importFile')->get('customer/import-file/{id}', 'CustomerImportController@importFile');
+Route::name('customer.importDelete')->get('customer/import-delete/{id}', 'CustomerImportController@destroy');
+
+/* ================== Users =====================*/
+
+Route::name('report.overview')->get('overview', 'UserController@index');
+Route::name('report.monthlySales')->post('user/monthly-sales', 'UserController@store');

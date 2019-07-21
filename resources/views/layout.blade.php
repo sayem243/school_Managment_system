@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <!--
-Template Name: Terminalbd - Responsive Admin Dashboard Template build with Twitter Bootstrap 4
+Template Name: Billing Software
 Author: Terminalbd
 Website: http://www.terminalbd.com/
 Contact: support@terminalbd.com
 Follow: www.twitter.com/terminalbd
 Dribbble: www.dribbble.com/terminalbd
 Like: www.facebook.com/terminalbd
-Purchase: http://themeforest.net/item/terminalbd-responsive-admin-dashboard-template/4021469?ref=terminalbd
-Renew Support: http://themeforest.net/item/terminalbd-responsive-admin-dashboard-template/4021469?ref=terminalbd
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+
 -->
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <!-- start::Head -->
@@ -86,6 +84,8 @@ License: You must have a valid license purchased only from themeforest(the above
                     <ul class="pcoded-submenu">
                         <li class=""><a href="{{ route('customer.index') }}" class="" >Customer</a></li>
                         <li class=""><a href="{{ route('customer.create') }}" class="" >New  Customer</a></li>
+                        <li class=""><a href="{{ route('customer.import') }}" class="" >Customer Import</a></li>
+                        <li class=""><a href="{{ route('customer.importForm') }}" class="" >New Import</a></li>
                     </ul>
                 </li>
                 <li data-username="" class="nav-item pcoded-hasmenu">
@@ -109,6 +109,13 @@ License: You must have a valid license purchased only from themeforest(the above
                         <li class=""><a href="{{ route('user.create') }}" class="" >New  User</a></li>
                     </ul>
                 </li>
+                <li data-username="" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Reports</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="{{ route('user.index') }}" class="" >Users</a></li>
+                        <li class=""><a href="{{ route('user.create') }}" class="" >New  User</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -123,7 +130,7 @@ License: You must have a valid license purchased only from themeforest(the above
             <div class="b-bg">
                 <i class="feather icon-trending-up"></i>
             </div>
-            <span class="b-title">Datta Able</span>
+            <span class="b-title"></span>
         </a>
     </div>
     <a class="mobile-menu" id="mobile-header" href="javascript:">
