@@ -163,7 +163,7 @@ class CustomerController extends Controller
     public function dataTable(Request $request)
     {
 
-        $iTotalRecords =  DB::table('customers')->count();;
+        $iTotalRecords =  DB::table('customers')->count();
         $iDisplayLength = intval($_REQUEST['length']);
         $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
         $iDisplayStart = intval($_REQUEST['start']);
@@ -197,6 +197,7 @@ class CustomerController extends Controller
                 $connectionMode     = $post->connectionMode,
                 $assignBandwidth    = $post->assignBandWidth,
                 $connectionStatus   = $post->connectionStatus,
+                $connectionDate     = date('d-m-Y',strtotime($post->connectionDate)),
                 $monthlyBill            = $post->monthlyBill,
                 $outstanding            = $post->outstanding,
                 "<div class='btn-group card-option'><button type='button' class='btn btn-notify' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-ellipsis-v'></i></button><ul class='list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right' x-placement='bottom-end'>

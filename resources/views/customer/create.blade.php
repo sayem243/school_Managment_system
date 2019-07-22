@@ -73,12 +73,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-form-label" for="username">Customer User Name <span class="required">*</span></label>
+                                        <label class="col-form-label" for="username">Customer UserID <span class="required">*</span></label>
                                         <div class="col-form-label">
                                             <input type="text" class="form-control" name="username" id="username" aria-describedby="validationTooltipUsernamePrepend" required />
-                                            <span class="help-block">Customer need unique user name</span>
+                                            <span class="help-block">Customer need unique user id</span>
                                             <div class="invalid-tooltip">
-                                                Please provide a valid customer user name.
+                                                Please provide a valid customer user id.
                                             </div>
                                         </div>
                                     </div>

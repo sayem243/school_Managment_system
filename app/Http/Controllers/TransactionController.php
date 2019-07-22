@@ -235,8 +235,6 @@ class TransactionController extends Controller
 
         $data = $request->all();
 
-        $posts = Transaction::all();
-
         $iTotalRecords =  DB::table('transactions')->count();
         $iDisplayLength = intval($_REQUEST['length']);
         $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;

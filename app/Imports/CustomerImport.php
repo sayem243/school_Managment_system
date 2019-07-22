@@ -19,24 +19,24 @@ class CustomerImport implements ToModel
     {
         if($row[0] != "Zone"){
             $zoneId = $this->getZoneId($row[0]);
-            $packageId = $this->getPackageId($row[1]);
+            $package = $this->getPackageId($row[1]);
             $status = $this->getConnectionStatus($row[6]);
             $connectionDate = $this->getConnectionDate($row[10]);
             return new Customer([
                 'zoneName'          => $row[0],
                 'package'           => $row[1],
                 'name'              => $row[2],
-                'mobile'            => $row[3],
-                'address'           => $row[4],
+                'address'           => $row[3],
+                'mobile'            => $row[4],
                 'username'          => $row[5],
                 'connectionStatus'  => $status,
                 'assignBandWidth'   => $row[7],
                 'bandWidth'         => $row[8],
                 'connectionMode'    => $row[9],
                 'connectionDate'    => $connectionDate,
-                'monthlyBill'       => $row[11],
-                'zone_d'            => $zoneId,
-                'package_d'         => $packageId
+                'monthlyBill'       => $package->price,
+                'zone_id'           => $zoneId,
+                'package_id'        => $package->id
             ]);
         }
 
@@ -58,15 +58,17 @@ class CustomerImport implements ToModel
 
     private function getPackageId($package)
     {
-        $internet = DB::table('internet_package')
-            ->select('id')
+        $internet = DB::table('internet_packages')
+            ->select('id','price')
             ->where('name', '=', $package)
             ->first();
         if($internet){
-            return $internet->id;
+            return $internet;
         }
         return false;
     }
+
+
 
     private function getConnectionDate($connectionDate){
         if($connectionDate){

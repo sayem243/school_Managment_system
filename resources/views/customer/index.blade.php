@@ -52,6 +52,7 @@
                             <th scope="col">Mode</th>
                             <th scope="col">Bandwidth</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Connected</th>
                             <th scope="col">Monthly</th>
                             <th scope="col">Outstanding</th>
                             <th scope="col text-center"><i class="feather icon-settings"></i></th>

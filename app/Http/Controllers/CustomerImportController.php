@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CustomerExport;
 use App\Model\CustomerImport;
 use App\Model\InternetPackage;
 use Illuminate\Http\JsonResponse;
@@ -97,13 +98,31 @@ class CustomerImportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function exportFile($id)
+    {
+        $post = CustomerImport::find($id);
+        $file = $post->file;
+        $source = public_path("/uploads/{$file}");
+        Excel::import(new CustomerExport(), $source);
+        return redirect('/customer/import')->with('success', 'Customer export has been success');
+    }
+
+
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function importFile($id)
     {
         $post = CustomerImport::find($id);
         $file = $post->file;
         $source = public_path("/uploads/{$file}");
         Excel::import(new \App\Imports\CustomerImport(), $source);
-        exit;
+        return redirect('/customer/import')->with('success', 'Customer import has been success');
     }
 
 

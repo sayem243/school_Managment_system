@@ -28,6 +28,8 @@ class Customer extends Model
         'receivable',
         'payment',
         'paidYear',
+        'zoneName',
+        'package',
         'paidMonth'
     ];
 

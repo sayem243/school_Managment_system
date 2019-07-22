@@ -3,10 +3,13 @@ $(document).ready(function () {
     var table= $('.table').DataTable( {
         "processing": true,
         "serverSide": true,
-        "paging": false,
-        "info":     false,
-        //"ordering": false,
         "bStateSave": true, // save datatable state(pagination, sort, etc) in cookie.
+
+        "lengthMenu": [
+            [20, 50, 100, 150, -1],
+            [20, 50, 100, 150, "All"] // change per page values here
+        ],
+        "pageLength": 20, // default record count per page
         "ajax": {
             "type"   : "POST",
             data: {_token: CSRF_TOKEN},
@@ -14,19 +17,16 @@ $(document).ready(function () {
         },
 
         "order": [
-            [1, "asc"]
+            [0, "asc"]
         ],// set first column as a default sort by asc
         "columnDefs": [ {
-            "targets": 4,
+            "targets": 11,
             "orderable": false
-        },{
+        },
+            {
                 "targets": 0,
                 "orderable": false
-        },{
-            "targets": 3,
-            "orderable": false
-        }
-        ],
+            }],
         "buttons": [
             {
                 extend: 'collection',
