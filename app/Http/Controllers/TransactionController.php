@@ -165,7 +165,7 @@ class TransactionController extends Controller
             $this->repository->billGenerate($post);
             return redirect('/transaction')->with('success', 'Bill generation has been generated Successfully');
         }
-        return view('transaction.index');
+        return redirect('/transaction/generate')->with('warning', 'This zone already bill generated');
     }
 
 
