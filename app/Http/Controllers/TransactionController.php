@@ -148,17 +148,23 @@ class TransactionController extends Controller
         $year = date("y");
         $time = strtotime(date("d-m-Y"));
         $month = date("F", strtotime("-1 month", $time));
+        $zone = $request->get('zone_id');
 
-        $post = new BillGenerate([
-            'zone_id' => $request->get('zone_id'),
-            'package_id'=> $request->get('package_id'),
-            'collection_id'=> $request->get('collection_id'),
-            'billMonth' => $month,
-            'billYear' => $year,
-        ]);
-        $post->save();
-        $this->repository->billGenerate($post);
-        exit;
+        $exist = DB::table('bill_generates')
+            ->where(array('zone_id'=> $zone,'billMonth'=>$month,'billYear'=>$year))
+            ->first();
+        if(empty($exist)){
+            $post = new BillGenerate([
+                'zone_id' => $request->get('zone_id'),
+                'package_id'=> $request->get('package_id'),
+                'collection_id'=> $request->get('collection_id'),
+                'billMonth' => $month,
+                'billYear' => $year,
+            ]);
+            $post->save();
+            $this->repository->billGenerate($post);
+            return redirect('/transaction')->with('success', 'Bill generation has been generated Successfully');
+        }
         return view('transaction.index');
     }
 

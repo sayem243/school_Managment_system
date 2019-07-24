@@ -12,6 +12,7 @@
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                             <a  href="{{ route('transaction.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Billing</a>
+                            <a  href="{{ route('transaction.generate') }}" class="btn btn-sm orange-bg white-font"><i class="fa fa-refresh"></i>Bill Generate</a>
                             <a href="{{ route('transaction.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                         </div>
                         <div class="btn-group card-option">

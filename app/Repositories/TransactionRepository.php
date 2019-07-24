@@ -81,6 +81,45 @@ class TransactionRepository
 
     }
 
+    public function todayCollection()
+    {
+        $startDate = date("Y-m-d 00:00:00");
+        $endDate = date("Y-m-d 23:59:59");
+        $customerCount = DB::table('transactions')
+            ->select( DB::raw('SUM(receivable) as receivable'), DB::raw('SUM(amount) as amount'),DB::raw('count(*) as totalCustomer'))
+            ->whereBetween('transactions.updated_at', [$startDate,$endDate])
+            ->first();
+        return $customerCount;
+
+    }
+
+    public function monthlyCollection()
+    {
+        $startDate = date("Y-m-01 00:00:00");
+        $endDate = date("Y-m-t 23:59:59");
+        $customerCount = DB::table('transactions')
+            ->select( DB::raw('SUM(receivable) as receivable'), DB::raw('SUM(amount) as amount'),DB::raw('count(*) as totalCustomer'))
+            ->whereBetween('transactions.updated_at', [$startDate,$endDate])
+            ->first();
+        return $customerCount;
+
+    }
+
+    public function zoneBaseCustomerOverview()
+    {
+        $startDate = date("Y-m-01 00:00:00");
+        $endDate = date("Y-m-t 23:59:59");
+        $customerCount = DB::table('customers')
+            ->join('locations', 'customers.zone_id', '=', 'locations.id')
+            ->select('connectionStatus','locations.name as location' , DB::raw('count(*) as total'))
+            ->groupBy('connectionStatus','locations.id')
+            ->whereBetween('customers.updated_at', [$startDate,$endDate])
+            ->get();
+        return $customerCount;
+
+    }
+
+
 
 
 }
