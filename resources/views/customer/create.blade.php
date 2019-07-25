@@ -49,7 +49,7 @@
                                     <div class="form-group">
                                         <label class="col-form-label" for="package">Internet Package <span class="required">*</span></label>
                                         <div class="col-form-label">
-                                            <select class="form-control" name="package" id="package" aria-describedby="validationTooltipPackagePrepend" required>
+                                            <select class="form-control" name="package_id" id="package_id" aria-describedby="validationTooltipPackagePrepend" required>
                                                 <option value=""> -Choose a internet package- </option>
                                                 @foreach($packages as $package)
                                                     <option value="{{ $package->id }}">{{ $package->name }}</option>
@@ -115,7 +115,7 @@
                                     <div class="form-group">
                                         <label class="col-form-label" for="thana">Zone Name<span class="required">*</span></label>
                                         <div class="col-form-label">
-                                            <select class="form-control" name="zone" id="zone" aria-describedby="validationTooltipPackagePrepend" required>
+                                            <select class="form-control" name="zone_id" id="zone_id" aria-describedby="validationTooltipPackagePrepend" required>
                                                 <option value=""> -Choose a zone name - </option>
                                                 @foreach($locations as $location)
                                                     @if('Zone' == $location->location_type)
@@ -154,7 +154,7 @@
                                         <label class="col-form-label" for="assignBandwidth">Assign Bandwidth
                                         </label>
                                         <div class="col-form-label">
-                                            <select class="form-control" name="assignBandwidth" id="assignBandwidth" >
+                                            <select class="form-control" name="assignBandWidth" id="assignBandWidth" >
                                                 <option value=""> -Choose a assign bandwidth - </option>
                                                 @foreach($assignBandwidths as $bandwidth)
                                                     <option value="{{ $bandwidth }}">{{ $bandwidth }}</option>
@@ -188,9 +188,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-form-label" for="connectionMode">Outstanding</label>
+                                        <label class="col-form-label" for="connectionMode">Opening Balance</label>
                                         <div class="col-form-label">
-                                            <input type="text" class="form-control" name="outstanding" id="outstanding" />
+                                            <input type="text" class="form-control" name="openingBalance" id="openingBalance" />
                                         </div>
                                     </div>
                                 </div>

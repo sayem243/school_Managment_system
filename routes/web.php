@@ -31,7 +31,7 @@ Route::name('customer.index')->get('customer', 'CustomerController@index');
 Route::name('customer.store')->post('customer/store', 'CustomerController@store');
 Route::name('customer.create')->get('customer/create', 'CustomerController@create');
 Route::name('customer.edit')->get('customer/edit/{id}', 'CustomerController@edit');
-Route::name('customer.update')->put('customer/update/{id}', 'CustomerController@update');
+Route::name('customer.update')->post('customer/update/{id}', 'CustomerController@update');
 Route::name('customer.show')->get('customer/show/{id}', 'CustomerController@show');
 Route::name('customer.destroy')->get('customer/destroy/{id}', 'CustomerController@destroy');
 Route::post('/customer/dataTable', 'CustomerController@dataTable');

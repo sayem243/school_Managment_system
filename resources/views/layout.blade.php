@@ -150,8 +150,8 @@ Like: www.facebook.com/terminalbd
                     <div class="dropdown-menu dropdown-menu-right profile-notification">
                         <div class="pro-head">
                             @if (Route::has('login'))
-                            <img src="{{ asset("assets/images/user/avatar-1.jpg") }}" class="img-radius" alt="User-Profile-Image">
-                            <span>John Doe</span>
+                            <img src="{{ asset("assets/images/user/avatar-2.jpg") }}" class="img-radius" alt="User-Profile-Image">
+                            <span>{{ Auth::user()->name }}</span>
                             <a href="{{ route('logout') }}" class="dud-logout" title="Logout">
                                 <i class="feather icon-log-out"></i>
                             </a>

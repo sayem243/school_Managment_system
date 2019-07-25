@@ -89,7 +89,7 @@
 
                                         @foreach($locationBaseCustomers as $loc)
                                             <tr class="unread">
-                                                <td><img class="rounded-circle" style="width:40px;" src="assets/images/user/avatar-2.jpg" alt="activity-user"></td>
+                                                <td><i class="feather icon-map-pin f-30 text-c-blue"></i></td>
                                                 <td>
                                                     <h6 class="mb-1">{{ $loc->location }}</h6>
                                                 </td>

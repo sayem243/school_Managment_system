@@ -23,6 +23,7 @@ class Customer extends Model
         'assignBandWidth',
         'monthlyBill',
         'outstanding',
+        'openingBalance',
         'zone_id',
         'package_id',
         'receivable',

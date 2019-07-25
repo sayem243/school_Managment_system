@@ -52,11 +52,12 @@ class CustomerController extends Controller
     {
         $packages = InternetPackage::all();
         $locations = Location::all();
+
         $connectionStatus = array("Create","Active","Hold","In-active");
         $connectionModes = array("Home","Mess","Office","Shop","Restaurant","Jim","Coaching","Institution","Government Office","Diagnostic","Hospital","Medicine");
         $bandwidthTypes = array("Shared","Dedicated","Dedicated + IP");
         $assignBandwidth = array("512 Kb","1.0 Mbps","1.5 Mbps","2.0 Mbps","2.5 Mbps","3.0 Mbps","3.5 Mbps","4.0 Mbps","4.5 Mbps","5.0 Mbps","5.5 Mbps","1.0 Mbps");
-        return view('customer.create',['packages' => $packages,'locations' => $locations,'connectionStatus' => $connectionStatus,'bandwidthTypes' => $bandwidthTypes,'connectionModes' => $connectionModes,'assignBandwidths' => $assignBandwidth]);
+        return view('customer.create',['customer' => '','packages' => $packages,'locations' => $locations,'connectionStatus' => $connectionStatus,'bandwidthTypes' => $bandwidthTypes,'connectionModes' => $connectionModes,'assignBandwidths' => $assignBandwidth]);
     }
 
     /**
@@ -70,13 +71,15 @@ class CustomerController extends Controller
         $request->validate([
             'name'=>'required',
             'mobile'=> 'required',
-            'address'=> 'required'
+            'address'=> 'required',
+            'package_id' => 'required|integer',
+            'zone_id' => 'required|integer'
         ]);
         $post = new Customer([
             'name'          => $request->get('name'),
             'mobile'        => $request->get('mobile'),
             'address'       => $request->get('address'),
-            'package_id'    => $request->get('package'),
+            'package_id'    => $request->get('package_id'),
             'username'    => $request->get('username'),
             'connectionStatus'    => $request->get('connectionStatus'),
             'connectionMode'    => $request->get('$connectionMode'),
@@ -84,13 +87,14 @@ class CustomerController extends Controller
             'assignBandWidth'    => $request->get('assignBandWidth'),
             'connectionDate'    => $request->get('connectionDate'),
             'monthlyBill'    => $request->get('monthlyBill'),
-            'outstanding'    => $request->get('outstanding'),
-            'zone_id'    => $request->get('zone'),
+            'outstanding'    => $request->get('openingBalance'),
+            'openingBalance'    => $request->get('openingBalance'),
+            'zone_id'    => $request->get('zone_id'),
             'email'         => $request->get('email'),
 
         ]);
         $post->save();
-        return redirect('/customer')->with('success', 'Customer has been added');
+        return redirect('/customer')->with('success', 'Customer has been added successfully');
 
     }
 
@@ -113,9 +117,16 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $post = Customer::find($id);
+        $customer = Customer::find($id);
         $packages = InternetPackage::all();
-        return view('customer.edit', compact('post','packages'));
+        $locations = Location::all();
+
+        $connectionStatus = array("Create","Active","Hold","In-active");
+        $connectionModes = array("Home","Mess","Office","Shop","Restaurant","Jim","Coaching","Institution","Government Office","Diagnostic","Hospital","Medicine");
+        $bandwidthTypes = array("Shared","Dedicated","Dedicated + IP");
+        $assignBandwidth = array("512 Kb","1.0 Mbps","1.5 Mbps","2.0 Mbps","2.5 Mbps","3.0 Mbps","3.5 Mbps","4.0 Mbps","4.5 Mbps","5.0 Mbps","5.5 Mbps","1.0 Mbps");
+        return view('customer.edit',['customer' => $customer,'packages' => $packages,'locations' => $locations,'connectionStatus' => $connectionStatus,'bandwidthTypes' => $bandwidthTypes,'connectionModes' => $connectionModes,'assignBandwidths' => $assignBandwidth]);
+
     }
 
     /**
@@ -131,18 +142,27 @@ class CustomerController extends Controller
             'name'=>'required',
             'mobile'=> 'required',
             'address' => 'required',
-            'package_id' => 'required|integer'
+            'package_id' => 'required|integer',
+            'zone_id' => 'required|integer'
         ]);
-
         $post = Customer::find($id);
         $post->name = $request->get('name');
+        $post->username = $request->get('username');
         $post->mobile = $request->get('mobile');
         $post->address = $request->get('address');
         $post->email = $request->get('email');
-        $post->package_id = $request->get('package');
+        $post->connectionStatus = $request->get('connectionStatus');
+        $post->connectionMode = $request->get('connectionMode');
+        $post->bandWidth = $request->get('bandWidth');
+        $post->assignBandWidth = $request->get('assignBandWidth');
+        $post->connectionDate = $request->get('connectionDate');
+        $post->monthlyBill = $request->get('monthlyBill');
+        $post->openingBalance = $request->get('openingBalance');
+        $post->zone_id = $request->get('zone_id');
+        $post->package_id = $request->get('package_id');
         $post->save();
 
-        return redirect('/customer')->with('success', 'Customer has been updated');
+        return redirect('/customer/edit/'.$id)->with('success', 'Customer has been updated successfully');
 
     }
 
