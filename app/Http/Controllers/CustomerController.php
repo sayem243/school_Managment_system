@@ -277,14 +277,14 @@ class CustomerController extends Controller
         $rows->join('locations', 'customers.zone_id', '=', 'locations.id');
         $rows->leftJoin('settings as mode', 'customers.connectionMode', '=', 'mode.id');
         $rows->leftJoin('settings as bandWidth', 'customers.bandWidth', '=', 'bandWidth.id');
-        $rows->leftJoin('settings as connectionStatus', 'customers.connectionStatus', '=', 'connectionStatus.id');
+        $rows->leftJoin('settings as status', 'customers.connectionStatus', '=', 'status.id');
         $rows->leftJoin('settings as assignBandWidth', 'customers.assignBandWidth', '=', 'assignBandWidth.id');
-        $rows->select('customers.*', 'internet_packages.name as package','internet_packages.price as amount');
+        $rows->select('customers.name as name','customers.mobile as mobile','customers.username as username','customers.connectionDate as connectionDate','customers.outstanding as outstanding', 'internet_packages.name as package','internet_packages.price as amount');
         $rows->addSelect('locations.name as zone');
         $rows->addSelect('mode.name as connectionMode');
         $rows->addSelect('bandWidth.name as bandWidth');
         $rows->addSelect('assignBandWidth.name as assignBandWidth');
-        $rows->addSelect('connectionStatus.name as connectionStatus');
+        $rows->addSelect('status.name as connectionStatus');
         if(isset($query['customerName'])){
             $name = $query['customerName'];
             $rows->where('customers.name','like',"{$name}%");
