@@ -35,7 +35,7 @@ Like: www.facebook.com/terminalbd
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}" type="text/css" >
     <!-- Bootstrap & Jquery Base javascript -->
     <script src="https://code.jquery.com/jquery-3.3.1.js" ></script>
-    <script src="{{ asset('assets/js/vendor-all.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js" ></script>
     <script src="{{ asset("assets/jquery/popper.min.js") }}" ></script>
     <script src="{{ asset("assets/bootstrap/js/bootstrap.min.js") }}" ></script>
     <script src="{{ asset("assets/bootstrap/js/bootstrap.bundle.min.js") }}" ></script>
@@ -126,7 +126,7 @@ Like: www.facebook.com/terminalbd
 <header class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed header-purple">
     <div class="m-header">
         <a class="mobile-menu" id="mobile-collapse1" href="javascript:"><span></span></a>
-        <a href="index.html" class="b-brand">
+        <a href="/dashboard" class="b-brand">
             <div class="b-bg">
                 <i class="feather icon-trending-up"></i>
             </div>

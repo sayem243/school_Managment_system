@@ -133,8 +133,10 @@
                                         <div class="col-form-label">
                                             <select class="form-control" name="connectionStatus" id="connectionStatus" >
                                                 <option value=""> -Choose a connection status - </option>
-                                                @foreach($connectionStatus as $connection)
-                                                    <option value="{{ $connection }}">{{ $connection }}</option>
+                                                @foreach($settings as $setting)
+                                                    @if($setting->type ==='Status')
+                                                        <option value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -144,8 +146,10 @@
                                         <div class="col-form-label">
                                             <select class="form-control" name="bandWidth" id="bandWidth" >
                                                 <option value=""> -Choose a connection type - </option>
-                                                @foreach($bandwidthTypes as $type)
-                                                    <option value="{{ $type }}">{{ $type }}</option>
+                                                @foreach($settings as $setting)
+                                                    @if($setting->type ==='Bandwidth')
+                                                        <option value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -156,8 +160,10 @@
                                         <div class="col-form-label">
                                             <select class="form-control" name="assignBandWidth" id="assignBandWidth" >
                                                 <option value=""> -Choose a assign bandwidth - </option>
-                                                @foreach($assignBandwidths as $bandwidth)
-                                                    <option value="{{ $bandwidth }}">{{ $bandwidth }}</option>
+                                                @foreach($settings as $setting)
+                                                    @if($setting->type ==='Assign Bandwidth')
+                                                        <option value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -168,8 +174,10 @@
                                         <div class="col-form-label">
                                             <select class="form-control" name="connectionMode" id="connectionMode" >
                                                 <option value=""> -Choose a connection mode - </option>
-                                                @foreach($connectionModes as $mode)
-                                                    <option value="{{ $mode }}">{{ $mode }}</option>
+                                                @foreach($settings as $setting)
+                                                    @if($setting->type === 'Mode')
+                                                        <option value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>

@@ -39,12 +39,81 @@
                 </div>
 
                 <div class="card-block">
-                    <table class="table table-striped table-bordered" style="width: 100%">
-                        <thead class="thead-dark">
+                    <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
+                    <thead class="thead-dark">
+                    <tr role="row" class="filter">
+                        <td colspan="2">
+                            <input  type="text" class="form-control form-filter input-sm" name="customerName" id="customerName" placeholder="Name"> </td>
+
+                        </td>
+                        <td>
+                            <input type="text" class="form-control form-filter input-sm" placeholder="UserID" name="customerUser" id="customerUser"> </td>
+                        <td>
+                            <input type="text" class="form-control form-filter input-sm" placeholder="Mobile" name="customerMobile" id="customerMobile"> </td>
+                        <td>
+                           <select class="form-control" name="zoneId" id="zoneId">
+                               <option value=""> -Zone- </option>
+                               @foreach($locations as $location)
+                               <option value="{{ $location->id }}">{{ $location->name }}</option>
+                               @endforeach
+                           </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="package_id" id="package_id" aria-describedby="validationTooltipPackagePrepend" required>
+                                <option value=""> -Package- </option>
+                                @foreach($packages as $package)
+                                    <option value="{{ $package->id }}">{{ $package->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+
+                        <td>
+                            <select class="form-control" name="bandWidth" id="bandWidth" >
+                                <option value=""> -Type - </option>
+                                @foreach($settings as $setting)
+                                    @if($setting->type =='Bandwidth')
+                                        <option value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="connectionMode" id="connectionMode" >
+                                <option value=""> -Mode - </option>
+                                @foreach($settings as $setting)
+                                    @if($setting->type =='Mode')
+                                        <option value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
+
+                        <td>
+                            <select class="form-control" name="assignBandWidth" id="assignBandWidth" >
+                                <option value=""> -Band Width - </option>
+                                @foreach($settings as $setting)
+                                    @if($setting->type =='Assign Bandwidth')
+                                        <option value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="form-control" name="connectionStatus" id="connectionStatus" >
+                                <option value="">-Status-</option>
+                                @foreach($settings as $setting)
+                                    @if($setting->type =='Status')
+                                        <option value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </td>
+                        <td colspan="4"></td>
+                    </tr>
                         <tr>
                             <th scope="col">S/N</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Username</th>
+                            <th scope="col">UserID</th>
                             <th scope="col">Mobile</th>
                             <th scope="col">Zone</th>
                             <th scope="col">Package</th>
@@ -53,10 +122,10 @@
                             <th scope="col">Bandwidth</th>
                             <th scope="col">Status</th>
                             <th scope="col">Connected</th>
-                            <th scope="col">Monthly</th>
                             <th scope="col">Outstanding</th>
                             <th scope="col text-center"><i class="feather icon-settings"></i></th>
                         </tr>
+
                         </thead>
                         <tbody>
                         </tbody>

@@ -51,9 +51,10 @@ class CustomerRepository
         $startDate = date("Y-m-01 00:00:00");
         $endDate = date("Y-m-t 23:59:59");
         $customerCount = DB::table('customers')
-            ->select('connectionStatus', DB::raw('count(*) as totalCustomer'), DB::raw('SUM(monthlyBill) as total'))
+             ->leftJoin('settings as status', 'customers.connectionStatus', '=', 'status.id')
+            ->select('status.name  as connectionStatus', DB::raw('count(*) as totalCustomer'), DB::raw('SUM(monthlyBill) as total'))
             ->groupBy('connectionStatus')
-            ->whereBetween('updated_at', [$startDate,$endDate])
+            ->whereBetween('customers.updated_at', [$startDate,$endDate])
             ->get();
         return $customerCount;
 
@@ -82,8 +83,10 @@ class CustomerRepository
         $endDate = date("Y-m-t 23:59:59");
         $customerCount = DB::table('customers')
             ->join('locations', 'customers.zone_id', '=', 'locations.id')
+            ->join('settings as status', 'customers.connectionStatus', '=', 'status.id')
+
             ->select('locations.name as location' , DB::raw('count(*) as totalCustomer'))
-            ->where('connectionStatus','Active')
+            ->where('status.name','Active')
             ->whereBetween('customers.updated_at', [$startDate,$endDate])
             ->groupBy('locations.name')
             ->get();

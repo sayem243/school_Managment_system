@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\CustomerExport;
 use App\Model\CustomerImport;
 use App\Model\InternetPackage;
+use App\Repositories\CustomerHistoriesRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,11 +15,19 @@ class CustomerImportController extends Controller
 {
 
     /**
+     * The CustomerRepository instance.
+     *
+     * @var \App\Repositories\CustomerHistoriesRepository
+     */
+    public $historiesRepository;
+
+    /**
      * Create a new PostController instance.
      */
-    public function __construct()
+    public function __construct(CustomerHistoriesRepository $historiesRepository)
     {
         $this->middleware('auth');
+        $this->historiesRepository = $historiesRepository;
     }
 
     /**
@@ -104,6 +113,7 @@ class CustomerImportController extends Controller
         $file = $post->file;
         $source = public_path("/uploads/{$file}");
         Excel::import(new CustomerExport(), $source);
+
         return redirect('/customer/import')->with('success', 'Customer export has been success');
     }
 
@@ -122,6 +132,8 @@ class CustomerImportController extends Controller
         $file = $post->file;
         $source = public_path("/uploads/{$file}");
         Excel::import(new \App\Imports\CustomerImport(), $source);
+        $this->historiesRepository->insertImportCustomerHistory();
+        DB::table('customer_imports')->where('id',$id)->update([ 'process' => 'Imported']);
         return redirect('/customer/import')->with('success', 'Customer import has been success');
     }
 

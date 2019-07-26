@@ -134,8 +134,10 @@
                                         <div class="col-form-label">
                                             <select class="form-control" name="connectionStatus" id="connectionStatus" >
                                                 <option value=""> -Choose a connection status - </option>
-                                                @foreach($connectionStatus as $connection)
-                                                    <option {{ $customer->connectionStatus === $connection ? "selected=selected" : '' }} value="{{ $connection }}">{{ $connection }}</option>
+                                                @foreach($settings as $setting)
+                                                    @if($setting->type ==='Status')
+                                                        <option {{ $customer->connectionStatus === $setting->id ? "selected=selected" : '' }} value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -145,8 +147,10 @@
                                         <div class="col-form-label">
                                             <select class="form-control" name="bandWidth" id="bandWidth" >
                                                 <option value=""> -Choose a connection type - </option>
-                                                @foreach($bandwidthTypes as $type)
-                                                    <option {{ $customer->bandWidth === $type ? "selected=selected" : '' }} value="{{ $type }}">{{ $type }}</option>
+                                                @foreach($settings as $setting)
+                                                    @if($setting->type ==='Bandwidth')
+                                                        <option {{ $customer->connectionStatus === $setting->id ? "selected=selected" : '' }} value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -155,10 +159,12 @@
                                         <label class="col-form-label" for="assignBandwidth">Assign Bandwidth
                                         </label>
                                         <div class="col-form-label">
-                                            <select class="form-control" name="assignBandWidth" id="assignBandWidth" >
+                                            <select class="form-control" name="assignBandWi\dth" id="assignBandWidth" >
                                                 <option value=""> -Choose a assign bandwidth - </option>
-                                                @foreach($assignBandwidths as $bandwidth)
-                                                    <option {{ $customer->assignBandwidth === $bandwidth ? "selected=selected" : '' }} value="{{ $bandwidth }}">{{ $bandwidth }}</option>
+                                                @foreach($settings as $setting)
+                                                    @if($setting->type ==='Assign Bandwidth')
+                                                        <option {{ $customer->connectionStatus === $setting->id ? "selected=selected" : '' }} value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>
@@ -169,8 +175,10 @@
                                         <div class="col-form-label">
                                             <select class="form-control" name="connectionMode" id="connectionMode" >
                                                 <option value=""> -Choose a connection mode - </option>
-                                                @foreach($connectionModes as $mode)
-                                                    <option {{ $customer->connectionMode === $mode ? "selected=selected" : '' }} value="{{ $mode }}">{{ $mode }}</option>
+                                                @foreach($settings as $setting)
+                                                    @if($setting->type === 'Mode')
+                                                        <option {{ $customer->connectionStatus === $setting->id ? "selected=selected" : '' }} value="{{ $setting->id }}">{{ $setting->name }}</option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </div>

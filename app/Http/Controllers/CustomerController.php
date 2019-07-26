@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Model\Customer;
 use App\Model\InternetPackage;
 use App\Model\Location;
+use App\Model\Setting;
+use App\Repositories\CustomerHistoriesRepository;
 use App\Repositories\CustomerRepository;
+use App\Repositories\TransactionRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,13 +24,30 @@ class CustomerController extends Controller
      */
     public $repository;
 
+     /**
+     * The CustomerRepository instance.
+     *
+     * @var \App\Repositories\CustomerHistoriesRepository
+     */
+    public $historiesRepository;
+
+    /**
+     * The CustomerRepository instance.
+     *
+     * @var \App\Repositories\TransactionRepository
+     */
+    public $transactionRepository;
+
     /**
      * Create a new PostController instance.
      *
      * @param  \App\Repositories\CustomerRepository $repository
      */
-    public function __construct(CustomerRepository $repository)
+    public function __construct(CustomerRepository $repository , CustomerHistoriesRepository $historiesRepository, TransactionRepository $transactionRepository)
     {
+        $this->repository = $repository;
+        $this->historiesRepository = $historiesRepository;
+        $this->transactionRepository = $transactionRepository;
         $this->repository = $repository;
         $this->middleware('auth');
     }
@@ -40,7 +60,12 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        return view('customer.index');
+
+
+        $locations = Location::all();
+        $packages = InternetPackage::all();
+        $settings = Setting::all();
+        return view('customer.index',['packages' => $packages,'locations' => $locations,'settings' => $settings]);
     }
 
     /**
@@ -50,14 +75,11 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $packages = InternetPackage::all();
         $locations = Location::all();
+        $packages = InternetPackage::all();
+        $settings = Setting::all();
+        return view('customer.create',['packages' => $packages,'locations' => $locations,'settings' => $settings]);
 
-        $connectionStatus = array("Create","Active","Hold","In-active");
-        $connectionModes = array("Home","Mess","Office","Shop","Restaurant","Jim","Coaching","Institution","Government Office","Diagnostic","Hospital","Medicine");
-        $bandwidthTypes = array("Shared","Dedicated","Dedicated + IP");
-        $assignBandwidth = array("512 Kb","1.0 Mbps","1.5 Mbps","2.0 Mbps","2.5 Mbps","3.0 Mbps","3.5 Mbps","4.0 Mbps","4.5 Mbps","5.0 Mbps","5.5 Mbps","1.0 Mbps");
-        return view('customer.create',['customer' => '','packages' => $packages,'locations' => $locations,'connectionStatus' => $connectionStatus,'bandwidthTypes' => $bandwidthTypes,'connectionModes' => $connectionModes,'assignBandwidths' => $assignBandwidth]);
     }
 
     /**
@@ -76,24 +98,25 @@ class CustomerController extends Controller
             'zone_id' => 'required|integer'
         ]);
         $post = new Customer([
-            'name'          => $request->get('name'),
-            'mobile'        => $request->get('mobile'),
-            'address'       => $request->get('address'),
-            'package_id'    => $request->get('package_id'),
-            'username'    => $request->get('username'),
-            'connectionStatus'    => $request->get('connectionStatus'),
-            'connectionMode'    => $request->get('$connectionMode'),
-            'bandWidth'    => $request->get('bandWidth'),
-            'assignBandWidth'    => $request->get('assignBandWidth'),
-            'connectionDate'    => $request->get('connectionDate'),
-            'monthlyBill'    => $request->get('monthlyBill'),
-            'outstanding'    => $request->get('openingBalance'),
-            'openingBalance'    => $request->get('openingBalance'),
-            'zone_id'    => $request->get('zone_id'),
-            'email'         => $request->get('email'),
+            'name'                  => $request->get('name'),
+            'mobile'                => $request->get('mobile'),
+            'address'               => $request->get('address'),
+            'email'                 => $request->get('email'),
+            'username'              => $request->get('username'),
+            'package_id'            => $request->get('package_id'),
+            'zone_id'               => $request->get('zone_id'),
+            'connectionStatus'      => $request->get('connectionStatus'),
+            'connectionMode'        => $request->get('$connectionMode'),
+            'bandWidth'             => $request->get('bandWidth'),
+            'assignBandWidth'       => $request->get('assignBandWidth'),
+            'connectionDate'        => $request->get('connectionDate'),
+            'monthlyBill'           => $request->get('monthlyBill'),
+            'outstanding'           => $request->get('openingBalance'),
+            'openingBalance'        => $request->get('openingBalance'),
 
         ]);
         $post->save();
+        $this->historiesRepository->insertCustomerHistory($post);
         return redirect('/customer')->with('success', 'Customer has been added successfully');
 
     }
@@ -109,6 +132,20 @@ class CustomerController extends Controller
         //
     }
 
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function ledger($id)
+    {
+        $data = $_REQUEST;
+        $customer = Customer::find($id);
+        $ledgers = $this->transactionRepository->getCustomerLedger($id,$data);
+        return view('customer.ledger',['customer' => $customer,'ledgers' => $ledgers,'data'=>$data]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -120,12 +157,9 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $packages = InternetPackage::all();
         $locations = Location::all();
+        $settings = Setting::all();
+        return view('customer.edit',['customer' => $customer,'packages' => $packages,'locations' => $locations,'settings' => $settings]);
 
-        $connectionStatus = array("Create","Active","Hold","In-active");
-        $connectionModes = array("Home","Mess","Office","Shop","Restaurant","Jim","Coaching","Institution","Government Office","Diagnostic","Hospital","Medicine");
-        $bandwidthTypes = array("Shared","Dedicated","Dedicated + IP");
-        $assignBandwidth = array("512 Kb","1.0 Mbps","1.5 Mbps","2.0 Mbps","2.5 Mbps","3.0 Mbps","3.5 Mbps","4.0 Mbps","4.5 Mbps","5.0 Mbps","5.5 Mbps","1.0 Mbps");
-        return view('customer.edit',['customer' => $customer,'packages' => $packages,'locations' => $locations,'connectionStatus' => $connectionStatus,'bandwidthTypes' => $bandwidthTypes,'connectionModes' => $connectionModes,'assignBandwidths' => $assignBandwidth]);
 
     }
 
@@ -161,7 +195,6 @@ class CustomerController extends Controller
         $post->zone_id = $request->get('zone_id');
         $post->package_id = $request->get('package_id');
         $post->save();
-
         return redirect('/customer/edit/'.$id)->with('success', 'Customer has been updated successfully');
 
     }
@@ -183,31 +216,120 @@ class CustomerController extends Controller
     public function dataTable(Request $request)
     {
 
-        $iTotalRecords =  DB::table('customers')->count();
+        $query = $request->request->all();
+
+        $countRecords =  DB::table('customers');
+        $countRecords->select(DB::raw('count(*) as totalCustomer'));
+        if(isset($query['customerName'])){
+            $name = $query['customerName'];
+            $countRecords->where('customers.name','like',"{$name}%");
+        }
+        if(isset($query['customerMobile'])){
+            $mobile = $query['customerMobile'];
+            $countRecords->where('customers.name','like',"{$mobile}%");
+        }
+        if(isset($query['customerUser'])){
+            $user = $query['customerUser'];
+            $countRecords->where('customers.username','like',"{$user}%");
+        }
+        if(isset($query['zoneId'])){
+            $zoneId = $query['zoneId'];
+            $countRecords->where('customers.zone_id',$zoneId);
+        }
+        if(isset($query['package_id'])){
+            $package_id = $query['package_id'];
+            $countRecords->where('customers.package_id',$package_id);
+        }
+        if(isset($query['connectionMode'])){
+            $connectionMode = $query['connectionMode'];
+            $countRecords->where('customers.connectionMode','like',"{$connectionMode}%");
+        }
+        if(isset($query['bandWidth'])){
+            $bandWidth = $query['bandWidth'];
+            $countRecords->where('customers.bandWidth','like',"{$bandWidth}%");
+        }
+        if(isset($query['assignBandWidth'])){
+            $assignBandWidth = $query['assignBandWidth'];
+            $countRecords->where('customers.assignBandWidth','like',"{$assignBandWidth}%");
+        }
+        if(isset($query['connectionStatus'])){
+            $connectionStatus = $query['connectionStatus'];
+            $countRecords->where('customers.connectionStatus','like',"{$connectionStatus}%");
+        }
+
+        $tcount = $countRecords->first();
+        $iTotalRecords = $tcount->totalCustomer;
         $iDisplayLength = intval($_REQUEST['length']);
         $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
         $iDisplayStart = intval($_REQUEST['start']);
         $sEcho = intval($_REQUEST['draw']);
-
         $records = array();
         $records["data"] = array();
-
         $end = $iDisplayStart + $iDisplayLength;
         $end = $end > $iTotalRecords ? $iTotalRecords : $end;
 
-        $rows = DB::table('customers')
-            ->join('internet_packages', 'customers.package_id', '=', 'internet_packages.id')
-            ->join('locations', 'customers.zone_id', '=', 'locations.id')
-            ->select('customers.*', 'internet_packages.name as package','internet_packages.price as amount')
-            ->addSelect('locations.name as zone')
-            ->offset($iDisplayStart)
-            ->limit($end)
-            ->get();
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 
-        foreach ($rows as $post):
+        $rows = DB::table('customers');
+        $rows->join('internet_packages', 'customers.package_id', '=', 'internet_packages.id');
+        $rows->join('locations', 'customers.zone_id', '=', 'locations.id');
+        $rows->leftJoin('settings as mode', 'customers.connectionMode', '=', 'mode.id');
+        $rows->leftJoin('settings as bandWidth', 'customers.bandWidth', '=', 'bandWidth.id');
+        $rows->leftJoin('settings as connectionStatus', 'customers.connectionStatus', '=', 'connectionStatus.id');
+        $rows->leftJoin('settings as assignBandWidth', 'customers.assignBandWidth', '=', 'assignBandWidth.id');
+        $rows->select('customers.*', 'internet_packages.name as package','internet_packages.price as amount');
+        $rows->addSelect('locations.name as zone');
+        $rows->addSelect('mode.name as connectionMode');
+        $rows->addSelect('bandWidth.name as bandWidth');
+        $rows->addSelect('assignBandWidth.name as assignBandWidth');
+        $rows->addSelect('connectionStatus.name as connectionStatus');
+        if(isset($query['customerName'])){
+            $name = $query['customerName'];
+            $rows->where('customers.name','like',"{$name}%");
+        }
+        if(isset($query['customerMobile'])){
+            $mobile = $query['customerMobile'];
+            $rows->where('customers.name','like',"{$mobile}%");
+        }
+        if(isset($query['customerUser'])){
+            $user = $query['customerUser'];
+            $rows->where('customers.username','like',"{$user}%");
+        }
+        if(isset($query['zoneId'])){
+            $zoneId = $query['zoneId'];
+            $rows->where('customers.zone_id',$zoneId);
+        }
+        if(isset($query['package_id'])){
+            $package_id = $query['package_id'];
+            $countRecords->where('customers.package_id',$package_id);
+        }
+        if(isset($query['connectionMode'])){
+            $connectionMode = $query['connectionMode'];
+            $rows->where('customers.connectionMode','like',"{$connectionMode}%");
+        }
+        if(isset($query['bandWidth'])){
+            $bandWidth = $query['bandWidth'];
+            $rows->where('customers.bandWidth','like',"{$bandWidth}%");
+        }
+        if(isset($query['assignBandWidth'])){
+            $assignBandWidth = $query['assignBandWidth'];
+            $rows->where('customers.assignBandWidth','like',"{$assignBandWidth}%");
+        }
+        if(isset($query['connectionStatus'])){
+            $connectionStatus = $query['connectionStatus'];
+            $rows->where('customers.connectionStatus','like',"{$connectionStatus}%");
+        }
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName,$columnSortOrder);
+        $result = $rows->get();
+        $i = $iDisplayStart > 0  ? ($iDisplayStart+1) : 1;
+        foreach ($result as $post):
 
             $records["data"][] = array(
-                $id                 = $post->id,
+                $id                 = $i,
                 $name               = $post->name,
                 $username           = $post->username,
                 $mobile             = $post->mobile,
@@ -218,13 +340,14 @@ class CustomerController extends Controller
                 $assignBandwidth    = $post->assignBandWidth,
                 $connectionStatus   = $post->connectionStatus,
                 $connectionDate     = date('d-m-Y',strtotime($post->connectionDate)),
-                $monthlyBill            = $post->monthlyBill,
                 $outstanding            = $post->outstanding,
                 "<div class='btn-group card-option'><button type='button' class='btn btn-notify' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-ellipsis-v'></i></button><ul class='list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right' x-placement='bottom-end'>
  <li class='dropdown-item'> <a href='/customer/show/{$id}' ><i class='feather icon-eye'></i> View</a></li>
 <li class='dropdown-item'> <a href='/customer/edit/{$id}'> <i class='feather icon-edit'></i> Edit</a></li>
 <li class='dropdown-item'> <a  href='/customer/destroy/{$id}'> <i class='feather icon-trash-2'></i> Remove</a></li>
+<li class='dropdown-item'> <a  href='/customer/ledger/{$id}'> <i class='feather icon-currency'></i> Ledger</a></li>
 </ul></div>");
+            $i++;
 
        endforeach;
 
@@ -232,6 +355,7 @@ class CustomerController extends Controller
             $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
             $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
         }
+
         $records["draw"] = $sEcho;
         $records["recordsTotal"] = $iTotalRecords;
         $records["recordsFiltered"] = $iTotalRecords;

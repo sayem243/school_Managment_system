@@ -20,7 +20,10 @@ class CustomerImport implements ToModel
         if($row[0] != "Zone"){
             $zoneId = $this->getZoneId($row[0]);
             $package = $this->getPackageId($row[1]);
-            $status = $this->getConnectionStatus($row[6]);
+            $status = $this->getSettingId("Status",$row[6]);
+            $assignBandWidth = $this->getSettingId('Assign BandWidth',$row[7]);
+            $bandWidth = $this->getSettingId('BandWidth',$row[8]);
+            $mode = $this->getSettingId('Mode',$row[9]);
             $connectionDate = $this->getConnectionDate($row[10]);
             return new Customer([
                 'zoneName'          => $row[0],
@@ -30,9 +33,9 @@ class CustomerImport implements ToModel
                 'mobile'            => $row[4],
                 'username'          => $row[5],
                 'connectionStatus'  => $status,
-                'assignBandWidth'   => $row[7],
-                'bandWidth'         => $row[8],
-                'connectionMode'    => $row[9],
+                'assignBandWidth'   => $assignBandWidth,
+                'bandWidth'         => $bandWidth,
+                'connectionMode'    => $mode,
                 'connectionDate'    => $connectionDate,
                 'monthlyBill'       => $package->price,
                 'zone_id'           => $zoneId,
@@ -75,7 +78,6 @@ class CustomerImport implements ToModel
             $con = strtotime($connectionDate);
             $date = date('Y-m-d',$con);
             return $date;
-
         }else{
             $date = date('Y-m-d');
             return $date;
@@ -92,5 +94,18 @@ class CustomerImport implements ToModel
             return "Hold";
         }
     }
+
+    private function getSettingId($type,$slug)
+    {
+        $internet = DB::table('settings')
+            ->select('id')
+            ->where(['type' => $type,'slug' => $slug])
+            ->first();
+        if($internet){
+            return $internet->id;
+        }
+        return false;
+    }
+
 
 }

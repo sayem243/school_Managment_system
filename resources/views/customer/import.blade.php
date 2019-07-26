@@ -45,6 +45,7 @@
                             <th scope="col">Created</th>
                             <th scope="col">Name</th>
                             <th scope="col">File</th>
+                            <th scope="col">Process</th>
                             <th scope="col text-center"><i class="feather icon-settings"></i></th>
                         </tr>
                         </thead>
@@ -54,10 +55,13 @@
                                 <td>{{ $loop->index+1 }}</td>
                                 <td>{{ date('d-m-Y', strtotime($entity->created_at)) }}</td>
                                 <td>{{ $entity->name }}</td><td><a href="{{ \Illuminate\Support\Facades\URL::asset("public/uploads/".$entity->file) }}" target="_blank">Download</a> </td>
+                                <td>{{ $entity->process }}</td>
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                                         <a href="{{ route('customer.importDelete',['id' => $entity->id]) }}" class="btn btn-sm yellow-bg white-font"><i class="fa fa-trash"></i>Delete</a>
+                                        @if($entity->process == "Created")
                                         <a href="{{ route('customer.importFile',['id' => $entity->id]) }}" class="btn btn-sm  btn-info"><i class="fas fa-download"></i>Import</a>
+                                        @endif
 
                                     </div>
                                 </td>

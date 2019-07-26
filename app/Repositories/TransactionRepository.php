@@ -60,8 +60,9 @@ class TransactionRepository
     {
         $zoneId = $generate->zone_id;
         $customers = DB::table('customers')
+            ->join('settings as status', 'customers.connectionStatus', '=', 'status.id')
             ->select('customers.*')
-            ->where('zone_id',$zoneId)
+            ->where(['status.name'=>'Active','zone_id'=>$zoneId])
             ->get();
         foreach ($customers as $customer):
             $transaction = DB::table('transactions')
@@ -71,13 +72,37 @@ class TransactionRepository
             if($transaction){
                 DB::table('transactions') ->where('id',$transaction->id)->update([ 'billGenerate_id' => $generate->id ]);
             }else{
+                $date = new \DateTime("now");
                 $balance = $customer->monthlyBill + $customer->outstanding;
                 $receivable = $customer->monthlyBill + $customer->receivable;
-                DB::table('transactions')->insert( [ 'customer_id' => $customer->id ,'billGenerate_id' => $generate->id, 'receivable' => $customer->monthlyBill,'month' => $generate->billMonth, 'year' => $generate->billYear,'balance' => $balance ]);
-                DB::table('customers')->where('id',$customer->id)->update([ 'outstanding' => $balance,'receivable' => $receivable,'paidMonth'=>$generate->billMonth,'paidYear'=> $generate->billYear ]);
+                DB::table('transactions')->insert( [ 'customer_id' => $customer->id ,'created_at' => $date,'updated_at' =>  $date,'billGenerate_id' => $generate->id, 'receivable' => $customer->monthlyBill,'month' => $generate->billMonth, 'year' => $generate->billYear,'balance' => $balance ]);
+                DB::table('customers')->where('id',$customer->id)->update([ 'outstanding' => $balance,'receivable' => $receivable]);
             }
         endforeach;
-        exit;
+    }
+
+
+
+    public function getCustomerLedger($customer,$data)
+    {
+        $startDate = isset($data['startDate']) ?  date("Y-m-d 00:00:00",strtotime($data['startDate'])) :'';
+        $endDate = isset($data['endDate']) ?  date("Y-m-d 23:59:59",strtotime($data['endDate'])) :'';
+
+        $ledgers = DB::table('transactions');
+        $ledgers->join('customers', 'transactions.customer_id', '=', 'customers.id');
+        $ledgers->leftJoin('internet_packages', 'transactions.package_id', '=', 'internet_packages.id');
+        $ledgers->leftJoin('users', 'transactions.collection_id', '=', 'users.id');
+        $ledgers->select('transactions.month as month','transactions.year as year','transactions.receivable as receivable','transactions.amount as amount','transactions.updated_at as updated','transactions.balance as balance');
+        $ledgers->addSelect('internet_packages.name as package');
+        $ledgers->addSelect('users.name as collection');
+        $ledgers->addSelect('customers.monthlyBill as monthly');
+        $ledgers->where('transactions.customer_id', $customer);
+        if($startDate and $endDate){
+            $ledgers->whereBetween('transactions.updated_at', [$startDate,$endDate]);
+        }
+        $ledgers->orderBy('transactions.updated_at','DESC');
+        $result = $ledgers->get();
+        return $result;
 
     }
 
@@ -87,6 +112,7 @@ class TransactionRepository
         $endDate = date("Y-m-d 23:59:59");
         $customerCount = DB::table('transactions')
             ->select( DB::raw('SUM(receivable) as receivable'), DB::raw('SUM(amount) as amount'),DB::raw('count(*) as totalCustomer'))
+            ->where('transactions.amount','>',0)
             ->whereBetween('transactions.updated_at', [$startDate,$endDate])
             ->first();
         return $customerCount;
@@ -99,11 +125,14 @@ class TransactionRepository
         $endDate = date("Y-m-t 23:59:59");
         $customerCount = DB::table('transactions')
             ->select( DB::raw('SUM(receivable) as receivable'), DB::raw('SUM(amount) as amount'),DB::raw('count(*) as totalCustomer'))
+            ->where('transactions.amount','>',0)
             ->whereBetween('transactions.updated_at', [$startDate,$endDate])
             ->first();
         return $customerCount;
 
     }
+
+
 
     public function zoneBaseCustomerOverview()
     {

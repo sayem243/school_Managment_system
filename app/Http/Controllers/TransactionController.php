@@ -259,7 +259,7 @@ class TransactionController extends Controller
             ->leftJoin('locations', 'customers.zone_id', '=', 'locations.id')
             ->leftJoin('internet_packages', 'customers.package_id', '=', 'internet_packages.id')
             ->select('customers.name','customers.mobile as mobile','customers.name as name','customers.monthlyBill as monthlyBill','customers.outstanding as outstanding')
-            ->addSelect('transactions.id as id','transactions.amount as amount','transactions.process as process','transactions.month as month','transactions.year as year')
+            ->addSelect('transactions.id as id','transactions.updated_at as updated','transactions.amount as amount','transactions.process as process','transactions.month as month','transactions.year as year')
             ->addSelect('internet_packages.name as packageName')
             ->addSelect('locations.name as zone')
             ->addSelect('users.username as username')
@@ -294,6 +294,7 @@ class TransactionController extends Controller
 
             $records["data"][] = array(
                 $id,
+                $date =  date('d-m-Y',strtotime($post->updated)),
                 $name =  $post->name,
                 $mobile =  $post->mobile,
                 $packageName = $post->packageName,

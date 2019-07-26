@@ -120,6 +120,11 @@
 	margin-top: 1px;
 }
 
+.pcoded-header.header-purple .dropdown .profile-notification .pro-head .dud-logout {
+	color: #fff;
+	background-color: #511fa2;
+}
+
 .required{
 	color: #dc3545;
 	font-size: 15px;
@@ -234,9 +239,10 @@ button{
 	margin-right: 3px;
 }
 
-.table th{
+.table th {
 	padding: 13px!important;
 	vertical-align: middle!important;
+	padding-left: 5px !important;
 }
 .table td{
 	padding: 2px!important;

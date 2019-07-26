@@ -37,7 +37,7 @@
                         </div>
                     @endif
                         @if (session('success'))
-                            <div class="alert alert-danger violet" role="alert">
+                            <div class="alert alert-success violet" role="alert">
                                 <div class="alert-icon"><i class="feather icon-alert-triangle" style="font-size: 30px;"></i></div>
                                 <div class="alert-text">
                                     {!! session('success') !!}
@@ -59,7 +59,7 @@
                                 @csrf
                                 <label class="col-sm-3 col-form-label" for="customer_id">Customer Name <span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <select class="form-control" name="customer_id" id="customer_id" aria-describedby="validationTooltipPackagePrepend" required>
+                                    <select class="form-control select2" name="customer_id" id="customer_id" aria-describedby="validationTooltipPackagePrepend" required>
                                         <option value=""> -Select customer- </option>
                                         @foreach($customers as $customer)
                                             <option value="{{ $customer->id }}">{{ $customer->name }}</option>
@@ -85,7 +85,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="paymentMethod">Payment Method <span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                   <select name="paymentMethod" id="paymentMethod"  >
+                                   <select class="form-control" name="paymentMethod" id="paymentMethod"  >
                                        @foreach($methods as $method)
                                        <option value="{{ $method }}">{{ $method }}</option>
                                        @endforeach
@@ -101,7 +101,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="process">Process<span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <select class="process" name="process" id="process">
+                                    <select class="form-control" name="process" id="process">
                                         @foreach($process as $pro)
                                             <option value="{{ $pro }}">{{ $pro }}</option>
                                         @endforeach
@@ -111,7 +111,7 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="collection_id">Collect To<span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <select name="collection_id" id="collection_id" >
+                                    <select class="form-control" name="collection_id" id="collection_id" >
                                         @foreach($collections as $collection)
                                             <option value="{{ $collection['id'] }}">{{ $collection['name'] }}</option>
                                         @endforeach

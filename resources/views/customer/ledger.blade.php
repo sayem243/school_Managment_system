@@ -8,11 +8,10 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Billing</h5>
+                    <h5>Customer Ledger : {{ $customer->name }}</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested dropdown">
                             <a  href="{{ route('transaction.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Billing</a>
-                            <a  href="{{ route('transaction.generate') }}" class="btn btn-sm orange-bg white-font"><i class="fa fa-refresh"></i>Bill Generate</a>
                             <a href="{{ route('transaction.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                         </div>
                         <div class="btn-group card-option">
@@ -40,28 +39,39 @@
                 </div>
 
                 <div class="card-block">
-                    <table class="table table-striped table-bordered" style="width: 100%">
+                    <table class="table table-striped table-bordered" id="commonTable" style="width: 100%">
                         <thead class="thead-dark">
                         <tr>
                             <th scope="col">S/N</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Customer Name</th>
-                            <th scope="col">Mobile</th>
                             <th scope="col">Package</th>
                             <th scope="col">Collection</th>
-                            <th scope="col">Zone</th>
                             <th scope="col">Monthly</th>
                             <th scope="col">Month</th>
+                            <th scope="col">Receivable</th>
                             <th scope="col">Receive</th>
                             <th scope="col">Balance</th>
-                            <th scope="col">Process</th>
-                            <th scope="col text-center"><i class="feather icon-settings"></i></th>
-                        </tr>
+                          </tr>
                         </thead>
+
                         <tbody>
+                        @foreach($ledgers  as $indexKey => $entity )
+                            <tr>
+                                <td>{{ $indexKey+1 }}.</td>
+                                <td>{{ date('d-m-Y', strtotime($entity->updated)) }}</td>
+                                <td>{{ $entity->package }}</td>
+                                <td>{{ $entity->collection }}</td>
+                                <td>{{ $entity->monthly }}</td>
+                                <td>{{ $entity->month }},{{ $entity->year }}</td>
+                                <td>{{ $entity->receivable }}</td>
+                                <td>{{ $entity->amount }}</td>
+                                <td>{{ $entity->balance }}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
+            </div>
             </div>
         </div>
     </div>
@@ -69,5 +79,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset("assets/datatable/transaction.js") }}" ></script>
+    <script src="{{ asset("assets/datatable/common.js") }}" ></script>
 @endsection

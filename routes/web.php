@@ -33,6 +33,7 @@ Route::name('customer.create')->get('customer/create', 'CustomerController@creat
 Route::name('customer.edit')->get('customer/edit/{id}', 'CustomerController@edit');
 Route::name('customer.update')->post('customer/update/{id}', 'CustomerController@update');
 Route::name('customer.show')->get('customer/show/{id}', 'CustomerController@show');
+Route::name('customer.ledger')->get('customer/ledger/{id}', 'CustomerController@ledger');
 Route::name('customer.destroy')->get('customer/destroy/{id}', 'CustomerController@destroy');
 Route::post('/customer/dataTable', 'CustomerController@dataTable');
 
