@@ -6,6 +6,7 @@ use App\Model\BillGenerate;
 use App\Model\Customer;
 use App\Model\InternetPackage;
 use App\Model\Location;
+use App\Model\Setting;
 use App\Model\Transaction;
 use App\Repositories\TransactionRepository;
 use App\User;
@@ -42,7 +43,11 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return view('transaction.index');
+        $locations = Location::all();
+        $packages = InternetPackage::all();
+        $settings = Setting::all();
+        $users = User::all();
+        return view('transaction.index',['users' => $users,'packages' => $packages,'locations' => $locations,'settings' => $settings]);
     }
 
     /**
@@ -239,9 +244,53 @@ class TransactionController extends Controller
     public function dataTable(Request $request)
     {
 
-        $data = $request->all();
 
-        $iTotalRecords =  DB::table('transactions')->count();
+        $query = $request->request->all();
+
+
+        $countRecords =  DB::table('transactions');
+        $countRecords->join('customers', 'transactions.customer_id', '=', 'customers.id');
+        $countRecords->leftJoin('internet_packages', 'transactions.package_id', '=', 'internet_packages.id');
+        $countRecords->select(DB::raw('count(*) as totalCustomer'));
+        if(isset($query['updated'])){
+            $updated = $query['updated'];
+            $startDate = date("Y-m-d 00:00:00",strtotime($updated));
+            $endDate = date("Y-m-d 23:59:59",strtotime($updated));
+            $countRecords->whereBetween('transactions.updated_at', [$startDate,$endDate]);
+        }
+        if(isset($query['customerName'])){
+            $name = $query['customerName'];
+            $countRecords->where('customers.name','like',"{$name}%");
+        }
+        if(isset($query['customerMobile'])){
+            $mobile = $query['customerMobile'];
+            $countRecords->where('customers.mobile','like',"{$mobile}%");
+        }
+        if(isset($query['zoneId'])){
+            $zoneId = $query['zoneId'];
+            $countRecords->where('customers.zone_id',$zoneId);
+        }
+        if(isset($query['packageId'])){
+            $package_id = $query['packageId'];
+            $countRecords->where('transactions.package_id',$package_id);
+        }
+        if(isset($query['month'])){
+            $month = $query['month'];
+            $countRecords->where('transactions.month','like',"{$month}%");
+        }
+        if(isset($query['process'])){
+            $process = $query['process'];
+            $countRecords->where('transactions.process','like',"{$process}%");
+        }
+
+        if(isset($query['balance'])){
+            $balance = $query['balance'];
+            $countRecords->where('transactions.process','>=',"{$balance}");
+        }
+
+        $tcount = $countRecords->first();
+        $iTotalRecords = $tcount->totalCustomer;
+
         $iDisplayLength = intval($_REQUEST['length']);
         $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
         $iDisplayStart = intval($_REQUEST['start']);
@@ -253,21 +302,68 @@ class TransactionController extends Controller
         $end = $iDisplayStart + $iDisplayLength;
         $end = $end > $iTotalRecords ? $iTotalRecords : $end;
 
-        $posts = DB::table('transactions')
-            ->join('customers', 'transactions.customer_id', '=', 'customers.id')
-            ->leftJoin('users', 'transactions.collection_id', '=', 'users.id')
-            ->leftJoin('locations', 'customers.zone_id', '=', 'locations.id')
-            ->leftJoin('internet_packages', 'customers.package_id', '=', 'internet_packages.id')
-            ->select('customers.name','customers.mobile as mobile','customers.name as name','customers.monthlyBill as monthlyBill','customers.outstanding as outstanding')
-            ->addSelect('transactions.id as id','transactions.updated_at as updated','transactions.amount as amount','transactions.process as process','transactions.month as month','transactions.year as year')
-            ->addSelect('internet_packages.name as packageName')
-            ->addSelect('locations.name as zone')
-            ->addSelect('users.username as username')
-            ->offset($iDisplayStart)
-            ->limit($end)
-            ->get();
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 
-        foreach ($posts as $post){
+
+        $posts = DB::table('transactions');
+        $posts->join('customers', 'transactions.customer_id', '=', 'customers.id');
+        $posts->leftJoin('users', 'transactions.collection_id', '=', 'users.id');
+        $posts->leftJoin('locations', 'customers.zone_id', '=', 'locations.id');
+        $posts->leftJoin('internet_packages', 'customers.package_id', '=', 'internet_packages.id');
+        $posts->select('customers.name','customers.mobile as mobile','customers.name as name','customers.monthlyBill as monthlyBill','customers.outstanding as outstanding','customers.zone_id as zoneId');
+        $posts->addSelect('transactions.id as id','transactions.updated_at as updated','transactions.amount as amount','transactions.process as process','transactions.month as month','transactions.year as year','transactions.package_id as packageId','transactions.collection_id as collectionId');
+        $posts->addSelect('internet_packages.name as packageName');
+        $posts->addSelect('locations.name as zone');
+        $posts->addSelect('users.name as collectionName');
+
+            if(isset($query['updated'])){
+                $updated = $query['updated'];
+                $startDate = date("Y-m-d 00:00:00",strtotime($updated));
+                $endDate = date("Y-m-d 23:59:59",strtotime($updated));
+                $posts->whereBetween('transactions.updated_at', [$startDate,$endDate]);
+            }
+            if(isset($query['customerName'])){
+                $name = $query['customerName'];
+                $posts->where('customers.name','like',"{$name}%");
+            }
+            if(isset($query['customerMobile'])){
+                $mobile = $query['customerMobile'];
+                $posts->where('customers.mobile','like',"{$mobile}%");
+            }
+            if(isset($query['zoneId'])){
+                $zoneId = $query['zoneId'];
+                $posts->where('customers.zone_id',$zoneId);
+            }
+            if(isset($query['packageId'])){
+                $package_id = $query['packageId'];
+                $posts->where('transactions.package_id',$package_id);
+            }
+             if(isset($query['collectionId'])){
+                $collectionId = $query['collectionId'];
+                $posts->where('transactions.collection_id',$collectionId);
+            }
+            if(isset($query['month'])) {
+                $month = $query['month'];
+                $year = date('y');
+                $posts->where(['transactions.month' => "{$month}",'transactions.year' => "{$year}"]);
+            }
+            if(isset($query['balance'])){
+                $balance = $query['balance'];
+                $posts->where('transactions.process','>=',"{$balance}");
+            }
+
+            if(isset($query['process'])){
+                $process = $query['process'];
+                $posts->where('transactions.process','like',"{$process}%");
+            }
+        $posts->offset($iDisplayStart);
+        $posts->limit($iDisplayLength);
+        $posts->orderBy($columnName,$columnSortOrder);
+        $result = $posts->get();
+        $i = $iDisplayStart > 0  ? ($iDisplayStart+1) : 1;
+        foreach ($result as $post){
 
             $id = $post->id;
             $paymentMonth = $post->month.','.$post->year;
@@ -293,12 +389,12 @@ class TransactionController extends Controller
             }
 
             $records["data"][] = array(
-                $id,
+                $i,
                 $date =  date('d-m-Y',strtotime($post->updated)),
                 $name =  $post->name,
                 $mobile =  $post->mobile,
                 $packageName = $post->packageName,
-                $username =  $post->username,
+                $username =  $post->collectionName,
                 $zone =  $post->zone,
                 $monthlyBill = $post->monthlyBill,
                 $paymentMonth,
@@ -308,6 +404,7 @@ class TransactionController extends Controller
                 $action
 
             );
+            $i++;
         }
 
         if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {

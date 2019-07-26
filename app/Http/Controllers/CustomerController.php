@@ -226,7 +226,7 @@ class CustomerController extends Controller
         }
         if(isset($query['customerMobile'])){
             $mobile = $query['customerMobile'];
-            $countRecords->where('customers.name','like',"{$mobile}%");
+            $countRecords->where('customers.mobile','like',"{$mobile}%");
         }
         if(isset($query['customerUser'])){
             $user = $query['customerUser'];
@@ -291,7 +291,7 @@ class CustomerController extends Controller
         }
         if(isset($query['customerMobile'])){
             $mobile = $query['customerMobile'];
-            $rows->where('customers.name','like',"{$mobile}%");
+            $rows->where('customers.mobile','like',"{$mobile}%");
         }
         if(isset($query['customerUser'])){
             $user = $query['customerUser'];
