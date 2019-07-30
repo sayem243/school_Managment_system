@@ -118,20 +118,6 @@
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="paymentMobile">Payment Mobile No</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="paymentMobile" id="paymentMobile" placeholder="Enter payment mobile no"  />
-                                </div>
-                            </div>
-                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="transactionId">Transaction ID</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="transactionId" id="transactionId" placeholder="Enter mobile payment transaction id"  />
-                                </div>
-                            </div>
-
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="remark">Remark</label>
                                 <div class="col-sm-6 col-form-label"><textarea class="form-control" name="remark" id="remark" rows="2" ></textarea>

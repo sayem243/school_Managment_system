@@ -45,7 +45,13 @@ class HomeController extends Controller
     public function index()
     {
 
-        return view('dashboard');
+        $customers = $this->customerRepository->customerOverview();
+        $locationBaseCustomers = $this->customerRepository->zoneBaseCustomerOverview();
+        $todayCollection = $this->repository->todayCollection();
+        $monthlyCollection = $this->repository->monthlyCollection();
+        $monthlyBill = $this->customerRepository->monthlyBill();
+
+        return view('dashboard',['customers' => $customers,'locationBaseCustomers' => $locationBaseCustomers,'todayCollection' => $todayCollection,'monthlyCollection' => $monthlyCollection,'monthlyBill' => $monthlyBill]);
     }
 
     /**

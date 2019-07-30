@@ -16,7 +16,7 @@
                                 <h6 class="mb-4">Daily Collection</h6>
                                 <div class="row d-flex align-items-center">
                                     <div class="col-9">
-                                        <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>{{ $todayCollection->amount }}</h3>
+                                        <h3 class="f-w-300 d-flex align-items-center m-b-0"><i class="feather icon-arrow-up text-c-green f-30 m-r-10"></i>@if ($todayCollection->amount) {{ $todayCollection->amount }}@endif</h3>
                                     </div>
 
                                     <div class="col-3 text-right">
@@ -37,7 +37,7 @@
                                 <h6 class="mb-4">Monthly Collection</h6>
                                 <div class="row d-flex align-items-center">
                                     <div class="col-9">
-                                        <h3 class="f-w-300 d-flex align-items-center  m-b-0"><i class="feather icon-arrow-down text-c-red f-30 m-r-10"></i>{{ $monthlyCollection->amount }}</h3>
+                                        <h3 class="f-w-300 d-flex align-items-center  m-b-0"><i class="feather icon-arrow-down text-c-red f-30 m-r-10"></i>@if ($monthlyCollection) {{ $monthlyCollection->amount }}@endif</h3>
                                     </div>
                                     <div class="col-3 text-right">
                                         <p class="m-b-0"><i class="feather icon-users"></i> {{ $monthlyCollection->totalCustomer }}</p>

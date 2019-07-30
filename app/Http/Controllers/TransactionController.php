@@ -61,7 +61,7 @@ class TransactionController extends Controller
         $customers = Customer::all();
         $collections = User::all();
         $process = array("Paid","Receivable");
-        $methods = array("Cash","Mobile");
+        $methods = array("Cash","bKash","Rocket","Nagad");
         return view('transaction.create',['customers' => $customers,'collections' => $collections,'process' => $process,'methods' => $methods]);
 
     }
