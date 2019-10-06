@@ -11,6 +11,23 @@ class TransactionRepository
 {
 
 
+
+    /**
+     * Create a query for Post.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function onlyCustomer()
+    {
+        return $customer = DB::table('customers')
+            ->leftJoin('settings', 'customers.connectionStatus', '=', 'settings.id')
+            ->select('customers.id as id','customers.name as name', 'customers.userName as username', 'customers.outstanding as balance')
+            ->where('settings.name',"Active")
+            ->get();
+
+    }
+
+
     /**
      * Create a query for Post.
      *
@@ -21,12 +38,12 @@ class TransactionRepository
     {
         $transaction = DB::table('transactions')
             ->select('id as id')
-            ->where(array('customer_id' => $customer,'month' => $month,'year' => $year))
+            ->where(array('customer_id' => $customer,'month' => $month,'year' => $year,'process' => "Receivable"))
             ->first();
         if($transaction){
-            return "In-valid";
-        }else{
             return "Valid";
+        }else{
+            return "In-valid";
         }
 
     }
@@ -75,7 +92,7 @@ class TransactionRepository
                 $date = new \DateTime("now");
                 $balance = $customer->monthlyBill + $customer->outstanding;
                 $receivable = $customer->monthlyBill + $customer->receivable;
-                DB::table('transactions')->insert( [ 'customer_id' => $customer->id ,'created_at' => $date,'updated_at' =>  $date,'billGenerate_id' => $generate->id, 'receivable' => $customer->monthlyBill,'month' => $generate->billMonth, 'year' => $generate->billYear,'balance' => $balance ]);
+                DB::table('transactions')->insert( [ 'customer_id' => $customer->id ,'created_at' => $date,'updated_at' =>  $date,'billGenerate_id' => $generate->id, 'receivable' => $customer->monthlyBill,'month' => $generate->billMonth, 'year' => $generate->billYear,'balance' => $balance,'process' => "Receivable" ]);
                 DB::table('customers')->where('id',$customer->id)->update([ 'outstanding' => $balance,'receivable' => $receivable]);
             }
         endforeach;
@@ -131,8 +148,6 @@ class TransactionRepository
         return $customerCount;
 
     }
-
-
 
     public function zoneBaseCustomerOverview()
     {

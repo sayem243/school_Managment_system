@@ -62,7 +62,7 @@
                                     <select class="form-control select2" name="customer_id" id="customer_id" aria-describedby="validationTooltipPackagePrepend" required>
                                         <option value=""> -Select customer- </option>
                                         @foreach($customers as $customer)
-                                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                            <option value="{{ $customer->id }}">{{ $customer->name }}({{$customer->username}})</option>
                                         @endforeach
                                     </select>
                                     <span class="help-block">Customer select for receive payment</span>

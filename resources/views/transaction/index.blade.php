@@ -49,7 +49,8 @@
                                 <input  type="text" class="form-control  input-sm" name="customerName" id="customerName" placeholder="Name"> </td>
                             <td>
                                 <input type="text" class="form-control  input-sm" placeholder="Mobile" name="customerMobile" id="customerMobile"> </td>
-
+                            <td>
+                                <input type="text" class="form-control  input-sm" placeholder="Username" name="username" id="username"> </td>
                             <td>
                                 <select class="form-control" name="packageId" id="packageId" >
                                     <option value=""> -Package- </option>
@@ -98,8 +99,9 @@
                         <tr>
                             <th scope="col">S/N</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Customer Name</th>
+                            <th scope="col">Customer</th>
                             <th scope="col">Mobile</th>
+                            <th scope="col">Username</th>
                             <th scope="col">Package</th>
                             <th scope="col">Collection</th>
                             <th scope="col">Zone</th>
@@ -118,7 +120,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('js')

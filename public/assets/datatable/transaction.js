@@ -20,6 +20,7 @@ $(document).ready(function () {
                 var updated = $('#updated').val();
                 var customerName = $('#customerName').val();
                 var customerMobile = $('#customerMobile').val();
+                var username = $('#username').val();
                 var zoneId = $('#zoneId').val();
                 var packageId = $('#packageId').val();
                 var collectionId = $('#collectionId').val();
@@ -32,6 +33,7 @@ $(document).ready(function () {
                 data.updated = updated;
                 data.customerName = customerName;
                 data.customerMobile = customerMobile;
+                data.username = username;
                 data.zoneId = zoneId;
                 data.packageId = packageId;
                 data.collectionId = collectionId;
@@ -45,6 +47,7 @@ $(document).ready(function () {
             { "name": 'updated' },
             { "name": 'name' },
             { "name": 'mobile' },
+            { "name": 'username' },
             { "name": 'packageId' },
             { "name": 'collectionId' },
             { "name": 'zoneId' },
@@ -100,6 +103,10 @@ $(document).ready(function () {
     });
 
     $('#customerMobile').keyup(function(){
+        dataTable.draw();
+    });
+
+    $('#username').keyup(function(){
         dataTable.draw();
     });
 

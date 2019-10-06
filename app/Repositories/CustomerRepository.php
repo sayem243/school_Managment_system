@@ -9,7 +9,8 @@ class CustomerRepository
 {
 
 
-    /**
+
+     /**
      * Create a query for Post.
      *
      * @return \Illuminate\Database\Eloquent\Builder

@@ -46,8 +46,9 @@ Route::name('transaction.billcreate')->post('transaction/billcreate', 'Transacti
 Route::name('transaction.store')->post('transaction/store', 'TransactionController@store');
 Route::name('transaction.create')->get('transaction/create', 'TransactionController@create');
 Route::name('transaction.edit')->get('transaction/edit/{id}', 'TransactionController@edit');
-Route::name('transaction.update')->put('transaction/update/{id}', 'TransactionController@update');
+Route::name('transaction.update')->post('transaction/update/{id}', 'TransactionController@update');
 Route::name('transaction.show')->get('transaction/show/{id}', 'TransactionController@show');
+Route::name('transaction.receive')->get('transaction/receive/{id}', 'TransactionController@receive');
 Route::name('transaction.destroy')->get('transaction/destroy/{id}', 'TransactionController@destroy');
 Route::post('/transaction/dataTable', 'TransactionController@dataTable');
 

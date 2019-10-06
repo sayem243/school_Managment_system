@@ -58,9 +58,10 @@ class TransactionController extends Controller
     public function create()
     {
 
-        $customers = Customer::all();
+        $customers = $this->repository->onlyCustomer();
         $collections = User::all();
-        $process = array("Paid","Receivable");
+
+        $process = array("Receivable & Paid","Receivable");
         $methods = array("Cash","bKash","Rocket","Nagad");
         return view('transaction.create',['customers' => $customers,'collections' => $collections,'process' => $process,'methods' => $methods]);
 
@@ -93,14 +94,15 @@ class TransactionController extends Controller
             $process = $request->get('process');
             $receivable = 0;
             $balance = 0;
-            if($process === "Paid"){
+            if($process === "Paid & Receivable"){
                 $receivable = $customer->monthlyBill;
                 $balance = (($customer->outstanding + $customer->monthlyBill) - $amount);
+                $process = "Paid";
             }elseif($process === "Receivable"){
                 $receivable = ($customer->monthlyBill + $amount);
                 $balance = ($customer->outstanding + $customer->monthlyBill + $amount);
+                $process = "Receivable";
             }
-
             $post = new Transaction([
                 'amount' => $amount,
                 'customer_id'=> $customerId,
@@ -121,6 +123,49 @@ class TransactionController extends Controller
         }else{
             return redirect('/transaction/create')->with('warning', 'This payment month already exist');
         }
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function receive($id)
+    {
+        $post = Transaction::find($id);
+        $collections = User::all();
+        $process = array("Paid","Receivable");
+        $methods = array("Cash","bKash","Rocket","Nagad");
+        return view('transaction.receive',['post' => $post,'collections' => $collections,'process' => $process,'methods' => $methods]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'amount'=> 'required|integer',
+        ]);
+        $post = Transaction::find($id);
+        $amount = $request->get('amount');
+        $balance = ($post->balance - $amount);
+        $post->amount = $amount;
+        $post->balance = $balance;
+        $post->process = "Paid";
+        $post->paymentMethod = $request->get('paymentMethod');
+/*        $post->transactionId = $request->get('transactionId');
+        $post->paymentMobile = $request->get('paymentMobile');*/
+        $post->remark = $request->get('remark');
+        $post->save();
+        $this->repository->billTransactionOutstanding($post->customer,$post->month,$post->year);
+        return redirect('/transaction')->with('success', 'Payment receive has been successfully');
 
     }
 
@@ -152,7 +197,7 @@ class TransactionController extends Controller
         ]);
         $year = date("y");
         $time = strtotime(date("d-m-Y"));
-        $month = date("F", strtotime("-1 month", $time));
+        $month = date("F");
         $zone = $request->get('zone_id');
 
         $exist = DB::table('bill_generates')
@@ -185,47 +230,7 @@ class TransactionController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $post = Transaction::find($id);
 
-        return view('transaction.edit', compact('post'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'name'=>'required',
-            'price'=> 'required|integer',
-        ]);
-
-        $post = Transaction::find($id);
-        $post->name = $request->get('name');
-        $post->price = $request->get('price');
-        $post->youtube = $request->get('youtube');
-        $post->bdix = $request->get('bdix');
-        $post->akamai = $request->get('akamai');
-        $post->facebook = $request->get('facebook');
-        $post->ftp = $request->get('ftp');
-        $post->transaction = $request->get('transaction');
-        $post->description = $request->get('description');
-        $post->save();
-        return redirect('/transaction')->with('success', 'transaction package has been updated');
-
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -312,11 +317,11 @@ class TransactionController extends Controller
         $posts->leftJoin('users', 'transactions.collection_id', '=', 'users.id');
         $posts->leftJoin('locations', 'customers.zone_id', '=', 'locations.id');
         $posts->leftJoin('internet_packages', 'customers.package_id', '=', 'internet_packages.id');
-        $posts->select('customers.name','customers.mobile as mobile','customers.name as name','customers.monthlyBill as monthlyBill','customers.outstanding as outstanding','customers.zone_id as zoneId');
+        $posts->select('customers.username as username','customers.mobile as mobile','customers.name as name','customers.monthlyBill as monthlyBill','customers.outstanding as outstanding','customers.zone_id as zoneId');
         $posts->addSelect('transactions.id as id','transactions.updated_at as updated','transactions.amount as amount','transactions.process as process','transactions.month as month','transactions.year as year','transactions.package_id as packageId','transactions.collection_id as collectionId');
         $posts->addSelect('internet_packages.name as packageName');
         $posts->addSelect('locations.name as zone');
-        $posts->addSelect('users.name as collectionName');
+        $posts->addSelect('users.username as collectionName');
 
             if(isset($query['updated'])){
                 $updated = $query['updated'];
@@ -378,13 +383,14 @@ class TransactionController extends Controller
  <li class='dropdown-item full-card'> <a href='/transaction/show/{$id}'> <i class='feather icon-eye'></i> View</a></li>
 <li class='dropdown-item full-card'> <a  href='/transaction/destroy/{$id}'> <i class='feather icon-trash-2'></i> Remove</a></li>
 </ul></div>";
-            }else{
+            }elseif($post->process == "Receivable"){
                 $action = "<div class='btn-group card-option'>
                             <button type='button' class='btn btn-notify' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                 <i class='fas fa-ellipsis-v'></i>
                             </button>
                             <ul class='list-unstyled card-option dropdown-menu dropdown-menu-right' x-placement='bottom-end' style='position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(53px, 41px, 0px);'>
- <li class='dropdown-item full-card'> <a href='/transaction/show/{$id}'> <i class='feather icon-eye'></i> View</a></li>
+ <li class='dropdown-item full-card'> 
+ <a href='/transaction/receive/{$id}'> <i class='feather icon-eye'></i> Receive</a></li>
 </ul></div>";
             }
 
@@ -393,8 +399,9 @@ class TransactionController extends Controller
                 $date =  date('d-m-Y',strtotime($post->updated)),
                 $name =  $post->name,
                 $mobile =  $post->mobile,
+                $username =  $post->username,
                 $packageName = $post->packageName,
-                $username =  $post->collectionName,
+                $collectionName =  $post->collectionName,
                 $zone =  $post->zone,
                 $monthlyBill = $post->monthlyBill,
                 $paymentMonth,
