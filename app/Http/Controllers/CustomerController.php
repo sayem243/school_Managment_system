@@ -52,6 +52,16 @@ class CustomerController extends Controller
         $this->middleware('auth');
     }
 
+    //APi
+
+
+    public function Customer_api(){
+
+        return response()->json(Customer::get(),200);
+    }
+
+
+
 
     /**
      * Display a listing of the resource.

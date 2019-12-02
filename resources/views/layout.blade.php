@@ -15,7 +15,7 @@ Like: www.facebook.com/terminalbd
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Internet Billing Software</title>
+    <title>School Managment Software</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Bootstrap 4.3 Base Css -->
@@ -62,7 +62,7 @@ Like: www.facebook.com/terminalbd
                 <div class="b-bg">
                     <i class="feather icon-trending-up"></i>
                 </div>
-                <span class="b-title">iBilling</span>
+                <span class="b-title">School </span>
             </a>
             <a class="mobile-menu on" id="mobile-collapse" href="javascript:"><span></span></a>
         </div>

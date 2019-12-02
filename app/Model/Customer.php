@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
+
+
+
     protected $fillable = [
         'name',
         'mobile',
@@ -33,6 +36,7 @@ class Customer extends Model
         'package',
         'paidMonth'
     ];
+
 
     public function transaction()
     {
