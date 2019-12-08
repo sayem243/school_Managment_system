@@ -100,3 +100,22 @@ Route::name('customer.importDelete')->get('customer/import-delete/{id}', 'Custom
 
 Route::name('report.overview')->get('overview', 'UserController@index');
 Route::name('report.monthlySales')->post('user/monthly-sales', 'UserController@store');
+
+/*=================== Admin ===================== */
+
+
+Route::get('admin/student/create','AdminController@create')->name('student_create');
+Route::post('/admin/student/store','AdminController@store')->name('student_store');
+//Route::post('admin/student/store', 'AdminController@store')->name('student_store');
+
+
+/*=================== Class ===================== */
+
+Route::get('class/create', 'StudentclassController@create')->name('class_create');
+Route::post('/class/store','StudentclassController@store')->name('class_store');
+//Route::post('/class/store','StudentclassController@store')->name('class_store');
+
+/*=================== Section ===================== */
+
+Route::get('section/create','SectionController@create')->name('section_create');
+Route::post('section/store','SectionController@store')->name('section_store');
