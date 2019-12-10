@@ -1,6 +1,5 @@
 @extends('layout')
 @section('main')
-
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
@@ -54,7 +53,7 @@
                                             <select class="form-control" name="studentclasses_id">
                                                 <option value="">Select Class</option>
                                                 @foreach($classnames as $classname)
-                                                    <option value="{{$classname->id}}"> {{$classname->class_name}} </option>
+                                                    <option value="{{$classname->id}}"> {{$classname->class_name  .$classname->group}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -104,8 +103,8 @@
                                         <div class="col-form-label">
                                             <select class="form-control" name="section">
                                                 <option value="">Select Section</option>
-                                                @foreach($classnames as $classname)
-                                                    <option value="{{$classname->id}}"> {{$classname->section}} </option>
+                                                @foreach($sections as $section)
+                                                    <option value="{{$section->id}}"> {{$section->section_name}} </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -122,7 +121,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-form-label" for="father_occupation">Fathers Occupation</label>
+                                        <label class="col-form-label" for="father_occupation">Fathers Occupation<span class="required">*</span></label>
                                         <div class="col-form-label">
                                             <input type="text" class="form-control" name="father_occupation" id="father_occupation" />
                                         </div>

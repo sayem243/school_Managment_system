@@ -106,6 +106,10 @@ Route::name('report.monthlySales')->post('user/monthly-sales', 'UserController@s
 
 Route::get('admin/student/create','AdminController@create')->name('student_create');
 Route::post('/admin/student/store','AdminController@store')->name('student_store');
+Route::get('/admin/student/class/2','AdminController@index')-> name('student_index2');
+Route::get('/admin/student/class/1','AdminController@indexOne')-> name('student_index1');
+Route::get('/admin/student/class/3','AdminController@indexThree')-> name('student_index3');
+
 //Route::post('admin/student/store', 'AdminController@store')->name('student_store');
 
 

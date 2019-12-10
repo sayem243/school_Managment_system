@@ -17,6 +17,7 @@ class CreateAdminsTable extends Migration
             $table->bigIncrements('id');
             $table->string('student_name');
             $table->string('mothername');
+            $table->string('id_no')->unique();
             $table->string('fname');
             $table->unsignedBigInteger('studentclasses_id');
             $table->unsignedBigInteger('section');
@@ -28,12 +29,9 @@ class CreateAdminsTable extends Migration
             $table->string('address');
             $table->timestamps();
             $table->foreign('studentclasses_id')->references('id')->on('studentclasses');
-            $table->foreign('section')->references('id')->on('studentclasses')->nullable();
+            $table->foreign('section')->references('id')->on('sections')->nullable();
 
         });
-
-
-
 
     }
 

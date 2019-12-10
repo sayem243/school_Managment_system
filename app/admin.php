@@ -11,4 +11,10 @@ class admin extends Model
       return $this->belongsTo('App\admin');
     }
 
+    public function Section(){
+
+        return $this->belongsTo('App\admin');
+    }
+
+
 }

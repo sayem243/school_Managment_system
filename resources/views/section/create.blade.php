@@ -4,7 +4,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>New Class</h5>
+                    <h5>Section Create</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
                             <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
@@ -18,6 +18,7 @@
                                 <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
                                 <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
                                 <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+
                             </ul>
                         </div>
                     </div>
@@ -36,25 +37,18 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form method="post" action="{{ route('class_store') }}" class="needs-validation" novalidate>
+                        <form method="post" action="{{ route('section_store') }}" class="needs-validation" novalidate>
                             <div class="form-group row">
                                 @csrf
-                                <label class="col-sm-3 col-form-label" for="class_name">Class <span class="required">*</span></label>
+                                <label class="col-sm-3 col-form-label" for="class_name">Section <span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="class_name" id="class_name" aria-describedby="validationTooltipUsernamePrepend" placeholder="Enter New Class name" required />
+                                    <input type="text" class="form-control" name="section_name" id="section_name" aria-describedby="validationTooltipUsernamePrepend" placeholder="Enter New Section Name" required />
                                     <div class="invalid-tooltip">
-                                        Please create a new class.
+                                        Please create a new Section.
                                     </div>
                                 </div>
                             </div>
 
-
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Group</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="group" id="group" placeholder="Enter Group Name"  />
-                                </div>
-                            </div>
                             <div class="separator"></div>
                             <div class="line aligncenter">
                                 <div class="form-group row">
@@ -68,6 +62,7 @@
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
