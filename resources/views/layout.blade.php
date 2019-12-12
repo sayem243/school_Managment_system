@@ -117,6 +117,14 @@ Like: www.facebook.com/terminalbd
                     {{--</ul>--}}
                 {{--</li>--}}
                 <li data-username="" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Teachers Profile</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="{{ route('teacher_create') }}" class="" >New Teacher</a></li>
+                    </ul>
+                </li>
+
+
+                <li data-username="" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Admin</span></a>
                     <ul class="pcoded-submenu">
                         <li class=""><a href="{{ route('student_create') }}" class="" >New Student</a></li>

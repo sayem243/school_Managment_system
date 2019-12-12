@@ -14,7 +14,7 @@ class CreateAdminsTable extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id',1001);
             $table->string('student_name');
             $table->string('mothername');
             $table->string('id_no')->unique();
@@ -32,6 +32,8 @@ class CreateAdminsTable extends Migration
             $table->foreign('section')->references('id')->on('sections')->nullable();
 
         });
+
+        //DB::update("ALTER TABLE tests AUTO_INCREMENT = 7000;");
 
     }
 

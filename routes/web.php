@@ -123,3 +123,8 @@ Route::post('/class/store','StudentclassController@store')->name('class_store');
 
 Route::get('section/create','SectionController@create')->name('section_create');
 Route::post('section/store','SectionController@store')->name('section_store');
+
+/*=================== Teachers Panel ===================== */
+Route::get('teachers/create','TeacherController@create')->name('teacher_create');
+Route::post('/teacher/store','TeacherController@store')->name('teacher_store');
+Route::get('/teacher/index','TeacherController@index')->name('teacher_index');
