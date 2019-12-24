@@ -17,9 +17,10 @@ class CreateStudentclassesTable extends Migration
             $table->bigIncrements('id');
             $table->string('class_name');
             $table->string('section')->nullable();
+            $table->string('admission_fee')->nullable();
+            $table->string('monthly_fee')->nullable();
+            $table->string('exam_fee')->nullable();
             $table->string('group')->nullable();
-
-
 
             $table->timestamps();
         });

@@ -127,4 +127,18 @@ Route::post('section/store','SectionController@store')->name('section_store');
 /*=================== Teachers Panel ===================== */
 Route::get('teachers/create','TeacherController@create')->name('teacher_create');
 Route::post('/teacher/store','TeacherController@store')->name('teacher_store');
-Route::get('/teacher/index','TeacherController@index')->name('teacher_index');
+Route::get('/teachers/index','TeacherController@index')->name('teacher_index');
+
+/*=================== Attendence System ===================== */
+
+Route::get('student/attendence','AttendenceController@create')->name('attendence_create');
+Route::post('student/attendence/store','AttendenceController@store')->name('attendence_store');
+
+
+/*=================== Settings Table ===================== */
+
+Route::get('setting/create','SettingController@create')->name('setting_create');
+Route::post('setting/store','SettingController@store')->name('setting_store');
+Route::post('setting/index','SettingController@index')->name('setting_index');
+
+

@@ -7,8 +7,10 @@
                     <h5>New Teacher</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
-                            <a  href="{{ route('customer.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Customer</a>
+
+                           {{-- <a  href="{{ route('customer.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Customer</a>
                             <a href="{{ route('customer.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            --}}
                         </div>
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -137,7 +139,7 @@
                                     <div class="form-group">
                                         <label class="col-form-label" for="mobile">PhD</label>
                                         <div class="col-form-label">
-                                            <input type="text" class="form-control" name="PhD" id="PhD" aria-describedby="validationTooltipUsernamePrepend" required />
+                                            <input type="text" class="form-control" name="PhD" id="PhD" aria-describedby="validationTooltipUsernamePrepend"  />
                                             <span class="help-block">Enter Your Bachelor Degree</span>
                                             <div class="invalid-tooltip">
                                                 Enter Your Bachelor Degree.

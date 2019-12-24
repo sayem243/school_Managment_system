@@ -315,37 +315,72 @@ button{
 	font-size: 11px;
 }
 
+
+
 /*change the custom*/
 
-.listview-item.big.faculty {
-	width: 540px;
-	float: left;
-	height: 180px;
-	overflow: hidden;
-}
-.listview-item.big.faculty {
-	margin-right: 10px;
-}
 .listview-item.big {
 	border: 1px solid #105BC0;
 	margin: 10px 0;
 	padding: 10px;
 	box-shadow: 0 0 2px #000;
 }
-.listview-item.big .pull-left {
-	width: 150px;
-	min-height: 130px;
-}
+
 .listview-item.big .pull-left {
 	margin-right: 15px;
 }
-.listview-item.big.faculty .listview-item-body {
-	width: 350px;
-	float: left;
-}
+
 h2.listview-item-heading, h2.listview-item-heading a {
 	font-size: 18px;
 	line-height: 22px;
 	margin: 0;
 	text-decoration: none;
 }
+
+.body-content img.listview-item-object {
+	margin: 0;
+}
+
+.listview-item-heading a, .two-lines a {
+	color: #7041cc;
+	font-size: 18px;
+	line-height: 30px;
+}
+
+.listview-item.big.faculty {
+	margin-right: 10px;
+}
+
+
+@media (min-width: 768px) {
+
+	.listview-item.big.teacher {
+		width: 540px;
+		float: left;
+		height: 180px;
+		overflow: hidden;
+	}
+
+	.listview-item.big .pull-left {
+		width: 150px;
+		min-height: 130px;
+	}
+
+	.listview-item.big.teacher .pull-left {
+		height: 158px;
+		overflow: hidden;
+		float: left;
+	}
+
+	.listview-item.big.faculty .listview-item-body {
+		width: 350px;
+		float: left;
+	}
+
+}
+
+/*
+img{
+	border-radius: 100%;
+}
+*/

@@ -117,9 +117,19 @@ Like: www.facebook.com/terminalbd
                     {{--</ul>--}}
                 {{--</li>--}}
                 <li data-username="" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Attendence</span></a>
+                    <ul class="pcoded-submenu">
+
+                        <li class=""><a href="{{ route('attendence_create') }}" class="" >Attendence-1</a></li>
+                    </ul>
+                </li>
+
+
+                <li data-username="" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Teachers Profile</span></a>
                     <ul class="pcoded-submenu">
-                        <li class=""><a href="{{ route('teacher_create') }}" class="" >New Teacher</a></li>
+
+                        <li class=""><a href="{{ route('teacher_index') }}" class="" >Teacher Profile</a></li>
                     </ul>
                 </li>
 
@@ -128,6 +138,7 @@ Like: www.facebook.com/terminalbd
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Admin</span></a>
                     <ul class="pcoded-submenu">
                         <li class=""><a href="{{ route('student_create') }}" class="" >New Student</a></li>
+                        <li class=""><a href="{{ route('teacher_create') }}" class="" >New Teacher</a></li>
                     </ul>
                 </li>
 
@@ -139,8 +150,6 @@ Like: www.facebook.com/terminalbd
                         <li class=""><a href="{{ route('student_index1') }}" class="" >Class-1</a></li>
                         <li class=""><a href="{{ route('student_index2') }}" class="" >Class-2</a></li>
                         <li class=""><a href="{{ route('student_index3') }}" class="" >Class-3</a></li>
-
-
                     </ul>
                 </li>
             </ul>

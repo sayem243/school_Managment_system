@@ -4,11 +4,11 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>New Class</h5>
+                    <h5>Settings Create</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
-                            <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
-                            <a href="{{ route('internet.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            {{--<a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>--}}
+                            {{--<a href="{{ route('internet.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>--}}
                         </div>
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,6 +18,7 @@
                                 <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
                                 <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
                                 <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+
                             </ul>
                         </div>
                     </div>
@@ -36,46 +37,39 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form method="post" action="{{ route('class_store') }}" class="needs-validation" novalidate>
+                        <form method="post" action="{{ route('setting_store') }}" class="needs-validation" novalidate>
                             <div class="form-group row">
                                 @csrf
-                                <label class="col-sm-3 col-form-label" for="class_name">Class <span class="required">*</span></label>
+                                <label class="col-sm-3 col-form-label" for="name">Setting Name <span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="class_name" id="class_name" aria-describedby="validationTooltipUsernamePrepend" placeholder="Enter New Class name" required />
+                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="validationTooltipUsernamePrepend" placeholder="Enter New Setting Name" required />
                                     <div class="invalid-tooltip">
-                                        Please create a new class.
+                                        Please create a new Section.
                                     </div>
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Group</label>
+                                @csrf
+                                <label class="col-sm-3 col-form-label" for="type">Type <span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="group" id="group" placeholder="Enter Group Name"  />
+                                    <input type="text" class="form-control" name="type" id="type" aria-describedby="validationTooltipUsernamePrepend" placeholder="Settings Type"  />
+                                    <div class="invalid-tooltip">
+                                        Please create a new Section.
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Admission Fee</label>
+                                @csrf
+                                <label class="col-sm-3 col-form-label" for="class_name">Slug </label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="admission_fee" id="admission_fee" placeholder=" Admission Fee"  />
+                                    <input type="text" class="form-control" name="section_name" id="section_name" aria-describedby="validationTooltipUsernamePrepend"   />
+                                    <div class="invalid-tooltip">
+                                        Please create a new Section.
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Monthly Fee</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="monthly_fee" id="monthly_fee" placeholder="Monthly Fee"  />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Exam Fee</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="exam_fee" id="exam_fee" placeholder="Exam Fee"  />
-                                </div>
-                            </div>
-
 
                             <div class="separator"></div>
                             <div class="line aligncenter">
@@ -90,6 +84,7 @@
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

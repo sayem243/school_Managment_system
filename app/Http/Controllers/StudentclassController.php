@@ -20,6 +20,10 @@ class StudentclassController extends Controller
           $studentclass->class_name=$request->class_name;
           $studentclass->section=$request->section;
           $studentclass->group=$request->group;
+          $studentclass->admission_fee = $request->admission_fee;
+          $studentclass->monthly_fee= $request->monthly_fee;
+          $studentclass->exam_fee= $request->exam_fee;
+
           $studentclass->save();
 
           return redirect()->route('class_create');

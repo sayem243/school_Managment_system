@@ -7,8 +7,8 @@
                     <h5>Teachers  Information</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
-                            <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
-                            <a href="{{ route('internet.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            {{--<a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>--}}
+                            <a href="{{ route('teacher_create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                         </div>
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -39,25 +39,28 @@
 
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="listview-item big faculty">
+                    @foreach($teachers as $teacher)
+
+                        <div class="col-md-6">
+                            <div class="listview-item big teacher">
                                 <div class="pull-left">
-                                    {{--<img src="http://www.northsouth.edu/assets/newimages/38809_788616094865_5623039_n_002.jpg">--}}
+                                    <img src="{{ Storage::url($teacher->photo) }}" width="100px">
                                 </div>
                                 <div class="listview-item-body">
-                                    <h2 class="listview-item-heading"><strong>Dr. Tamgid Ahmed Chowdhury</strong></h2>
+                                    <h2 class="listview-item-heading"><strong><a href=""> {{$teacher->name  }}</a></strong></h2>
                                     <b> Associate Professor &amp; <br>Director, MBA &amp; EMBA Programs</b> <br>Ph.D., Macquarie University, Australia <br>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-
-
                         </div>
+
+                    @endforeach
+
                     </div>
-
-
+                   {{-- end row--}}
 
                 </div>
+                {{--end of card body--}}
             </div>
         </div>
     </div>

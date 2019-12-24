@@ -4,7 +4,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>New Class</h5>
+                    <h5>Student Attendence</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
                             <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
@@ -18,6 +18,7 @@
                                 <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
                                 <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
                                 <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+
                             </ul>
                         </div>
                     </div>
@@ -36,51 +37,44 @@
                         </div>
                     @endif
                     <div class="card-body">
-                        <form method="post" action="{{ route('class_store') }}" class="needs-validation" novalidate>
-                            <div class="form-group row">
-                                @csrf
-                                <label class="col-sm-3 col-form-label" for="class_name">Class <span class="required">*</span></label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="class_name" id="class_name" aria-describedby="validationTooltipUsernamePrepend" placeholder="Enter New Class name" required />
-                                    <div class="invalid-tooltip">
-                                        Please create a new class.
-                                    </div>
-                                </div>
-                            </div>
+                        <form method="post" action="{{ route('attendence_store') }}" class="needs-validation" novalidate>
+                            {{  csrf_field() }}
+                            <table class="table table-striped table-bordered dataTable no-footer">
+                                <thead class="thead-dark">
+                                  <tr>
+                                     <th>SL</th>
+                                      <th>Name</th>
+                                      <th>Roll Number</th>
+                                      <th>Attendece</th>
+                                      <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
+                                            <i class="feather icon-settings"></i> </th>
 
+                                    </tr>
+                                    </thead>
+                               <tbody>
+                               @php $i=0; @endphp
+                               @foreach($attendences as $attendence)
+                                   @php $i++ @endphp
+                                   <tr>
+                                       <td>{{$i}}</td>
+                                       <td>{{$attendence->student_name }} </td>
+                                       <td>{{$attendence->id }}</td>
+                                       <td>
+                                           <input type="hidden" name="student_id[]" value="{{$attendence->id}}">
+                                           <input type="radio" name="attendence[{{$attendence->id}}]" value="1">P
+                                           <input type="radio" name="attendence[{{$attendence->id}}]" value="Absent">A
+                                       </td>
+                                       <td></td>
+                                   </tr>
+                               @endforeach
+                               </tbody>
 
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Group</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="group" id="group" placeholder="Enter Group Name"  />
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Admission Fee</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="admission_fee" id="admission_fee" placeholder=" Admission Fee"  />
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Monthly Fee</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="monthly_fee" id="monthly_fee" placeholder="Monthly Fee"  />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Exam Fee</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="exam_fee" id="exam_fee" placeholder="Exam Fee"  />
-                                </div>
-                            </div>
-
+                                </table>
 
                             <div class="separator"></div>
                             <div class="line aligncenter">
                                 <div class="form-group row">
-                                    <div class="col-sm-3 col-form-label"></div>
+                                    <div class="col-sm-4 col-form-label"></div>
                                     <div class="col-sm-6 col-form-label">
                                         <button type="submit" class="btn purple-bg white-font"> <i class="feather icon-save"></i> Save</button>
                                         <button type="reset" class="btn btn btn-outline-danger"> <i class="feather icon-refresh-ccw"></i> Cancel</button>
@@ -90,6 +84,7 @@
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

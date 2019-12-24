@@ -10,7 +10,8 @@ class TeacherController extends Controller
 
     public function index(){
 
-        return view('teachers.indexTeacher');
+        $teachers=Teacher::all();
+        return view('teachers.indexTeacher')->with('teachers',$teachers);
     }
 
 
@@ -21,6 +22,11 @@ class TeacherController extends Controller
     }
 
     public function store(Request $request){
+
+        $request->validate([
+            'mobile'=>'required',
+
+        ]);
 
         $teacher= New Teacher;
         $teacher->name= $request->name;
