@@ -117,6 +117,8 @@ Route::get('/admin/student/class/3','AdminController@indexThree')-> name('studen
 
 Route::get('class/create', 'StudentclassController@create')->name('class_create');
 Route::post('/class/store','StudentclassController@store')->name('class_store');
+Route::get('/all/class/fees','StudentclassController@allClass')->name('all_class');
+
 //Route::post('/class/store','StudentclassController@store')->name('class_store');
 
 /*=================== Section ===================== */
@@ -134,11 +136,17 @@ Route::get('/teachers/index','TeacherController@index')->name('teacher_index');
 Route::get('student/attendence','AttendenceController@create')->name('attendence_create');
 Route::post('student/attendence/store','AttendenceController@store')->name('attendence_store');
 
-
 /*=================== Settings Table ===================== */
 
 Route::get('setting/create','SettingController@create')->name('setting_create');
 Route::post('setting/store','SettingController@store')->name('setting_store');
 Route::post('setting/index','SettingController@index')->name('setting_index');
 
+/*=================== Students Fees ===================== */
 
+Route::get('student/fees/create','FeesController@create')->name('fees_create');
+Route::post('/student/fees/store','FeesController@store')->name('fees_store');
+//ajax
+Route::get('student/class/fees/admissionfees/{id}','FeesController@admission_fee')->name('admissionfees');
+Route::get('student/class/fees/examfees/{id}','FeesController@exam_fee')->name('examfees');
+Route::get('student/class/fees/monthlyfees/{id}','FeesController@monthly_fee')->name('monthly_fee');

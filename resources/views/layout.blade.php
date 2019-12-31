@@ -116,6 +116,18 @@ Like: www.facebook.com/terminalbd
                         {{--<li class=""><a href="{{ route('user.create') }}" class="" >New  User</a></li>--}}
                     {{--</ul>--}}
                 {{--</li>--}}
+
+                <li data-username="" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Fees</span></a>
+                    <ul class="pcoded-submenu">
+
+                        <li class=""><a href="{{ route('fees_create') }}" class="" >Student Fees</a></li>
+                    </ul>
+                </li>
+
+
+
+
                 <li data-username="" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Attendence</span></a>
                     <ul class="pcoded-submenu">

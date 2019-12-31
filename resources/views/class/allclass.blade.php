@@ -4,7 +4,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Student Information</h5>
+                    <h5>Class Fees</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
                             <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
@@ -42,32 +42,29 @@
                         <thead class="thead-dark">
                         <tr>
                             <th>SL</th>
-                            <th> Name</th>
-                            <th>ID</th>
-                            <th>Father Name</th>
-                            <th>Mother Name</th>
+                            <th> Class Name</th>
                             <th>Section</th>
-                            <th>Parents Mobile</th>
-                            <th>Father's Occupation </th>
+                            <th>Admission Fees</th>
+                            <th>Monthly Fees</th>
+                            <th>Exam Fees</th>
+                            <th>Group</th>
                             <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                                 <i class="feather icon-settings"></i>
                             </th>
-
                         </tr>
                         </thead>
                         <tbody>
                         @php $i=0; @endphp
-                        @foreach($admins as $admin)
+                        @foreach($allclasses as $allclass)
                             @php $i++ @endphp
                             <tr>
                                 <td>{{$i}} </td>
-                                <td>{{$admin->student_name}}</td>
-                                <td>{{$admin->id_no}}</td>
-                                <td>{{$admin->fname}}</td>
-                                <td>{{$admin->mothername}}</td>
-                                <td>{{$admin->section}}</td>
-                                <td>{{$admin->father_mobile}}</td>
-                                <td>{{$admin->father_occupation}}</td>
+                                <td>{{$allclass->class_name}}</td>
+                                <td>{{$allclass->section}}</td>
+                                <td>{{$allclass->admission_fee}}</td>
+                                <td>{{$allclass->monthly_fee}}</td>
+                                <td>{{$allclass->exam_fee}}</td>
+                                <td>{{$allclass->group}}</td>
                                 <td></td>
                             </tr>
                         @endforeach

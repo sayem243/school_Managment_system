@@ -66,7 +66,7 @@
                                         <td>{{$admin->fname}}</td>
                                         <td>{{$admin->mothername}}</td>
                                         <td>{{$admin->section}}</td>
-                                        <td>{{$admin->mobile}}</td>
+                                        <td>{{$admin->father_mobile}}</td>
                                         <td>{{$admin->father_occupation}}</td>
                                         <td></td>
                                     </tr>

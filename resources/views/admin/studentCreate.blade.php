@@ -7,8 +7,8 @@
                     <h5>New Student</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
-                            <a  href="{{ route('customer.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Customer</a>
-                            <a href="{{ route('customer.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+                            {{--<a  href="{{ route('customer.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Customer</a>--}}
+                            {{--<a href="{{ route('customer.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>--}}
                         </div>
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -28,9 +28,9 @@
                         <form method="post" action="{{ route('student_store') }}" class="needs-validation" novalidate>   @csrf
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="name">Student Name <span class="required">*</span></label>
-                                        <div class="col-form-label">
+                                    <div class="form-group row ">
+                                        <label class="col-sm-4 col-form-label" for="name" >Student Name <span class="required">*</span></label>
+                                        <div class="col-sm-7">
                                             <input type="text" class="form-control" name="student_name" id="student_name" aria-describedby="validationTooltipUsernamePrepend" required />
                                             <span class="help-block">Student full name</span>
                                             <div class="invalid-tooltip">
@@ -39,17 +39,31 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="name">Father's Name<span class="required">*</span></label>
-                                        <div class="col-form-label">
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="name">Father's Name<span class="required">*</span></label>
+                                        <div class="col-sm-7">
                                             <input type="text" class="form-control" name="fname" id="fname" aria-describedby="validationTooltipUsernamePrepend" required />
                                             <span class="help-block">Father's full name</span>
+                                            <div class="invalid-tooltip">
+                                                Please provide Fathers Name.
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="studentclasses_id">Class <span class="required">*</span></label>
-                                        <div class="col-form-label">
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="mobile">Father's Mobile No <span class="required">*</span></label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name="father_mobile" id="father_mobile" aria-describedby="validationTooltipUsernamePrepend" required />
+                                            <span class="help-block">Parents valid mobile no</span>
+                                            <div class="invalid-tooltip">
+                                                Please provide a valid Father's Mobile No.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="studentclasses_id">Class <span class="required">*</span></label>
+                                        <div class="col-sm-7">
                                             <select class="form-control" name="studentclasses_id">
                                                 <option value="">Select Class</option>
                                                 @foreach($classnames as $classname)
@@ -59,48 +73,84 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="photo">Student Photo<span class="required">*</span></label>
+                                        <div class="col-sm-7">
+                                            <input type="file" class="form-control" name="photo" id="photo" aria-describedby="validationTooltipUsernamePrepend" required />
+                                            <span class="help-block">Upload your Recent Photo</span>
+                                        </div>
+                                    </div>
 
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="mobile">Mobile No <span class="required">*</span></label>
-                                        <div class="col-form-label">
-                                            <input type="text" class="form-control" name="mobile" id="mobile" aria-describedby="validationTooltipUsernamePrepend" required />
-                                            <span class="help-block">Parents valid mobile no</span>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="bloodGroup">Blood Group</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name="bloodGroup" id="bloodGroup" aria-describedby="validationTooltipUsernamePrepend"  />
+                                            <span class="help-block">Please provide valid email address</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="email">Email Address</label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name="email" id="email" aria-describedby="validationTooltipUsernamePrepend"  />
+                                            <span class="help-block">Please provide valid email address</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="permanent_address">Permanent Address <span class="required">*</span></label>
+                                        <div class="col-sm-7">
+                                            <textarea class="form-control" name="permanent_address" id="permanent_address" rows="2" aria-describedby="validationTooltipUsernamePrepend" required ></textarea>
+                                            <span class="help-block">Permanent Address </span>
                                             <div class="invalid-tooltip">
-                                                Please provide a valid mobile no.
+                                                Please provide Permanent Address
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="email">Email Address</label>
-                                        <div class="col-form-label">
-                                            <input type="text" class="form-control" name="email" id="email" aria-describedby="validationTooltipUsernamePrepend" required />
-                                            <span class="help-block">Customer valid email address</span>
-                                        </div>
-                                    </div>
+
 
                                 </div>
 
                                 <div class="col-sm-6">
-
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="connectionDate">Date of Birth</label>
-                                        <div class="col-form-label">
+                                    <div class="form-group row ">
+                                        <label class="col-sm-4 col-form-label" for="connectionDate">Date of Birth</label>
+                                        <div class="col-sm-7">
                                             <input type="date" class="form-control datePicker" name="dob" id="dob" aria-describedby="validationTooltipUsernamePrepend" required />
+                                            <span class="help-block">Date of Birth </span>
+                                            <div class="invalid-tooltip">
+                                                Please provide your Excat Birth Date.
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="name">Mother's Name<span class="required">*</span></label>
-                                        <div class="col-form-label">
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="name">Mother's Name<span class="required">*</span></label>
+                                        <div class="col-sm-7">
                                             <input type="text" class="form-control" name="mothername" id="mothername" aria-describedby="validationTooltipUsernamePrepend" required />
                                             <span class="help-block">Mother's full name</span>
+                                            <div class="invalid-tooltip">
+                                                Please provide Mother's Name.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="mobile">Mother's Mobile No <span class="required">*</span></label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name="mother_mobile" id="mother_mobile" aria-describedby="validationTooltipUsernamePrepend" required />
+                                            <span class="help-block">Parents valid mobile no</span>
+                                            <div class="invalid-tooltip">
+                                                Please provide a valid Mother's Mobile No.
+                                            </div>
                                         </div>
                                     </div>
 
 
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="studentclasses_id">Section <span class="required">*</span></label>
-                                        <div class="col-form-label">
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="studentclasses_id">Section <span class="required">*</span></label>
+                                        <div class="col-sm-7">
                                             <select class="form-control" name="section">
                                                 <option value="">Select Section</option>
                                                 @foreach($sections as $section)
@@ -111,30 +161,52 @@
                                     </div>
 
 
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="father_occupation">Gender</label>
-                                        <select class="form-control" name="gender" id="gender">
-                                            <option value="male">Male</option>
-                                            <option value="female">Female</option>
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="father_occupation">Fathers Occupation<span class="required">*</span></label>
-                                        <div class="col-form-label">
-                                            <input type="text" class="form-control" name="father_occupation" id="father_occupation" />
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="emergency_number">Emergency Number <span class="required">*</span></label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name="emergency_number" id="emergency_number" aria-describedby="validationTooltipUsernamePrepend" required />
+                                            <span class="help-block">Parents valid mobile no</span>
+                                            <div class="invalid-tooltip">
+                                                Please provide a Emergency Mobile No.
+                                            </div>
                                         </div>
                                     </div>
 
 
-                                    <div class="form-group">
-                                        <label class="col-form-label" for="address">Address <span class="required">*</span></label>
-                                        <div class="col-form-label">
-                                            <textarea class="form-control" name="address" id="address" rows="3" aria-describedby="validationTooltipUsernamePrepend" required ></textarea>
-                                            <span class="help-block">Parmanent Address </span>
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="father_occupation">Gender</label>
+                                        <div class="col-sm-7">
+                                        <select class="form-control" name="gender" id="gender">
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
+                                            <span class="help-block">Select Your Gender </span>
                                             <div class="invalid-tooltip">
-                                                Please provide    address.
+                                                Please Select Your Gender
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="father_occupation">Fathers Occupation<span class="required">*</span></label>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" name="father_occupation" id="father_occupation" />
+
+                                        <span class="help-block">Father's Occupation </span>
+                                        <div class="invalid-tooltip">
+                                            Please provide a Father's Occupation
+                                        </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-4 col-form-label" for="present_address"> Present Address <span class="required">*</span></label>
+                                        <div class="col-sm-7">
+                                            <textarea class="form-control" name="present_address" id="present_address" rows="2" aria-describedby="validationTooltipUsernamePrepend" required ></textarea>
+                                            <span class="help-block">Present Address </span>
+                                            <div class="invalid-tooltip">
+                                                Please provide Present Address
                                             </div>
                                         </div>
                                     </div>
@@ -157,6 +229,5 @@
             </div>
         </div>
     </div>
-
 @endsection
 

@@ -29,14 +29,26 @@ class AdminController extends Controller
         $Student->student_name=$request->student_name;
         $Student->fname=$request->fname;
         $Student->studentclasses_id=$request->studentclasses_id;
-         $Student->section=$request->section;
-        $Student->mobile=$request->mobile;
+        $Student->section=$request->section;
         $Student->email=$request->email;
         $Student->dob=$request->dob;
         $Student->mothername=$request->mothername;
         $Student->gender=$request->gender;
         $Student->father_occupation=$request->father_occupation;
-        $Student->address=$request->address;
+
+        $Student->present_address=$request->present_address;
+        $Student->permanent_address=$request->permanent_address;
+
+        $Student->father_mobile=$request->father_mobile;
+        $Student->mother_mobile=$request->mother_mobile;
+        $Student->emergency_number=$request->emergency_number;
+        $Student->bloodGroup=$request->bloodGroup;
+
+         if($request->hasFile('photo')){
+             $Student->photo=$request->photo->store('public/images');
+         }
+
+
 
       /* start auto generted */
  $startOfYear = Carbon::now()->startOfYear();
@@ -45,7 +57,7 @@ class AdminController extends Controller
  $count = count($students) + 1;
  ///$student = admin::create($request->all());
 
- $Student->id_no = Carbon::now()->toDateString() . '-' . $count;
+ $Student->id_no = Carbon::now()->toDateString(). $count;
 
       /*   End of Auto generated*/
 

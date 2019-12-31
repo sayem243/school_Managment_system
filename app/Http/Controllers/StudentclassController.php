@@ -13,6 +13,14 @@ class StudentclassController extends Controller
         return view('class.createClass');
     }
 
+
+    public function allClass(){
+
+    $allclasses= Studentclass::all();
+    return view('class.allclass')->with('allclasses',$allclasses);
+
+    }
+
      public function store(Request $request){
 
 

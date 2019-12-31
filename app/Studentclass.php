@@ -11,4 +11,8 @@ class Studentclass extends Model
         return $this->hasMany('App\admin');
 
     }
+
+    public function Fees(){
+        return $this->hasMany('App\Fees');
+    }
 }
