@@ -8,7 +8,7 @@ class Fees extends Model
 {
     public  function Studentclass(){
 
-        return $this->belongsTo('App\Studentclass');
+        return $this->hasMany('App\Studentclass');
 
     }
 

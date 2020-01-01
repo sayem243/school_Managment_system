@@ -8,13 +8,14 @@ class admin extends Model
 {
     public  function Studentclass(){
 
-      return $this->belongsTo('App\admin');
+      return $this->belongsTo('App\Studentclass');
     }
 
     public function Section(){
 
-        return $this->belongsTo('App\admin');
+        return $this->belongsTo(Section::class);
     }
 
+   /* check*/
 
 }

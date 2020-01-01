@@ -4,15 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Studentclass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentclassController extends Controller
 {
 
-      public function create(){
-
+    public function create(){
         return view('class.createClass');
     }
+    //sql checking
+  /*  public function create(){
 
+          $classes=DB::table('settings')
+              ->select(DB::raw('*'))
+              ->where('type','=','class')
+              ->get();
+
+        return view('class.createClass',['classes'=>$classes]);
+    }*/
 
     public function allClass(){
 

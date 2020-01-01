@@ -27,9 +27,6 @@ class AttendenceController extends Controller
 
             $attendence->save();
         }
-
-
     }
-
 
 }

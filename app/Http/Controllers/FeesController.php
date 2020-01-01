@@ -15,7 +15,6 @@ class FeesController extends Controller
         $class=Studentclass::all();
 
         return view('fees.create',['classes'=>$class]);
-
     }
 
 
@@ -53,18 +52,16 @@ class FeesController extends Controller
     }
 
 
-
-
     public function store (Request $request){
 
         $fees = new Fees;
         $fees->class_name_ID=$request->class_name;
-//        $fees->admissionFees_ID=$request->admissionFees;
-//        $fees->monthly_fee_ID=$request->monthly_fee;
-//        $fees->exam_fee_ID=$request->exam_fee;
-
-
-        $fees->save();
+        $fees->admissionFees_ID=$request->admissionFees;
+        $fees->monthly_fee_ID=$request->monthly_fee;
+        $fees->exam_fee_ID=$request->exam_fee;
+//
+      var_dump($fees);die;
+        //$fees->save();
 
         return redirect()->route('fees_create');
 

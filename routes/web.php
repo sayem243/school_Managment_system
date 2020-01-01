@@ -150,3 +150,6 @@ Route::post('/student/fees/store','FeesController@store')->name('fees_store');
 Route::get('student/class/fees/admissionfees/{id}','FeesController@admission_fee')->name('admissionfees');
 Route::get('student/class/fees/examfees/{id}','FeesController@exam_fee')->name('examfees');
 Route::get('student/class/fees/monthlyfees/{id}','FeesController@monthly_fee')->name('monthly_fee');
+
+/*=================== Batch ===================== */
+/*Route::post('create/batch','')*/

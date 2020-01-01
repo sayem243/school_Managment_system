@@ -45,10 +45,8 @@ class AdminController extends Controller
         $Student->bloodGroup=$request->bloodGroup;
 
          if($request->hasFile('photo')){
-             $Student->photo=$request->photo->store('public/images');
+             $Student->photo = $request->photo->store('public/images');
          }
-
-
 
       /* start auto generted */
  $startOfYear = Carbon::now()->startOfYear();
@@ -61,8 +59,7 @@ class AdminController extends Controller
 
       /*   End of Auto generated*/
 
-
-       // var_dump($Student);die;
+        //var_dump($Student);die;
          $Student->save();
         return redirect()->route('student_create');
     }

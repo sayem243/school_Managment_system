@@ -25,6 +25,7 @@ class TeacherController extends Controller
 
         $request->validate([
             'mobile'=>'required',
+            'nid'=>'required'
 
         ]);
 

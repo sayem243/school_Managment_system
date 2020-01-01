@@ -8,6 +8,6 @@ class Section extends Model
 {
     public function admin(){
 
-        return $this->hasMany('App\admin');
+        return $this->hasMany(admin::class);
     }
 }

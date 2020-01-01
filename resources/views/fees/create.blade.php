@@ -43,7 +43,6 @@
                                             <option value="{{$class->id}}"> {{$class->class_name}}</option>
                                         @endforeach
                                     </select>
-
                                     <div class="invalid-tooltip">
                                         Please create a new class.
                                     </div>

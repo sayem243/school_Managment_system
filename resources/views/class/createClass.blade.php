@@ -41,7 +41,14 @@
                                 @csrf
                                 <label class="col-sm-3 col-form-label" for="class_name">Class <span class="required">*</span></label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="class_name" id="class_name" aria-describedby="validationTooltipUsernamePrepend" placeholder="Enter New Class name" required />
+                                    <input type="text" class="form-control" name="class_name" id="class_name" aria-describedby="validationTooltipUsernamePrepend" required />
+                                 {{--   <select class="form-control" name="class">
+                                        <option value="">Select Class</option>
+                                        @foreach($classes as $class)
+                                            <option value="{{$classes}}"> {{$class->name}}  </option>
+                                        @endforeach
+                                    </select>
+--}}
                                     <div class="invalid-tooltip">
                                         Please create a new class.
                                     </div>
@@ -52,27 +59,27 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="group">Group</label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="group" id="group" placeholder="Enter Group Name"  />
+                                    <input type="text" class="form-control" name="group" id="group"   />
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="group">Admission Fee</label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="admission_fee" id="admission_fee" placeholder=" Admission Fee"  />
+                                    <input type="text" class="form-control" name="admission_fee" id="admission_fee"   />
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="group">Monthly Fee</label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="monthly_fee" id="monthly_fee" placeholder="Monthly Fee"  />
+                                    <input type="text" class="form-control" name="monthly_fee" id="monthly_fee"  />
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="group">Exam Fee</label>
+                                <label class="col-sm-3 col-form-label" for="exam_fee">Exam Fee</label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="exam_fee" id="exam_fee" placeholder="Exam Fee"  />
+                                    <input type="text" class="form-control" name="exam_fee" id="exam_fee"   />
                                 </div>
                             </div>
 
