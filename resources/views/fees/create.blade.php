@@ -33,6 +33,7 @@
                     @endif
                     <div class="card-body">
                         <form method="post" action="{{ route('fees_store') }}" class="needs-validation" novalidate>
+
                             <div class="form-group row">
                                 @csrf
                                 <label class="col-sm-3 col-form-label" for="class_name">Class <span class="required">*</span></label>
@@ -50,33 +51,41 @@
                             </div>
 
 
-                            {{--<div class="form-group row">--}}
-                                {{--<label class="col-sm-3 col-form-label" for="group">Group</label>--}}
-                                {{--<div class="col-sm-6 col-form-label">--}}
-                                    {{--<input type="text" class="form-control" name="group" id="group" placeholder="Enter Group Name"  />--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
 
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="admissionFees">Admission Fee</label>
                                 <div class="col-sm-6 col-form-label">
                                     <input type="text" class="form-control admissionFees" name="admissionFees" id="admissionFees" placeholder=" Admission Fee"  />
                                 </div>
+
+                                <div class="col-sm-2 col-form-label">
+                                    <input type="text" class="form-control" name="admissionFee" id="admissionFee" />
+                                </div>
+
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="monthly_fee">Monthly Fee</label>
                                 <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="monthly_fee" id="monthly_fee" placeholder="Monthly Fee"  />
+                                    <input type="text" class="form-control" name="monthly_fee" id="monthly_fee" placeholder="Monthly Fee"/>
                                 </div>
+
+                                <div class="col-sm-2 col-form-label">
+                                    <input type="text" class="form-control admissionFees" name="monthlyFee" id="monthlyFee"  />
+                                </div>
+
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="exam_fee">Exam Fee</label>
                                 <div class="col-sm-6 col-form-label">
                                     <input type="text" class="form-control" name="exam_fee" id="exam_fee" placeholder="Exam Fee"  />
                                 </div>
-                            </div>
 
+                                <div class="col-sm-2 col-form-label">
+                                    <input type="text" class="form-control" name="examFee" id="examFee"/>
+                                </div>
+
+                            </div>
 
                             <div class="separator"></div>
                             <div class="line aligncenter">
@@ -97,9 +106,6 @@
 
     <script type="text/javascript">
 
-
-
-
         $("#class_name").on('change',function (e) {
             var element=e.target;
             e.preventDefault();
@@ -117,10 +123,28 @@
 
                     $('#admissionFees').val(data[0].admission_fee);
                 }
+            });
+
+            var max = admission_fee;
+            $('input').keyup(function(){
+
+                var inputValue = $(this).val();
+                if(inputValue > max){
+                    alert('greater!');
+
+                    $(this).val('')
+                }
             })
+
 
         });
 
+
+
+
+
+
+//end;
 
         $("#class_name").on('change',function (e) {
             var element=e.target;
@@ -155,7 +179,6 @@
                     $('#monthly_fee').val(data[0].monthly_fee);
                 }
             })
-
         })
 
     </script>

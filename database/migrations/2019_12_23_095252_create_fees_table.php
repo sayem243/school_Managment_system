@@ -15,17 +15,12 @@ class CreateFeesTable extends Migration
     {
         Schema::create('fees', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('exam_fee')->nullable();
-            $table->string('labfee')->nullable();
-            $table->unsignedBigInteger('class_name_ID');
-            $table->unsignedBigInteger('admissionFees_ID');
-            $table->unsignedBigInteger('monthly_fee_ID');
-            $table->unsignedBigInteger('exam_fee_ID');
-
-            $table->foreign('class_name_ID')->references('id')->on('studentclasses')->nullable();
-            $table->foreign('admissionFees_ID')->references('id')->on('studentclasses')->nullable();
-            $table->foreign('monthly_fee_ID')->references('id')->on('studentclasses')->nullable();
-            $table->foreign('exam_fee_ID')->references('id')->on('studentclasses')->nullable();
+            $table->string('date')->nullable();
+            $table->unsignedBigInteger('class_id');
+            $table->string('admissionFee')->nullable();
+            $table->string('monthlyFee')->nullable();
+            $table->string('examFee')->nullable();
+            $table->foreign('class_id')->references('id')->on('studentclasses')->nullable();
 
 
             $table->timestamps();

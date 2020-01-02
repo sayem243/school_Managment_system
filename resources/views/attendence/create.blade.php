@@ -60,7 +60,7 @@
                                        <td>{{$attendence->student_name }} </td>
                                        <td>{{$attendence->id }}</td>
                                        <td>
-                                           <input type="hidden" name="student_id[]" value="{{$attendence->id}}">
+                                           <input type="hidden"name="student_id[]" value="{{$attendence->id}}">
                                            <input type="radio" name="attendence[{{$attendence->id}}]" value="1">P
                                            <input type="radio" name="attendence[{{$attendence->id}}]" value="Absent">A
                                        </td>

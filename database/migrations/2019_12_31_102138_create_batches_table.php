@@ -13,7 +13,7 @@ class CreateBatchesTable extends Migration
      */
     public function up()
     {
-        Schema::create('batches', function (Blueprint $table) {
+         Schema::create('batches', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
         });
@@ -28,4 +28,6 @@ class CreateBatchesTable extends Migration
     {
         Schema::dropIfExists('batches');
     }
+
+
 }

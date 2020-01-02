@@ -15,9 +15,6 @@ class Studentclass extends Model
         return $this->belongsTo('App\Fees');
     }
 
-//    public function setting(){
-//        return $this->hasMany('App\Setting');
-//    }
 
 
 }
