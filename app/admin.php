@@ -16,4 +16,5 @@ class admin extends Model
         return $this->belongsTo('App\Section');
     }
 
+
 }

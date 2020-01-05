@@ -32,12 +32,35 @@
                         </div>
                     @endif
                     <div class="card-body">
+
                         <form method="post" action="{{ route('fees_store') }}" class="needs-validation" novalidate>
 
                             <div class="form-group row">
                                 @csrf
+                                <label class="col-sm-3 col-form-label" for="month">Months <span class="required">*</span></label>
+                                <div class="col-sm-2 col-form-label">
+                                    <select class="form-control" name="month" id="month">
+                                        <option value=""> Select Months</option>
+                                        @foreach($months as $month)
+                                            <option value="{{$month->id}}"> {{$month->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="invalid-tooltip">
+                                        Select Month
+                                    </div>
+                                </div>
+                                <label class="col-sm-0 col-form-label" for="date">Year :</label>
+                                <div class="col-sm-2 col-form-label">
+                                    <input type="text" class="form-control" name="year" id="year" />
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group row">
+                                @csrf
                                 <label class="col-sm-3 col-form-label" for="class_name">Class <span class="required">*</span></label>
-                                <div class="col-sm-6 col-form-label">
+                                <div class="col-sm-2 col-form-label">
                                     <select class="form-control" name="class_name" id="class_name">
                                         <option value=""> Select Class</option>
                                         @foreach($classes as $class)
@@ -51,12 +74,8 @@
                             </div>
 
 
-
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="admissionFees">Admission Fee</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control admissionFees" name="admissionFees" id="admissionFees" placeholder=" Admission Fee"  />
-                                </div>
+                                <label class="col-sm-3 col-form-label" for="admissionFees">Admission Fee (<span id="admissionFees"> </span>)</label>
 
                                 <div class="col-sm-2 col-form-label">
                                     <input type="text" class="form-control" name="admissionFee" id="admissionFee" />
@@ -65,22 +84,14 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="monthly_fee">Monthly Fee</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="monthly_fee" id="monthly_fee" placeholder="Monthly Fee"/>
-                                </div>
-
+                                <label class="col-sm-3 col-form-label" for="monthly_fee">Monthly Fee (<span id="monthly_fee"></span>) </label>
                                 <div class="col-sm-2 col-form-label">
                                     <input type="text" class="form-control admissionFees" name="monthlyFee" id="monthlyFee"  />
                                 </div>
 
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label" for="exam_fee">Exam Fee</label>
-                                <div class="col-sm-6 col-form-label">
-                                    <input type="text" class="form-control" name="exam_fee" id="exam_fee" placeholder="Exam Fee"  />
-                                </div>
-
+                                <label class="col-sm-3 col-form-label" for="exam_fee">Exam Fee (<span id="exam_fee"></span>)</label>
                                 <div class="col-sm-2 col-form-label">
                                     <input type="text" class="form-control" name="examFee" id="examFee"/>
                                 </div>
@@ -120,66 +131,14 @@
                 url:'/student/class/fees/admissionfees/'+id,
                 data:{},
                 success:function (data) {
-
-                    $('#admissionFees').val(data[0].admission_fee);
+                    $('#admissionFees').text(data[0].admission_fee);
+                    $('#exam_fee').text(data[0].exam_fee);
+                    $('#monthly_fee').text(data[0].monthly_fee);
                 }
             });
 
-            var max = admission_fee;
-            $('input').keyup(function(){
-
-                var inputValue = $(this).val();
-                if(inputValue > max){
-                    alert('greater!');
-
-                    $(this).val('')
-                }
-            })
-
-
         });
 
-
-
-
-
-
-//end;
-
-        $("#class_name").on('change',function (e) {
-            var element=e.target;
-            e.preventDefault();
-            var id=$(this).val();
-            if(id==''){
-                $('#exam_fee').val('');
-                return false;
-            }
-
-            $.ajax({
-                type:'GET',
-                dataType:'json',
-                url:'/student/class/fees/examfees/'+id,
-                data:{},
-                success:function (data) {
-                    $('#exam_fee').val(data[0].exam_fee);
-                }
-            })
-        });
-
-        $("#class_name").on('change',function (e) {
-            var element=e.target;
-            e.preventDefault();
-            var id=$(this).val();
-            $.ajax({
-                type:'GET',
-                dataType:'json',
-                url:'/student/class/fees/monthlyfees/'+id,
-                data:{},
-                success:function (data) {
-                    $('#monthly_fee').val(data[0].monthly_fee);
-                }
-            })
-        })
 
     </script>
 

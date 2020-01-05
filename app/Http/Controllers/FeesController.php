@@ -13,8 +13,11 @@ class FeesController extends Controller
     public function create(){
 
         $class=Studentclass::all();
-
-        return view('fees.create',['classes'=>$class]);
+        $months=DB::table('settings')
+            ->select(DB::raw('*'))
+            ->where('type','=','month')
+            ->get();
+        return view('fees.create',['classes'=>$class, 'months'=>$months]);
     }
 
 
@@ -55,6 +58,9 @@ class FeesController extends Controller
     public function store (Request $request){
 
         $fees = new Fees;
+        $fees->month=$request->month;
+        $fees->year=$request->year;
+
         $fees->class_id=$request->class_name;
         $fees->admissionFee=$request->admissionFee;
         $fees->monthlyFee=$request->monthlyFee;
