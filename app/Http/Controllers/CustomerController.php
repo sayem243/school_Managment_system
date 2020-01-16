@@ -295,10 +295,12 @@ class CustomerController extends Controller
         $rows->addSelect('bandWidth.name as bandWidth');
         $rows->addSelect('assignBandWidth.name as assignBandWidth');
         $rows->addSelect('status.name as connectionStatus');
+
         if(isset($query['customerName'])){
             $name = $query['customerName'];
             $rows->where('customers.name','like',"{$name}%");
         }
+
         if(isset($query['customerMobile'])){
             $mobile = $query['customerMobile'];
             $rows->where('customers.mobile','like',"{$mobile}%");
@@ -352,7 +354,7 @@ class CustomerController extends Controller
                 $connectionDate     = date('d-m-Y',strtotime($post->connectionDate)),
                 $outstanding            = $post->outstanding,
                 "<div class='btn-group card-option'><button type='button' class='btn btn-notify' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><i class='fas fa-ellipsis-v'></i></button><ul class='list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right' x-placement='bottom-end'>
- <li class='dropdown-item'> <a href='/customer/show/{$id}' ><i class='feather icon-eye'></i> View</a></li>
+<li class='dropdown-item'> <a href='/customer/show/{$id}' ><i class='feather icon-eye'></i> View</a></li>
 <li class='dropdown-item'> <a href='/customer/edit/{$id}'> <i class='feather icon-edit'></i> Edit</a></li>
 <li class='dropdown-item'> <a  href='/customer/destroy/{$id}'> <i class='feather icon-trash-2'></i> Remove</a></li>
 <li class='dropdown-item'> <a  href='/customer/ledger/{$id}'> <i class='feather icon-currency'></i> Ledger</a></li>

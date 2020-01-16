@@ -15,7 +15,7 @@ class CreateFeesTable extends Migration
     {
         Schema::create('fees', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('month');
+            $table->unsignedBigInteger('month_id');
             $table->unsignedBigInteger('class_id');
             $table->string('admissionFee')->nullable();
             $table->string('monthlyFee')->nullable();
@@ -24,10 +24,16 @@ class CreateFeesTable extends Migration
             $table->string('year')->nullable();
 
             $table->foreign('class_id')->references('id')->on('studentclasses')->nullable();
-            $table->foreign('month')->references('id')->on('settings')->nullable();
+            $table->foreign('month_id')->references('id')->on('settings')->nullable();
             $table->timestamps();
         });
+
+
+
+
     }
+
+
 
     /**
      * Reverse the migrations.

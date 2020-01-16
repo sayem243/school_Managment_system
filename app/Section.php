@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Section extends Model
 {
-
-//    student
+//student
     public function admin(){
-
-        return $this->hasMany('App\admin');
+        return $this->hasMany(admin::class);
     }
 }

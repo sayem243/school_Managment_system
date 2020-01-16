@@ -11,9 +11,9 @@ class admin extends Model
       return $this->belongsTo('App\Studentclass');
     }
 
-    public function sections(){
+    public function section(){
 
-        return $this->belongsTo('App\Section');
+        return $this->belongsTo(Section::class ,'section');
     }
 
 

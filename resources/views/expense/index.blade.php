@@ -4,12 +4,11 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Student Information</h5>
+                    <h5> Daily Expense Information</h5>
                     <div class="card-header-right">
-                      {{--  <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
-                            <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
-                            <a href="{{ route('internet.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
-                        </div>--}}
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
+
+                        </div>
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-ellipsis-v"></i>
@@ -42,13 +41,12 @@
                         <thead class="thead-dark">
                         <tr>
                             <th>SL</th>
-                            <th>Name</th>
-                            <th>ID</th>
-                            <th>Father Name</th>
-                            <th>Mother Name</th>
-                            <th>Section</th>
-                            <th>Parents Mobile</th>
-                            <th>Father's Occupation </th>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+
+
                             <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
                                 <i class="feather icon-settings"></i>
                             </th>
@@ -57,18 +55,14 @@
                         </thead>
                         <tbody>
                         @php $i=0; @endphp
-                        @foreach($admins as $admin)
+                        @foreach($expenses as $expense)
                             @php $i++ @endphp
                             <tr>
                                 <td>{{$i}} </td>
-                                <td>{{$admin->student_name}}</td>
-                                <td>{{$admin->id_no}}</td>
-                                <td>{{$admin->fname}}</td>
-                                <td>{{$admin->mothername}}</td>
-                                <td>{{$admin->section}}</td>
-                                <td>{{$admin->father_mobile}}</td>
-                                <td>{{$admin->father_occupation}}</td>
-                                <td> </td>
+                                <td>{{$expense->date}}</td>
+                                <td>{{$expense->title}}</td>
+                                <td>{{$expense->amount}}</td>
+                                <td></td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -76,6 +70,7 @@
                 </div>
                 {{--</div>--}}
             </div>
+
         </div>
     </div>
 

@@ -10,4 +10,16 @@ class Setting extends Model
 //    public function Studentclass(){
 //        return $this->belongsTo('App\Studentclass');
 //    }
+
+    public function month(){
+        return $this->hasMany('App\Fees');
+    }
+
+
+
+
+
+
+
+
 }

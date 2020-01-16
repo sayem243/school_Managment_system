@@ -7,8 +7,7 @@
                     <h5>Student Information</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
-                            <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
-                            <a href="{{ route('internet.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
+
                         </div>
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,40 +37,40 @@
                     @endif
 
                         <div class="card-body">
-                            <table class="table table-striped table-bordered dataTable no-footer">
+                            <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
                                 <thead class="thead-dark">
+                                <tr role="row" class="filter">
+                                    <td colspan="2">
+                                        <input  type="text" class="form-control form-filter input-sm" name="studentName" id="studentName" placeholder="Name"> </td>
+                                    <td>
+                                        <input type="text" class="form-control form-filter input-sm" placeholder="studentID" name="id_no" id="id_no"> </td>
+                                    <td>
+                                        <select class="form-control" name="classID" id="ClassID">
+                                            <option value=""> -Class- </option>
+                                            @foreach($classes as $class)
+                                                <option value="{{ $class->id }}">{{ $class->class_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+
+
+
+                                </tr>
+
                                 <tr>
-                                    <th>SL</th>
-                                    <th> Name</th>
-                                    <th>ID</th>
-                                    <th>Father Name</th>
-                                    <th>Mother Name</th>
-                                    <th>Section</th>
-                                    <th>Parents Mobile</th>
-                                    <th>Father's Occupation </th>
-                                    <th scope="col text-center" class="sorting_disabled" rowspan="1" colspan="1" aria-label style="width: 24px;">
-                                        <i class="feather icon-settings"></i>
-                                    </th>
+                                    <th scope="col">SL</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Class</th>
+                                    {{--<th>Father Name</th>--}}
+                                    {{--<th>Mother Name</th>--}}
+                                    {{--<th>Section</th>--}}
+                                    {{--<th>Parents Mobile</th>--}}
+                                    {{--<th>Father's Occupation </th>--}}
 
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @php $i=0; @endphp
-                                @foreach($admins as $admin)
-                                    @php $i++ @endphp
-                                    <tr>
-                                        <td>{{$i}} </td>
-                                        <td>{{$admin->student_name}}</td>
-                                        <td>{{$admin->id_no}}</td>
-                                        <td>{{$admin->fname}}</td>
-                                        <td>{{$admin->mothername}}</td>
-                                        <td>{{$admin->section}}</td>
-                                        <td>{{$admin->father_mobile}}</td>
-                                        <td>{{$admin->father_occupation}}</td>
-                                        <td></td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
+
                             </table>
                         </div>
                     {{--</div>--}}
@@ -80,4 +79,8 @@
             </div>
         </div>
 
+@endsection
+
+@section('js')
+    <script src="{{ asset("assets/datatable/student.js") }}" ></script>
 @endsection

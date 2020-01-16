@@ -43,7 +43,12 @@ Like: www.facebook.com/terminalbd
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    {{--Datepicker--}}
+    {{--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>--}}
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+       <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+        {{--end of datepicker--}}
 
 </head>
 <!-- end::Head -->
@@ -121,8 +126,8 @@ Like: www.facebook.com/terminalbd
                 <li data-username="" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Fees</span></a>
                     <ul class="pcoded-submenu">
-
-                        <li class=""><a href="{{ route('fees_create') }}" class="" >Student Fees</a></li>
+                        <li class=""><a href="{{ route('fees_create') }}" class="" >New Fees</a></li>
+                        <li class=""><a href="{{ route('fees_index') }}" class="" >Student Fees</a></li>
                     </ul>
                 </li>
 
@@ -235,6 +240,9 @@ Like: www.facebook.com/terminalbd
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote-bs4.js"></script>
+
+
+
 <!-- Common scripts -->
 @yield('js')
 <script src="{{ asset('assets/js/scripts.js') }}"></script>

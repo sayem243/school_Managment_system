@@ -8,6 +8,7 @@ use App\Studentclass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 
 //use DB;
 
@@ -64,8 +65,16 @@ class AdminController extends Controller
         return redirect()->route('student_create');
     }
 
+    public function indexOne(){
 
-    public function index(){
+        $admins = admin::all();
+        $class =Studentclass::all();
+
+        // print_r($admins);
+        return view('admin.index',['admins'=>$admins , 'classes'=>$class]);
+    }
+
+    public function indexTwo(){
 
        $admins = DB::table('admins')
             ->select(DB::raw('*'))
@@ -74,20 +83,100 @@ class AdminController extends Controller
         // print_r($admins);
              return view('admin.index',['admins'=>$admins]);
     }
-    public function indexOne(){
-
-        $admins = DB::table('admins')
-            ->select(DB::raw('*'))
-            ->where('studentclasses_id','=',1)
-            ->get();
-        // print_r($admins);
-        return view('admin.index',['admins'=>$admins]);
-    }
 
     public function indexThree(){
         $admins=DB::table('admins')->select(DB::raw('*'))->where('studentclasses_id','=',3)->get();
         return view('admin.indexThree',['admins'=>$admins]);
     }
+
+    public function dataTable(Request $request){
+
+        $query = $request->request->all();
+        $countRecords =  DB::table('admins');
+        $countRecords->select(DB::raw('count(*) as totalStudent'));
+        if(isset($query['studentName'])){
+            $name = $query['studentName'];
+            $countRecords->where('admins.student_name','like',"{$name}%");
+        }
+        if(isset($query['id_no'])){
+            $id_no=$query['id_no'];
+            $countRecords->where('admins.id_no','like',"{$id_no}%");
+        }
+
+        if(isset($query['ClassID'])){
+            $ClassID=$query['ClassID'];
+            $countRecords->where('admins.studentclasses_id','like',$ClassID);
+        }
+
+        $tcount = $countRecords->first();
+        $iTotalRecords = $tcount->totalStudent;
+        $iDisplayLength = intval($_REQUEST['length']);
+        $iDisplayLength = $iDisplayLength < 0 ? $iTotalRecords : $iDisplayLength;
+        $iDisplayStart = intval($_REQUEST['start']);
+        $sEcho = intval($_REQUEST['draw']);
+        $records = array();
+        $records["data"] = array();
+        $end = $iDisplayStart + $iDisplayLength;
+        $end = $end > $iTotalRecords ? $iTotalRecords : $end;
+
+        $columnIndex = $_POST['order'][0]['column']; // Column index
+        $columnName = $_POST['columns'][$columnIndex]['name']; // Column name
+        $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
+
+        $rows = DB::table('admins');
+        $rows->select('admins.student_name as name','admins.id_no as studentID');
+        $rows->join('studentclasses', 'admins.studentclasses_id', '=', 'studentclasses.id');
+        $rows->addSelect('studentclasses.class_name as class');
+
+        if(isset($query['studentName'])){
+            $name = $query['studentName'];
+            $rows->where('admins.student_name','like',"{$name}%");
+        }
+
+        if(isset($query['id_no'])){
+            $id_no=$query['id_no'];
+            $rows->where('admins.id_no','like',"{$id_no}");
+        }
+
+        if(isset($query['ClassID'])){
+            $ClassID=$query['ClassID'];
+            $rows->where('admins.studentclasses_id','like',$ClassID);
+        }
+
+
+
+        $rows->offset($iDisplayStart);
+        $rows->limit($iDisplayLength);
+        $rows->orderBy($columnName,$columnSortOrder);
+        $result = $rows->get();
+        $i = $iDisplayStart > 0  ? ($iDisplayStart+1) : 1;
+
+        foreach ($result as $post):
+
+            $records["data"][] = array(
+                $id                 = $i,
+                $name               = $post->name,
+                $id_no              = $post->studentID,
+                $ClassID            = $post->class,
+
+);
+            $i++;
+        endforeach;
+
+      /*  if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+        }*/
+
+        $records["draw"] = $sEcho;
+        $records["recordsTotal"] = $iTotalRecords;
+        $records["recordsFiltered"] = $iTotalRecords;
+
+        return new JsonResponse($records);
+
+    }
+
+
 
 
 }

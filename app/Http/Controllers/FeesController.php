@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Fees;
+use App\Setting;
 use App\Studentclass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -58,7 +59,7 @@ class FeesController extends Controller
     public function store (Request $request){
 
         $fees = new Fees;
-        $fees->month=$request->month;
+        $fees->month_id=$request->month;
         $fees->year=$request->year;
 
         $fees->class_id=$request->class_name;
@@ -66,13 +67,16 @@ class FeesController extends Controller
         $fees->monthlyFee=$request->monthlyFee;
         $fees->examFee=$request->examFee;
 //
-
         $fees->save();
 
         return redirect()->route('fees_create');
 
     }
+    public function index(){
 
+         $fees=Fees::all();
+         return view('fees.index',['fees'=>$fees]);
+    }
 
 
 }

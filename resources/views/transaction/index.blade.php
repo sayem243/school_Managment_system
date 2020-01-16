@@ -44,7 +44,6 @@
                         <tr role="row" class="filter">
                             <td colspan="2">
                                 <input  type="date" class="form-control form-filter input-sm input-daterange" name="updated" id="updated" placeholder="date"> </td>
-
                             <td>
                                 <input  type="text" class="form-control  input-sm" name="customerName" id="customerName" placeholder="Name"> </td>
                             <td>
