@@ -107,6 +107,10 @@ class AdminController extends Controller
             $ClassID=$query['ClassID'];
             $countRecords->where('admins.studentclasses_id','like',$ClassID);
         }
+        if(isset($query['emergency_number'])){
+            $emergency_number=$query['emergency_number'];
+            $countRecords->where('admins.emergency_number','like',"{$emergency_number}%");
+        }
 
         $tcount = $countRecords->first();
         $iTotalRecords = $tcount->totalStudent;
@@ -124,7 +128,7 @@ class AdminController extends Controller
         $columnSortOrder = $_POST['order'][0]['dir']; // asc or desc
 
         $rows = DB::table('admins');
-        $rows->select('admins.student_name as name','admins.id_no as studentID');
+        $rows->select('admins.student_name as name','admins.id_no as studentID','admins.emergency_number as emergency_number');
         $rows->join('studentclasses', 'admins.studentclasses_id', '=', 'studentclasses.id');
         $rows->addSelect('studentclasses.class_name as class');
 
@@ -135,7 +139,7 @@ class AdminController extends Controller
 
         if(isset($query['id_no'])){
             $id_no=$query['id_no'];
-            $rows->where('admins.id_no','like',"{$id_no}");
+            $rows->where('admins.id_no','like',"{$id_no}%");
         }
 
         if(isset($query['ClassID'])){
@@ -143,6 +147,10 @@ class AdminController extends Controller
             $rows->where('admins.studentclasses_id','like',$ClassID);
         }
 
+        if(isset($query['emergency_number'])){
+            $emergency_number=$query['emergency_number'];
+            $rows->where('admins.emergency_number','like',"{$emergency_number}%");
+        }
 
 
         $rows->offset($iDisplayStart);
@@ -158,7 +166,7 @@ class AdminController extends Controller
                 $name               = $post->name,
                 $id_no              = $post->studentID,
                 $ClassID            = $post->class,
-
+                $emergency_number   =$post->emergency_number,
 );
             $i++;
         endforeach;

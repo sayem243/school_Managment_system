@@ -155,6 +155,7 @@ Route::get('student/class/fees/admissionfees/{id}','FeesController@admission_fee
 /*=================== Batch ===================== */
 /*Route::post('create/batch','')*/
 
+
 /*===================Expense===================== */
 
 Route::get('expense/create/','ExpenseController@create')->name('expense_create');

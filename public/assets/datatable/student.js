@@ -20,6 +20,7 @@ $(document).ready(function () {
                 var studentName = $('#studentName').val();
                 var id_no = $('#id_no').val();
                 var ClassID=$('#ClassID').val();
+                var emergency_number=$('#emergency_number').val();
                 // var customerMobile = $('#customerMobile').val();
                 // var zoneId = $('#zoneId').val();
                 // var package_id = $('#package_id').val();
@@ -34,6 +35,8 @@ $(document).ready(function () {
                 data.studentName = studentName;
                 data.id_no=id_no;
                 data.ClassID=ClassID;
+                data.emergency_number=emergency_number;
+
 
                 // data.customerUser = customerUser;
                 // data.customerMobile = customerMobile;
@@ -49,7 +52,9 @@ $(document).ready(function () {
              { "name": 'id' },
              { "name": 'student_name' },
              { "name": 'id_no'},
-             { "name": 'studentclasses_id'}
+             { "name": 'studentclasses_id'},
+             { "name": 'emergency_number'}
+
 /*            { "name": 'id_no' },
             { "name": 'father_mobile' },
             { "name": 'zone_id' },
@@ -101,6 +106,9 @@ $(document).ready(function () {
         dataTable.draw();
     });
     $('#ClassID').change(function(){
+        dataTable.draw();
+    });
+    $('#emergency_number').keyup(function(){
         dataTable.draw();
     });
     //

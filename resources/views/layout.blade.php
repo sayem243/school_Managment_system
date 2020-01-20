@@ -166,7 +166,7 @@ Like: www.facebook.com/terminalbd
                         <li class=""><a href="{{ route('class_create') }}" class="" >New Class</a></li>
                         <li class=""><a href="{{ route('section_create') }}" class="" >New Section</a></li>
                         <li class=""><a href="{{ route('student_index1') }}" class="" >Class-1</a></li>
-                        <li class=""><a href="{{ route('student_index2') }}" class="" >Class-2</a></li>
+                        {{--<li class=""><a href="{{ route('student_index2') }}" class="" >Class-2</a></li>--}}
                         <li class=""><a href="{{ route('student_index3') }}" class="" >Class-3</a></li>
                     </ul>
                 </li>

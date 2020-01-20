@@ -52,6 +52,8 @@
                                             @endforeach
                                         </select>
                                     </td>
+                                    <td>
+                                        <input type="text" class="form-control form-filter input-sm" placeholder="Emergency Number" name="emergency_number" id="emergency_number"> </td>
 
 
 
@@ -62,6 +64,8 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">ID</th>
                                     <th scope="col">Class</th>
+                                    <th scope="col">Emergency Number</th>
+                                    {{--<th scope="col text-center"><i class="feather icon-settings"></i></th>--}}
                                     {{--<th>Father Name</th>--}}
                                     {{--<th>Mother Name</th>--}}
                                     {{--<th>Section</th>--}}

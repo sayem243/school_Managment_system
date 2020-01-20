@@ -124,6 +124,7 @@
                             <th scope="col">Connected</th>
                             <th scope="col">Outstanding</th>
                             <th scope="col text-center"><i class="feather icon-settings"></i></th>
+
                         </tr>
 
                         </thead>
