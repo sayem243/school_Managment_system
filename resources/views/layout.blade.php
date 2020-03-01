@@ -123,16 +123,6 @@ Like: www.facebook.com/terminalbd
                     {{--</ul>--}}
                 {{--</li>--}}
 
-                <li data-username="" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Fees</span></a>
-                    <ul class="pcoded-submenu">
-                        <li class=""><a href="{{ route('fees_create') }}" class="" >New Fees</a></li>
-                        <li class=""><a href="{{ route('fees_index') }}" class="" >Student Fees</a></li>
-                    </ul>
-                </li>
-
-
-
 
                 <li data-username="" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Attendence</span></a>
@@ -142,6 +132,13 @@ Like: www.facebook.com/terminalbd
                     </ul>
                 </li>
 
+                <li data-username="" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Fees</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="{{ route('fees_create') }}" class="" >New Fees</a></li>
+                        <li class=""><a href="{{ route('fees_index') }}" class="" >Student Fees</a></li>
+                    </ul>
+                </li>
 
                 <li data-username="" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Teachers Profile</span></a>
@@ -159,15 +156,24 @@ Like: www.facebook.com/terminalbd
                         <li class=""><a href="{{ route('teacher_create') }}" class="" >New Teacher</a></li>
                     </ul>
                 </li>
+                       {{--=============================== Transaction========================== --}}
+
+                <li data-username="" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Transaction</span></a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href="{{ route('transaction_create') }}" class="" >New Transaction</a></li>
+                        <li class=""><a href="{{ route('transaction_index') }}" class="" >Transaction</a></li>
+                    </ul>
+                </li>
 
                 <li data-username="" class="nav-item pcoded-hasmenu">
                     <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-user-check"></i></span><span class="pcoded-mtext">Class & Section</span></a>
                     <ul class="pcoded-submenu">
                         <li class=""><a href="{{ route('class_create') }}" class="" >New Class</a></li>
                         <li class=""><a href="{{ route('section_create') }}" class="" >New Section</a></li>
-                        <li class=""><a href="{{ route('student_index1') }}" class="" >Class-1</a></li>
-                        {{--<li class=""><a href="{{ route('student_index2') }}" class="" >Class-2</a></li>--}}
-                        <li class=""><a href="{{ route('student_index3') }}" class="" >Class-3</a></li>
+                        <li class=""><a href="{{ route('student_index1') }}" class="" >Class</a></li>
+                        <li class=""><a href="{{ route('student_index2') }}" class="" >Class-2</a></li>
+                        {{--<li class=""><a href="{{ route('student_index3') }}" class="" >Class-3</a></li>--}}
                     </ul>
                 </li>
             </ul>

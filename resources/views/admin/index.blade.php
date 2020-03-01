@@ -43,7 +43,7 @@
                                     <td colspan="2">
                                         <input  type="text" class="form-control form-filter input-sm" name="studentName" id="studentName" placeholder="Name"> </td>
                                     <td>
-                                        <input type="text" class="form-control form-filter input-sm" placeholder="studentID" name="id_no" id="id_no"> </td>
+                                        <input type="text" class="form-control form-filter input-sm" placeholder="StudentID" name="id_no" id="id_no"> </td>
                                     <td>
                                         <select class="form-control" name="classID" id="ClassID">
                                             <option value=""> -Class- </option>
@@ -55,8 +55,6 @@
                                     <td>
                                         <input type="text" class="form-control form-filter input-sm" placeholder="Emergency Number" name="emergency_number" id="emergency_number"> </td>
 
-
-
                                 </tr>
 
                                 <tr>
@@ -65,6 +63,7 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Class</th>
                                     <th scope="col">Emergency Number</th>
+
                                     {{--<th scope="col text-center"><i class="feather icon-settings"></i></th>--}}
                                     {{--<th>Father Name</th>--}}
                                     {{--<th>Mother Name</th>--}}

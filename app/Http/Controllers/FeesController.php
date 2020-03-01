@@ -55,7 +55,6 @@ class FeesController extends Controller
         return response()->json($monthly_fees);
     }
 
-
     public function store (Request $request){
 
         $fees = new Fees;
@@ -68,15 +67,38 @@ class FeesController extends Controller
         $fees->examFee=$request->examFee;
 //
         $fees->save();
-
         return redirect()->route('fees_create');
-
     }
-    public function index(){
 
+    public function edit($id){
+        $fees=Fees::find($id);
+        $months=DB::table('settings')
+            ->select(DB::raw('*'))
+            ->where('type','=','month')
+            ->get();
+
+        $classes=Studentclass::all();
+        return view('fees.edit',['fees'=>$fees,'months'=>$months,'classes'=>$classes]);
+    }
+
+    public function update(Request $request ,$id){
+
+        $fees =Fees::find($id);
+        $fees->month_id=$request->month;
+        $fees->year=$request->year;
+
+        $fees->class_id=$request->class_name;
+        $fees->admissionFee=$request->admissionFee;
+        $fees->monthlyFee=$request->monthlyFee;
+        $fees->examFee=$request->examFee;
+        $fees->save();
+
+        return redirect()->route('fees_index');
+    }
+
+    public function index(){
          $fees=Fees::all();
          return view('fees.index',['fees'=>$fees]);
     }
-
 
 }

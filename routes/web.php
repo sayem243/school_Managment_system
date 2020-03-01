@@ -112,6 +112,7 @@ Route::get('/admin/student/class/3','AdminController@indexThree')-> name('studen
 Route::post('/customer/dataTable', 'CustomerController@dataTable');
 Route::post('/student/dataTable','AdminController@dataTable');
 
+Route::get('/student/all/view/{id}','AdminController@View')->name('student_view');
 
 /*=================== Class ===================== */
 Route::get('class/create', 'StudentclassController@create')->name('class_create');
@@ -147,6 +148,8 @@ Route::get('setting/index','SettingController@index')->name('setting_index');
 Route::get('student/fees/create','FeesController@create')->name('fees_create');
 Route::post('/student/fees/store','FeesController@store')->name('fees_store');
 Route::get('student/fees/batch','FeesController@index')->name('fees_index');
+Route::get('/student/fess/edit/{id}','FeesController@edit')->name('fees_edit');
+Route::post('student/fees/update/{id}','FeesController@update')->name('fees_update');
 
 //ajax
 Route::get('student/class/fees/admissionfees/{id}','FeesController@admission_fee')->name('admissionfees');
@@ -166,3 +169,4 @@ Route::post('expense/store/','ExpenseController@store')->name('expense_store');
 
 Route::get('student/transaction/create','StudentTransactionController@create')->name('transaction_create');
 Route::get('student/transaction/index','StudentTransactionController@index')->name('transaction_index');
+Route::post('student/transaction/store','StudentTransactionController@store')->name('transaction_store');

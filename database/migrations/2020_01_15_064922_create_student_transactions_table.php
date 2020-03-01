@@ -15,8 +15,22 @@ class CreateStudentTransactionsTable extends Migration
     {
         Schema::create('student_transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            //fees=batch
+            $table->foreign('studentclasses_id')->references('id')->on('studentclasses');
+            $table->unsignedBigInteger('studentclasses_id');
+            $table->unsignedBigInteger('student_id')->nullable();
+            $table->foreign('student_id')->references('id')->on('admins');
+
+            $table->string('debit');
+            $table->string('payment_id')->nullable();
+            $table->foreign('fees_id')->references('id')->on('fees');
+            $table->unsignedBigInteger('fees_id');
+
             $table->timestamps();
         });
+
+
     }
 
     /**

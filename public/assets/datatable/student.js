@@ -21,13 +21,6 @@ $(document).ready(function () {
                 var id_no = $('#id_no').val();
                 var ClassID=$('#ClassID').val();
                 var emergency_number=$('#emergency_number').val();
-                // var customerMobile = $('#customerMobile').val();
-                // var zoneId = $('#zoneId').val();
-                // var package_id = $('#package_id').val();
-                // var connectionMode = $('#connectionMode').val();
-                // var bandWidth = $('#bandWidth').val();
-                // var assignBandWidth = $('#assignBandWidth').val();
-                // var connectionStatus = $('#connectionStatus').val();
 
 
                 // Append to data

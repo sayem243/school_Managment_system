@@ -81,13 +81,17 @@ class AdminController extends Controller
             ->where('studentclasses_id','=',2)
             ->get();
         // print_r($admins);
-             return view('admin.index',['admins'=>$admins]);
+             return view('admin.indexTwo',['admins'=>$admins]);
     }
 
-    public function indexThree(){
-        $admins=DB::table('admins')->select(DB::raw('*'))->where('studentclasses_id','=',3)->get();
-        return view('admin.indexThree',['admins'=>$admins]);
+    public function View ($id){
+        $details=admin::find($id);
+        //$sections = Section::all();
+
+        return view('admin.details',['details'=>$details ]);
+
     }
+
 
     public function dataTable(Request $request){
 
@@ -166,15 +170,15 @@ class AdminController extends Controller
                 $name               = $post->name,
                 $id_no              = $post->studentID,
                 $ClassID            = $post->class,
-                $emergency_number   =$post->emergency_number,
+                $emergency_number   = $post->emergency_number,
 );
             $i++;
         endforeach;
 
-      /*  if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
-            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
-            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
-        }*/
+//       if (isset($_REQUEST["customActionType"]) && $_REQUEST["customActionType"] == "group_action") {
+//            $records["customActionStatus"] = "OK"; // pass custom message(useful for getting status of group actions)
+//            $records["customActionMessage"] = "Group action successfully has been completed. Well done!"; // pass custom message(useful for getting status of group actions)
+//        }
 
         $records["draw"] = $sEcho;
         $records["recordsTotal"] = $iTotalRecords;
@@ -183,8 +187,5 @@ class AdminController extends Controller
         return new JsonResponse($records);
 
     }
-
-
-
 
 }

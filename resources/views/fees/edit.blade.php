@@ -4,13 +4,11 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5> Student Fees</h5>
+                    <h5>Edit Fees</h5>
                     <div class="card-header-right">
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v">
-
-                                </i>
+                                <i class="fas fa-ellipsis-v"></i>
                             </button>
                             <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="bottom-end" >
                                 <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
@@ -35,7 +33,7 @@
                     @endif
                     <div class="card-body">
 
-                        <form method="post" action="{{ route('fees_store') }}" class="needs-validation" novalidate>
+                        <form method="post" action="{{ route('fees_update',$fees->id) }}" class="needs-validation" novalidate>
 
                             <div class="form-group row">
                                 @csrf
@@ -44,7 +42,7 @@
                                     <select class="form-control" name="month" id="month">
                                         <option value=""> Select Months</option>
                                         @foreach($months as $month)
-                                            <option value="{{$month->id}}"> {{$month->name}}</option>
+                                            <option value="{{$month->id}}"{{$month->id==$fees->month_id?'selected="selected"': ''}} > {{$month->name}}</option>
                                         @endforeach
                                     </select>
                                     <div class="invalid-tooltip">
@@ -53,7 +51,7 @@
                                 </div>
                                 <label class="col-sm-0 col-form-label" for="date">Year :</label>
                                 <div class="col-sm-2 col-form-label">
-                                    <input type="text" class="form-control" name="year" id="year" />
+                                    <input type="text" class="form-control" name="year" id="year" value="{{$fees->year}}"/>
                                 </div>
 
                             </div>
@@ -66,7 +64,7 @@
                                     <select class="form-control" name="class_name" id="class_name">
                                         <option value=""> Select Class</option>
                                         @foreach($classes as $class)
-                                            <option value="{{$class->id}}"> {{$class->class_name}}</option>
+                                            <option value="{{$class->id}}" {{$class->id==$fees->class_id?'selected="selected"': ''}} > {{$class->class_name}}</option>
                                         @endforeach
                                     </select>
                                     <div class="invalid-tooltip">
@@ -80,7 +78,7 @@
                                 <label class="col-sm-3 col-form-label" for="admissionFees">Admission Fee (<span id="admissionFees"> </span>)</label>
 
                                 <div class="col-sm-2 col-form-label">
-                                    <input type="text" class="form-control" name="admissionFee" id="admissionFee" />
+                                    <input type="text" class="form-control" name="admissionFee" id="admissionFee" value="{{$fees->admissionFee}}" />
                                 </div>
 
                             </div>
@@ -88,14 +86,14 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="monthly_fee">Monthly Fee (<span id="monthly_fee"></span>) </label>
                                 <div class="col-sm-2 col-form-label">
-                                    <input type="text" class="form-control admissionFees" name="monthlyFee" id="monthlyFee"  />
+                                    <input type="text" class="form-control admissionFees" name="monthlyFee" id="monthlyFee" value="{{$fees->monthlyFee}}" />
                                 </div>
 
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label" for="exam_fee">Exam Fee (<span id="exam_fee"></span>)</label>
                                 <div class="col-sm-2 col-form-label">
-                                    <input type="text" class="form-control" name="examFee" id="examFee"/>
+                                    <input type="text" class="form-control" name="examFee" id="examFee" value="{{$fees->examFee}}"/>
                                 </div>
 
                             </div>

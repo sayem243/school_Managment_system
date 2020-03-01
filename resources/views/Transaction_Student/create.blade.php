@@ -4,7 +4,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h5>Student Transaction Table</h5>
+                    <h5>Student Transaction Create</h5>
                     <div class="card-header-right">
                         <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
 
@@ -23,13 +23,13 @@
                 </div>
                 <div class="card-block">
                     <div class="card-body">
-                        <form method="post" action="{{ route('student_store') }}" class="needs-validation" novalidate>   @csrf
+                        <form method="post" action="{{ route('transaction_store') }}" class="needs-validation" novalidate>   @csrf
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group row ">
                                         <label class="col-sm-4 col-form-label" for="studentID" >Student ID <span class="required">*</span></label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="student_name" id="student_name" aria-describedby="validationTooltipUsernamePrepend" required />
+                                            <input type="text" class="form-control" name="student_id" id="student_id" aria-describedby="validationTooltipUsernamePrepend" required />
                                             <span class="help-block">Student ID</span>
                                             <div class="invalid-tooltip">
                                                 Please provide a valid Student ID.
@@ -53,7 +53,6 @@
                                 </div>
 
                                 <div class="col-sm-6">
-
                                     <div class="form-group row">
                                         <label class="col-sm-4 col-form-label" for="studentclasses_id">Class <span class="required">*</span></label>
                                         <div class="col-sm-7">
@@ -66,17 +65,20 @@
                                         </div>
                                     </div>
 
-
                                     <div class="form-group row">
-                                        <label class="col-sm-4 col-form-label" for="credit">Credit Amount <span class="required">*</span></label>
+                                        <label class="col-sm-4 col-form-label" for="studentclasses_id">Batch ID <span class="required">*</span></label>
                                         <div class="col-sm-7">
-                                            <input type="text" class="form-control" name="emergency_number" id="emergency_number" aria-describedby="validationTooltipUsernamePrepend"  />
-                                            <span class="help-block">Credit :</span>
-                                            <div class="invalid-tooltip">
-                                                Credit Amount
-                                            </div>
+                                            <select class="form-control" name="batch_id">
+                                                <option value="">Select Batch ID</option>
+                                                @foreach($fees as $fee)
+                                                    <option value="{{$fee->id}}"> {{$fee->year}}-{{$fee->months->name}} </option>
+                                                    {{--relational data--}}
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
+
+
 
                                 </div>
                             </div>

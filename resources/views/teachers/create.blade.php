@@ -26,6 +26,21 @@
                 </div>
                 <div class="card-block">
                     <div class="card-body">
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger violet" role="alert">
+                                <div class="alert-icon"><i class="feather icon-alert-triangle" style="font-size: 30px;"></i></div>
+                                <div class="alert-text">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+
+
                         <form method="post" action="{{ route('teacher_store') }}" class="needs-validation" enctype="multipart/form-data" novalidate>   @csrf
                             <div class="row">
                                 <div class="col-sm-6">
@@ -35,7 +50,7 @@
                                             <input type="text" class="form-control" name="name" id="name" aria-describedby="validationTooltipUsernamePrepend" required />
                                             <span class="help-block">Teacher's full name</span>
                                             <div class="invalid-tooltip">
-                                                Please provide a valid  name.
+                                                Please provide a valid name.
                                             </div>
                                         </div>
                                     </div>

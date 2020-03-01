@@ -66,7 +66,22 @@
                                 <td>{{$admin->section}}</td>
                                 <td>{{$admin->father_mobile}}</td>
                                 <td>{{$admin->father_occupation}}</td>
-                                <td></td>
+                                <td>
+                                    <div class="btn-group card-option">
+                                        <a href="javascript:"  class="btn btn-notify btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                                        <ul class="list-unstyled card-option dropdown-info dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(34px, 29px, 0px);">
+
+                                                <li class="dropdown-item">
+                                                    <a href={{route('student_view',$admin->id)}}>
+                                                        <i class="feather icon-eye"></i>
+                                                        View</a>
+
+                                                    {{--<a href="{{route('student_view',$admin->id)}}"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="">Open modal for @mdo</button> </a>--}}
+                                                </li>
+
+                                        </ul>
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -78,4 +93,8 @@
         </div>
     </div>
 
+
+
+
 @endsection
+

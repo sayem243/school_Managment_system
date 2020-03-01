@@ -23,11 +23,13 @@ class TeacherController extends Controller
 
     public function store(Request $request){
 
-        $request->validate([
+
+        $this->validate($request,[
             'mobile'=>'required',
             'nid'=>'required'
-
         ]);
+
+
 
         $teacher= New Teacher;
         $teacher->name= $request->name;

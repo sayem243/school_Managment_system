@@ -6,10 +6,12 @@
                 <div class="card-header">
                     <h5>New Class</h5>
                     <div class="card-header-right">
-                        <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
+
+                     {{--   <div class="btn-group btn-group-sm" role="group" aria-label="Button group with nested">
                             <a  href="{{ route('internet.index') }}" class="btn btn-sm indigo-bg white-font"><i class="fa fa-th-list"></i>Package</a>
                             <a href="{{ route('internet.create') }}" class="btn btn-sm  btn-info"><i class="fas fa-sign-out-alt"></i>Add New</a>
                         </div>
+                        --}}
                         <div class="btn-group card-option">
                             <button type="button" class="btn dropdown-toggle btn-more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-ellipsis-v"></i>

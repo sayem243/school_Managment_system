@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -15,6 +16,11 @@ class Fees extends Model
     public function months(){
 
         return $this->belongsTo(Setting::class,'month_id');
+    }
+
+    public function transaction(){
+
+        return $this->hasMany(studentTransaction::class);
     }
 
 }
